@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 7 — OOP advanced: composition, inheritance, overriding — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink active" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 7 · OOP advanced</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 7 — OOP advanced: composition, inheritance, overriding</h1>
+<p><strong>Exam weight: 15–30 marks, roughly every other paper.</strong> When Paper 4 says "inherits from",
+"overrides", or shows a class containing an array of other objects, this module is the
+difference between attempted and earned marks. The mark scheme for inheritance is
+short and predictable — five or six specific points.</p>
+<h2>1. Inheritance — the exact mark points</h2>
+<p>From <a class="qref" href="files/papers/N23-P42-QP.pdf#page=12" title="Open the question paper at page 12">Nov 2023 P42 Q3(c)</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=30" title="Open the mark scheme at page 30">MS&nbsp;p.30</a></span> and <a class="qref" href="files/papers/J25-P42-QP.pdf#page=9" title="Open the question paper at page 9">J25/42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=33" title="Open the mark scheme at page 33">MS&nbsp;p.33</a></span> mark schemes, a subclass declaration earns:</p>
+<ol>
+<li><strong>Class header inheriting from the parent</strong> — <code>class MagicCharacter(Character):</code></li>
+<li><strong>Declaring the new attribute</strong> (type comment in Python) — <code># self.__Element : STRING</code></li>
+<li><strong>Constructor header with the extended parameter count</strong> — <code>def __init__(self, name, dob, intelligence, speed, element):</code></li>
+<li><strong>Calling the parent constructor</strong> — <code>super().__init__(name, dob, intelligence, speed)</code></li>
+<li><strong>Assigning the parameter to the new attribute</strong> — <code>self.__Element = element</code></li>
+</ol>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Character</span><span class="p">:</span>
+    <span class="c1"># self.__CharacterName : STRING</span>
+    <span class="c1"># self.__DateOfBirth   : DATE</span>
+    <span class="c1"># self.__Intelligence  : REAL</span>
+    <span class="c1"># self.__Speed         : INTEGER</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dob</span><span class="p">,</span> <span class="n">intelligence</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__CharacterName</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__DateOfBirth</span> <span class="o">=</span> <span class="n">dob</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Intelligence</span> <span class="o">=</span> <span class="n">intelligence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Speed</span> <span class="o">=</span> <span class="n">speed</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MagicCharacter</span><span class="p">(</span><span class="n">Character</span><span class="p">):</span>
+    <span class="c1"># self.__Element : STRING</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dob</span><span class="p">,</span> <span class="n">intelligence</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">dob</span><span class="p">,</span> <span class="n">intelligence</span><span class="p">,</span> <span class="n">speed</span><span class="p">)</span>   <span class="c1"># parent constructor first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Element</span> <span class="o">=</span> <span class="n">element</span>
+</pre></div></div>
+<h2>2. Overriding — redefine, no keyword needed</h2>
+<p>Python overrides by simply redefining the method in the subclass (no <code>Overrides</code> keyword —
+that's VB/Java syntax). The mark scheme's point is "method header overriding parent method":</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Character</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Learn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Intelligence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Intelligence</span> <span class="o">*</span> <span class="mf">1.1</span>     <span class="c1"># +10%</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MagicCharacter</span><span class="p">(</span><span class="n">Character</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Learn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                                        <span class="c1"># overrides Learn()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Element</span> <span class="o">==</span> <span class="s2">&quot;fire&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Element</span> <span class="o">==</span> <span class="s2">&quot;water&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__Intelligence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Intelligence</span> <span class="o">*</span> <span class="mf">1.2</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Element</span> <span class="o">==</span> <span class="s2">&quot;earth&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__Intelligence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Intelligence</span> <span class="o">*</span> <span class="mf">1.3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__Intelligence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Intelligence</span> <span class="o">*</span> <span class="mf">1.1</span>
+</pre></div></div>
+<p>Polymorphism then works automatically: a variable holding either class calls whichever
+<code>Learn()</code> it has. Questions that output "type-dependent" values (<a class="qref" href="files/papers/J23-P41-QP.pdf#page=1" title="Open the question paper at page 1">J23/41</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>: print vertical
+position <em>if the object is a helicopter</em>) are solved with a class check:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vehicle</span><span class="p">,</span> <span class="n">Helicopter</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">vehicle</span><span class="o">.</span><span class="n">GetVerticalPosition</span><span class="p">())</span>
+</pre></div></div>
+<h2>3. Worked example — Vehicle / Helicopter (<a class="qref" href="files/papers/J23-P41-QP.pdf#page=4" title="Open the question paper at page 4">June 2023 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P41-MS.pdf#page=12" title="Open the mark scheme at page 12">MS&nbsp;p.12</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J23-P41-QP.pdf#page=4" title="Open the question paper at page 4">June 2023 Paper 41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P41-MS.pdf#page=12" title="Open the mark scheme at page 12">MS&nbsp;p.12</a></span> [32 marks]</strong> —
+<code>9618 Past Papers\9618 Computer Science June 2023 Question paper 41.pdf</code></p>
+<p>In brief: parent class <code>Vehicle</code> (ID, max speed, current speed, increase amount, horizontal
+position) with constructor, getters, setters, and <code>IncreaseSpeed()</code> that limits to max
+speed; child class <code>Helicopter</code> adds vertical position/vertical change/max height and
+<strong>overrides</strong> <code>IncreaseSpeed()</code> to also apply the vertical limit; an output procedure prints
+position and speed for any vehicle, plus vertical data if it is a helicopter; main
+instantiates a car and a helicopter and increases each one's speed twice.</p>
+<p>The full model is <a href="solutions/m07_vehicle_helicopter.html"><code>solutions/m07_vehicle_helicopter.py</code></a>. The part to study is the override:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Helicopter</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
+    <span class="c1"># self.__VerticalPosition : INTEGER</span>
+    <span class="c1"># self.__VerticalChange   : INTEGER</span>
+    <span class="c1"># self.__MaxHeight        : INTEGER</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vehicle_id</span><span class="p">,</span> <span class="n">max_speed</span><span class="p">,</span> <span class="n">increase_amount</span><span class="p">,</span> <span class="n">vertical_position</span><span class="p">,</span>
+                 <span class="n">vertical_change</span><span class="p">,</span> <span class="n">max_height</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vehicle_id</span><span class="p">,</span> <span class="n">max_speed</span><span class="p">,</span> <span class="n">increase_amount</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalPosition</span> <span class="o">=</span> <span class="n">vertical_position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalChange</span> <span class="o">=</span> <span class="n">vertical_change</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__MaxHeight</span> <span class="o">=</span> <span class="n">max_height</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">IncreaseSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                     <span class="c1"># overrides Vehicle.IncreaseSpeed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalPosition</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalChange</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalPosition</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__MaxHeight</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalPosition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__MaxHeight</span>
+        <span class="n">Vehicle</span><span class="o">.</span><span class="n">IncreaseSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>              <span class="c1"># or re-implement the horizontal logic</span>
+</pre></div></div>
+<p><strong>Mark scheme shape:</strong> inherits header / new attributes with types / constructor calls
+parent / override redefines the limit logic / isinstance-based output.</p>
+<h2>4. Worked example — Employee/Manager with overriding + super (<a class="qref" href="files/papers/J23-P42-QP.pdf#page=10" title="Open the question paper at page 10">June 2023 P42 Q3(b)</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=28" title="Open the mark scheme at page 28">MS&nbsp;p.28</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J23-P42-QP.pdf#page=10" title="Open the question paper at page 10">June 2023 Paper 42 Q3(b)</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=28" title="Open the mark scheme at page 28">MS&nbsp;p.28</a></span> [7 marks]</strong> — <code>Manager</code> inherits <code>Employee</code>, adds a
+bonus <em>percentage</em>; its <code>SetPay()</code> <strong>overrides</strong> the parent: the hours are increased by the
+bonus percentage <em>before</em> delegating to the parent's <code>SetPay()</code>.</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Manager</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+    <span class="c1"># self.__BonusValue : REAL</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hourly_pay</span><span class="p">,</span> <span class="n">employee_number</span><span class="p">,</span> <span class="n">bonus_value</span><span class="p">,</span> <span class="n">job_title</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hourly_pay</span><span class="p">,</span> <span class="n">employee_number</span><span class="p">,</span> <span class="n">job_title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__BonusValue</span> <span class="o">=</span> <span class="n">bonus_value</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetPay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">week_number</span><span class="p">,</span> <span class="n">hours_worked</span><span class="p">):</span>       <span class="c1"># override</span>
+        <span class="n">hours_worked</span> <span class="o">=</span> <span class="n">hours_worked</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__BonusValue</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">Employee</span><span class="o">.</span><span class="n">SetPay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">week_number</span><span class="p">,</span> <span class="n">hours_worked</span><span class="p">)</span>   <span class="c1"># delegate to parent</span>
+</pre></div></div>
+<p>The "increase then call parent" pattern (bonus, then store) is the exam's favourite
+override shape. The surrounding file-driven instantiation is Module 5's worked example.</p>
+<h2>5. Composition — objects owning objects</h2>
+<p>Equally frequent, and easier: a class whose attributes include other objects or arrays of
+them.</p>
+<ul>
+<li><strong><a class="qref" href="files/papers/N22-P41-QP.pdf#page=6" title="Open the question paper at page 6">N22/41 Q2(b)</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=11" title="Open the mark scheme at page 11">MS&nbsp;p.11</a></span></strong>: <code>Hand</code> holds an array of 5 <code>Card</code> objects + <code>FirstCard</code> + count.</li>
+<li><strong><a class="qref" href="files/papers/J26-P41-QP.pdf#page=8" title="Open the question paper at page 8">J26/41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P41-MS.pdf#page=32" title="Open the mark scheme at page 32">MS&nbsp;p.32</a></span></strong>: <code>Path</code> holds <code>BoardArray[0:99]</code> of <code>TheObject</code> (100 objects, initialised
+  empty) and <code>NumberSpaces</code>.</li>
+<li><strong><a class="qref" href="files/papers/N25-P41-QP.pdf#page=4" title="Open the question paper at page 4">N25/41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span></strong>: <code>Station</code> holds <code>Trains[0:9]</code> of <code>Train</code> + platform count.</li>
+<li><strong><a class="qref" href="files/papers/N25-P43-QP.pdf#page=4" title="Open the question paper at page 4">N25/43 Q1(b)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=10" title="Open the mark scheme at page 10">MS&nbsp;p.10</a></span></strong>: <code>Board</code> holds a <strong>2D</strong> 10×10 grid of <code>BoardObject</code>, each initialised
+  empty (code <code>"-"</code>, value 0).</li>
+</ul>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="c1"># self.__StationID     : STRING</span>
+    <span class="c1"># self.__NumberPlatforms : INTEGER</span>
+    <span class="c1"># self.__NumberTrains  : INTEGER</span>
+    <span class="c1"># self.__Trains        : ARRAY[0:9] OF Train</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">number_platforms</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__StationID</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__NumberPlatforms</span> <span class="o">=</span> <span class="n">number_platforms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__NumberTrains</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Trains</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">AddTrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_train</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__NumberTrains</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__NumberPlatforms</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Trains</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__NumberTrains</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_train</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__NumberTrains</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetTrains</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__NumberTrains</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;There are no trains&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The trains at station </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__StationID</span><span class="si">}</span><span class="s2"> are: &quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__NumberTrains</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__Trains</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">GetTrainIDNumber</span><span class="p">()</span><span class="si">}</span><span class="s2"> on route number </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__Trains</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">GetRoute</span><span class="p">()</span><span class="si">}</span><span class="s2">; &quot;</span>
+        <span class="k">return</span> <span class="n">result</span>
+</pre></div></div>
+<p>Note the empty-object initialisation (<a class="qref" href="files/papers/N25-P43-QP.pdf#page=1" title="Open the question paper at page 1">N25/43</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> wants each grid cell to <em>be</em> a BoardObject
+with code <code>"-"</code>): build it in a loop, not with <code>[None]*n</code> when the paper demands real empty
+objects.</p>
+<p><strong>Mark scheme shape:</strong> class declaration / array attribute declared with type / constructor
+initialises every element (or to the specified empty object) / methods use the contained
+objects through their getters.</p>
+<h2>6. Choosing: inheritance or composition?</h2>
+<p>Read the question text. "X <strong>inherits from</strong> Y" / "X <strong>is a</strong> Y" → inheritance.
+"X <strong>contains/has</strong> Y" / class diagram shows Y as an attribute type → composition. Papers
+never leave it ambiguous; both earn a fixed, short mark list, so treat either as free marks
+once fluent.</p>
+<h2>Practice set</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/J23-P41-QP.pdf#page=4" title="Open the question paper at page 4">Jun 2023 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P41-MS.pdf#page=12" title="Open the mark scheme at page 12">MS&nbsp;p.12</a></span></td>
+<td>Vehicle/Helicopter full inheritance question</td>
+<td>32</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J23-P42-QP.pdf#page=8" title="Open the question paper at page 8">Jun 2023 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=23" title="Open the mark scheme at page 23">MS&nbsp;p.23</a></span></td>
+<td>Employee/Manager + variable-length file</td>
+<td>33</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N23-P41-QP.pdf#page=8" title="Open the question paper at page 8">Nov 2023 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P41-MS.pdf#page=25" title="Open the mark scheme at page 25">MS&nbsp;p.25</a></span></td>
+<td>Character/BikeCharacter, clamped setters, validated input</td>
+<td>30</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N23-P42-QP.pdf#page=10" title="Open the question paper at page 10">Nov 2023 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=22" title="Open the mark scheme at page 22">MS&nbsp;p.22</a></span></td>
+<td>Character + DATE + MagicCharacter override</td>
+<td>31</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J25-P42-QP.pdf#page=9" title="Open the question paper at page 9">Jun 2025 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=33" title="Open the mark scheme at page 33">MS&nbsp;p.33</a></span></td>
+<td>Animal/Parrot/Wolf — two subclasses overriding one method</td>
+<td>26</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N22-P41-QP.pdf#page=4" title="Open the question paper at page 4">Nov 2022 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=8" title="Open the mark scheme at page 8">MS&nbsp;p.8</a></span></td>
+<td>Card + Hand composition + scoring</td>
+<td>31</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P41-QP.pdf#page=8" title="Open the question paper at page 8">Jun 2026 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P41-MS.pdf#page=32" title="Open the mark scheme at page 32">MS&nbsp;p.32</a></span></td>
+<td>Path owning 100 objects + string building</td>
+<td>21</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N25-P41-QP.pdf#page=4" title="Open the question paper at page 4">Nov 2025 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span></td>
+<td>Train/Station composition</td>
+<td>25</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N25-P43-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2025 P43 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=7" title="Open the mark scheme at page 7">MS&nbsp;p.7</a></span></td>
+<td>Board with 10×10 grid of BoardObjects</td>
+<td>31</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common pitfalls</h2>
+<ul>
+<li>Forgetting <code>super().__init__(...)</code> — a dedicated mark point in every inheritance question.</li>
+<li>Re-declaring inherited attributes in the subclass (never needed; just call super).</li>
+<li>Override that doesn't handle the "else" case the paper specifies (the +10% fallback).</li>
+<li>Composition constructor that leaves the object array as <code>None</code> when the paper demands
+  initialised empty objects.</li>
+<li>Using the subclass's new private attribute <em>before</em> assigning it in <code>__init__</code>.</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="a440681137b3"><span>I can write the 5-point subclass skeleton from memory, including super().</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="0909e3963209"><span>I can override a method and delegate to the parent where the paper requires it.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="036198c5b6f5"><span>I can build a class that owns an array of other objects, initialised per spec.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="cb492619afb0"><span>I know when to use isinstance() for type-dependent output.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-06.html"><div class="dir">← Previous</div><div class="pt">Module 6 — OOP foundations: classes, constructors, getters, setters</div></a><a class="next" href="module-08.html"><div class="dir">Next →</div><div class="pt">Module 8 — Stacks and queues (array-based ADTs)</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

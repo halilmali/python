@@ -1,0 +1,5 @@
+Fire Station,3981,Expert,Town
+Castle Keep,2100,Expert,Castle
+Robot Lab,1830,Expert,Space
+Dragon Cave,2400,Expert,Castle
+Observatory,2890,Expert,Space

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 8 — Stacks and queues (array-based ADTs) — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink active" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 8 · Stacks &amp; queues</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 8 — Stacks and queues (array-based ADTs)</h1>
+<p><strong>Exam weight: 20–29 marks whenever they appear — and some ADT question appears in
+virtually every paper.</strong> These are the highest-density marks in Paper 4: a fixed set of
+operations (declare / push-enqueue / pop-dequeue / full-empty checks / pointer updates)
+implemented over a global array, usually with part of the algorithm given as pseudocode.</p>
+<h2>1. The universal ADT skeleton</h2>
+<p>Every stack or queue question has the same five components. Learn them as a set:</p>
+<ol>
+<li><strong>Declare</strong> the array (fixed size, often initialised to −1 or 0 or empty string) and the
+   pointer(s) as globals.</li>
+<li><strong>Insert operation</strong> (<code>Push</code>/<code>Enqueue</code>) — check full, store, update pointer, return
+   TRUE/FALSE (or 1/−1).</li>
+<li><strong>Remove operation</strong> (<code>Pop</code>/<code>Dequeue</code>) — check empty, return the sentinel or the value,
+   update pointer.</li>
+<li><strong>Main program</strong> that drives it — often with a deliberate overflow/underflow test.</li>
+<li><strong>Screenshot evidence</strong> with the paper's exact test data.</li>
+</ol>
+<p>The sentinel values (−1, −999, <code>"Empty"</code>, <code>"FALSE"</code> string) are specified per paper — use
+<em>exactly</em> what the paper says, because the main program's output message is marked against
+it. Note <a class="qref" href="files/papers/N25-P43-QP.pdf#page=1" title="Open the question paper at page 1">N25/43</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>'s trap: <code>Dequeue()</code> returns the <strong>string</strong> <code>"False"</code>, not a Boolean.</p>
+<h2>2. Stack (LIFO) — the canonical implementation</h2>
+<p><a class="qref" href="files/papers/J22-P42-QP.pdf#page=1" title="Open the question paper at page 1">June 2022 P42</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> gave us the master template (Module 2 worked it in full). Here is the
+variant from <strong><a class="qref" href="files/papers/N25-P41-QP.pdf#page=2" title="Open the question paper at page 2">November 2025 Paper 41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span> [20 marks]</strong>, where the pointer is the index of
+the <em>last</em> element, initialised to −1, the stack holds 30 integers, and parts (d)–(e) add a
+random-fill loop and a "pop everything, report min and max" function:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">Stack</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">)]</span>     <span class="c1"># global; papers say &quot;initialised to null&quot;</span>
+<span class="n">TopOfStack</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>                        <span class="c1"># global integer</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Push</span><span class="p">(</span><span class="n">NewValue</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">TopOfStack</span>
+    <span class="k">if</span> <span class="n">TopOfStack</span> <span class="o">==</span> <span class="mi">29</span><span class="p">:</span>               <span class="c1"># full</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">TopOfStack</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">Stack</span><span class="p">[</span><span class="n">TopOfStack</span><span class="p">]</span> <span class="o">=</span> <span class="n">NewValue</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Pop</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">TopOfStack</span>
+    <span class="k">if</span> <span class="n">TopOfStack</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>               <span class="c1"># empty</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">999</span>                    <span class="c1"># sentinel defined by the paper</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">[</span><span class="n">TopOfStack</span><span class="p">]</span>
+    <span class="n">TopOfStack</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">FindValues</span><span class="p">():</span>
+    <span class="n">largest</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">smallest</span> <span class="o">=</span> <span class="mi">1001</span>
+    <span class="k">while</span> <span class="n">TopOfStack</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">Pop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">largest</span><span class="p">:</span>
+            <span class="n">largest</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">smallest</span><span class="p">:</span>
+            <span class="n">smallest</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Largest:&quot;</span><span class="p">,</span> <span class="n">largest</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Smallest:&quot;</span><span class="p">,</span> <span class="n">smallest</span><span class="p">)</span>
+
+<span class="c1"># main: 40 random integers 0-1000 pushed until full (&quot;Stack full&quot;)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">Push</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stack full&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">FindValues</span><span class="p">()</span>
+</pre></div></div>
+<p>Full runnable version: <a href="solutions/m08_stack_n25.html"><code>solutions/m08_stack_n25.py</code></a>.</p>
+<p><strong>Mark scheme shape for Push (4 marks):</strong> full check returning FALSE / pointer increment /
+store at the new top / return TRUE. For Pop: empty check with sentinel / read top /
+pointer decrement / return. Note how <a class="qref" href="files/papers/J22-P42-QP.pdf#page=1" title="Open the question paper at page 1">J22/42</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>'s variant (pointer = next free space, initial 0)
+flips the increments — <em>always re-derive from the paper's stated pointer semantics</em>.</p>
+<h2>3. Linear queue (FIFO)</h2>
+<p>Head/tail pointers. <strong><a class="qref" href="files/papers/J26-P41-QP.pdf#page=2" title="Open the question paper at page 2">June 2026 Paper 41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P41-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span> [26 marks]</strong> is the clean specimen: 10-element
+queue, pointers initialised to −1, <code>Enqueue()</code> (7 marks) with full check, <code>Dequeue()</code>
+returning −1 when empty, then the main program attempts <strong>11</strong> inputs to force the overflow
+message and dequeues four.</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">Queue</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="n">HeadPointer</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">TailPointer</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Enqueue</span><span class="p">(</span><span class="n">DataToInsert</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">HeadPointer</span><span class="p">,</span> <span class="n">TailPointer</span>
+    <span class="k">if</span> <span class="n">TailPointer</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>               <span class="c1"># variant-dependent: some papers use a count</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">HeadPointer</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">HeadPointer</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">TailPointer</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">Queue</span><span class="p">[</span><span class="n">TailPointer</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataToInsert</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Dequeue</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">HeadPointer</span>
+    <span class="k">if</span> <span class="n">HeadPointer</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">HeadPointer</span> <span class="o">&gt;</span> <span class="n">TailPointer</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">[</span><span class="n">HeadPointer</span><span class="p">]</span>
+    <span class="n">HeadPointer</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">value</span>
+</pre></div></div>
+<p>Pointer conventions differ per paper (head at first item vs head before it; tail after last
+vs at last) — the question <em>always</em> states them, and the mark scheme follows the statement.
+Re-derive, don't recite. Full solution: <a href="solutions/m08_queue_j26.html"><code>solutions/m08_queue_j26.py</code></a>.</p>
+<p>Other linear-queue appearances: <a class="qref" href="files/papers/J24-P41-QP.pdf#page=11" title="Open the question paper at page 11">J24/41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=29" title="Open the mark scheme at page 29">MS&nbsp;p.29</a></span> (strings + check digit), <a class="qref" href="files/papers/J25-P43-QP.pdf#page=2" title="Open the question paper at page 2">J25/43 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P43-MS.pdf#page=7" title="Open the mark scheme at page 7">MS&nbsp;p.7</a></span> (fill from
+file, dequeue-all with running total), <a class="qref" href="files/papers/N22-P42-QP.pdf#page=8" title="Open the question paper at page 8">N22/42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=20" title="Open the mark scheme at page 20">MS&nbsp;p.20</a></span> (enqueue 1–20 + recursive rewrite of
+output), <a class="qref" href="files/papers/N25-P43-QP.pdf#page=9" title="Open the question paper at page 9">N25/43 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=20" title="Open the mark scheme at page 20">MS&nbsp;p.20</a></span> (run-length compression — must consume via <code>Dequeue()</code>).</p>
+<h2>4. Circular queue (wrap-around)</h2>
+<p><strong><a class="qref" href="files/papers/J25-P41-QP.pdf#page=2" title="Open the question paper at page 2">June 2025 Paper 41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P41-MS.pdf#page=7" title="Open the mark scheme at page 7">MS&nbsp;p.7</a></span> [20 marks]</strong>: 20-element queue of integers initialised to −1,
+<code>HeadPointer</code>, <code>TailPointer</code>, <code>NumberItems</code>; the mark-earning twist is modular arithmetic:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">Enqueue</span><span class="p">(</span><span class="n">NewItem</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">HeadPointer</span><span class="p">,</span> <span class="n">TailPointer</span><span class="p">,</span> <span class="n">NumberItems</span>
+    <span class="k">if</span> <span class="n">NumberItems</span> <span class="o">==</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">TailPointer</span> <span class="o">=</span> <span class="p">(</span><span class="n">TailPointer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">20</span>      <span class="c1"># wrap-around</span>
+    <span class="n">Queue</span><span class="p">[</span><span class="n">TailPointer</span><span class="p">]</span> <span class="o">=</span> <span class="n">NewItem</span>
+    <span class="n">NumberItems</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Dequeue</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">HeadPointer</span><span class="p">,</span> <span class="n">NumberItems</span>
+    <span class="k">if</span> <span class="n">NumberItems</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">[</span><span class="n">HeadPointer</span><span class="p">]</span>
+    <span class="n">HeadPointer</span> <span class="o">=</span> <span class="p">(</span><span class="n">HeadPointer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">20</span>
+    <span class="n">NumberItems</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">value</span>
+</pre></div></div>
+<p>Full solution: <a href="solutions/m08_circular_queue.html"><code>solutions/m08_circular_queue.py</code></a>. Earlier circular-queue questions:
+<a class="qref" href="files/papers/J22-P41-QP.pdf#page=8" title="Open the question paper at page 8">J22/41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P41-MS.pdf#page=27" title="Open the mark scheme at page 27">MS&nbsp;p.27</a></span> (Enqueue pseudocode with 5 blanks to complete, BYREF parameters) and <a class="qref" href="files/papers/J23-P42-QP.pdf#page=5" title="Open the question paper at page 5">J23/42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=11" title="Open the mark scheme at page 11">MS&nbsp;p.11</a></span>
+(circular queue of <strong>records</strong> with empty-record initialisation: <code>ID = ""</code>, quantity −1).</p>
+<h2>5. Two stacks, side by side (<a class="qref" href="files/papers/J23-P41-QP.pdf#page=8" title="Open the question paper at page 8">June 2023 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span> / <a class="qref" href="files/papers/N23-P42-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2023 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span>)</h2>
+<p>Same skeleton twice, with a routing condition. <a class="qref" href="files/papers/N23-P42-QP.pdf#page=1" title="Open the question paper at page 1">N23/42</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>: read 100 letters from
+<code>StackData.txt</code>; vowels push to <code>StackVowel</code>, consonants to <code>StackConsonant</code>; pop functions
+return <code>"No data"</code> when empty; main pops five letters of the user's chosen kind and outputs
+them on one line. <a class="qref" href="files/papers/J23-P41-QP.pdf#page=1" title="Open the question paper at page 1">J23/41</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> pushes animal names and colours to two stacks, then pops one of
+each per output ("black horse"), with push-back rules when one stack empties.</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">PushData</span><span class="p">(</span><span class="n">letter</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">VowelTop</span><span class="p">,</span> <span class="n">ConsonantTop</span>
+    <span class="k">if</span> <span class="n">letter</span> <span class="ow">in</span> <span class="s2">&quot;aeiou&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">VowelTop</span> <span class="o">==</span> <span class="mi">99</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vowel stack full&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">VowelTop</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">StackVowel</span><span class="p">[</span><span class="n">VowelTop</span><span class="p">]</span> <span class="o">=</span> <span class="n">letter</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ConsonantTop</span> <span class="o">==</span> <span class="mi">99</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Consonant stack full&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ConsonantTop</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">StackConsonant</span><span class="p">[</span><span class="n">ConsonantTop</span><span class="p">]</span> <span class="o">=</span> <span class="n">letter</span>
+</pre></div></div>
+<p>Full solution: <a href="solutions/m08_two_stacks.html"><code>solutions/m08_two_stacks.py</code></a>.</p>
+<h2>6. Stack that evaluates (<a class="qref" href="files/papers/J25-P42-QP.pdf#page=4" title="Open the question paper at page 4">June 2025 P42 Q1(e)</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=14" title="Open the mark scheme at page 14">MS&nbsp;p.14</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J25-P42-QP.pdf#page=4" title="Open the question paper at page 4">June 2025 Paper 42 Q1(e)</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=14" title="Open the mark scheme at page 14">MS&nbsp;p.14</a></span> [7 marks]</strong> — <code>StackData.txt</code> holds an alternating
+pattern of numbers and operators (<code>+ - * / ^</code>); <code>Calculate()</code> pops the first value to
+<strong>initialise the total</strong> (the paper guarantees it is a number), then repeatedly pops an
+operator followed by the number to apply, until the stack is empty. <code>^</code> is Python's <code>**</code>.
+The paper works a full example in its text — follow it, and note that the pop order is
+number → (operator, number) pairs. This is the ADT question at its most algorithmic — do it
+after Modules 1 and 8; model: <a href="solutions/m08_stack_calculator.html"><code>solutions/m08_stack_calculator.py</code></a>.</p>
+<h2>7. Queue as a record (<a class="qref" href="files/papers/N24-P42-QP.pdf#page=8" title="Open the question paper at page 8">Nov 2024 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P42-MS.pdf#page=18" title="Open the mark scheme at page 18">MS&nbsp;p.18</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N24-P42-QP.pdf#page=8" title="Open the question paper at page 8">November 2024 Paper 42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P42-MS.pdf#page=18" title="Open the mark scheme at page 18">MS&nbsp;p.18</a></span> [29 marks]</strong> — the queue lives <em>inside</em> a record
+(array + head + tail together), <code>Enqueue()</code> is given as incomplete pseudocode with three
+blanks and explicit BYREF/BYVAL, and <code>Dequeue()</code> is deliberately <strong>non-destructive</strong> (reads
+the value without advancing the head). In Python, wrap the three fields in a class:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">TheQueue</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QueueArray</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>     <span class="c1"># integer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">HeadPointer</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>            <span class="c1"># integer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TailPointer</span> <span class="o">=</span> <span class="mi">0</span>             <span class="c1"># integer</span>
+</pre></div></div>
+<p>and pass the queue object into the functions (Python objects are BYREF — the pseudocode's
+<code>BYREF AQueue</code> maps to ordinary parameter passing). Model:
+<a href="solutions/m08_queue_record.html"><code>solutions/m08_queue_record.py</code></a>.</p>
+<h2>Practice set</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/J22-P42-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2022 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Stack, pointer = next free space, 11-push overflow test</td>
+<td>25</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J23-P41-QP.pdf#page=8" title="Open the question paper at page 8">Jun 2023 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span></td>
+<td>Two stacks from files + push-back output rules</td>
+<td>25</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N23-P42-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2023 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Two stacks (vowels/consonants) from file</td>
+<td>27</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J25-P41-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2025 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P41-MS.pdf#page=7" title="Open the mark scheme at page 7">MS&nbsp;p.7</a></span></td>
+<td>Circular queue, random fill, success/unsuccessful loop</td>
+<td>20</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J25-P42-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2025 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=7" title="Open the mark scheme at page 7">MS&nbsp;p.7</a></span></td>
+<td>Stack calculator from file</td>
+<td>27</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P41-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2026 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P41-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span></td>
+<td>Linear queue, 11-input overflow, dequeue four</td>
+<td>26</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N25-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2025 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span></td>
+<td>Stack (top = last index), random fill, min/max</td>
+<td>20</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N24-P42-QP.pdf#page=8" title="Open the question paper at page 8">Nov 2024 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P42-MS.pdf#page=18" title="Open the mark scheme at page 18">MS&nbsp;p.18</a></span></td>
+<td>Queue in a record, blanks, non-destructive Dequeue</td>
+<td>29</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J23-P42-QP.pdf#page=5" title="Open the question paper at page 5">Jun 2023 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=11" title="Open the mark scheme at page 11">MS&nbsp;p.11</a></span></td>
+<td>Circular queue of records</td>
+<td>28</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common pitfalls</h2>
+<ul>
+<li>Using a memorised pointer convention when the paper states a different one (this is the
+  #1 cause of lost ADT marks).</li>
+<li>Sentinel mismatch: returning <code>False</code> where the paper says <code>−1</code>, or the string <code>"Empty"</code>
+  where the main program prints a message built from the return value.</li>
+<li>Forgetting <code>global</code> on the pointers (Module 2) — the store works, the pointer doesn't.</li>
+<li>Not running the deliberate overflow/underflow test the paper prints, so the screenshot
+  can't earn its mark.</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="497ba09f4f7a"><span>I derive Push/Pop/Enqueue/Dequeue from the paper's stated pointer semantics, not memory.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="8ed9cbd9ba3b"><span>I use the paper's exact sentinel values and messages.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="bc6b5011d320"><span>I can implement wrap-around with <code>%</code>.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="ea28a8e439c0"><span>I always run the printed overflow/invalid test and screenshot it.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-07.html"><div class="dir">← Previous</div><div class="pt">Module 7 — OOP advanced: composition, inheritance, overriding</div></a><a class="next" href="module-09.html"><div class="dir">Next →</div><div class="pt">Module 9 — Linked lists, binary trees, hash tables</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

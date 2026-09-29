@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 4 — String processing and input validation — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink active" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 4 · Strings &amp; validation</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 4 — String processing and input validation</h1>
+<p><strong>Exam weight: 10–20 marks most papers.</strong> Two recurring families: (a) string algorithms
+where builtins are banned or limited, (b) validation loops that repeat until input is
+acceptable. Both are mark-scheme-formulaic once you've seen them.</p>
+<h2>1. The string toolkit vs the bans</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Allowed default</th>
+<th>When banned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Length</td>
+<td><code>len(s)</code></td>
+<td>count with a loop</td>
+</tr>
+<tr>
+<td>Slice / MID</td>
+<td><code>s[start-1:start-1+n]</code></td>
+<td>index char by char</td>
+</tr>
+<tr>
+<td>Compare</td>
+<td><code>&lt;</code>, <code>&gt;</code>, <code>==</code></td>
+<td>compare <code>ord()</code> char by char</td>
+</tr>
+<tr>
+<td>Case</td>
+<td><code>s.lower()</code>, <code>s.upper()</code></td>
+<td><code>ord()</code> ± 32 arithmetic</td>
+</tr>
+<tr>
+<td>Split</td>
+<td><code>s.split(",")</code></td>
+<td>scan for the separator</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Read the ban carefully.</strong> <a class="qref" href="files/papers/J26-P42-QP.pdf#page=2" title="Open the question paper at page 2">J26/42 Q1(b)</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=7" title="Open the mark scheme at page 7">MS&nbsp;p.7</a></span> says find the longest/shortest string "without
+using inbuilt functions", but <em>permits</em> <code>LENGTH</code> — so <code>len()</code> is fine and manual char loops
+are pointless there. <a class="qref" href="files/papers/N24-P41-QP.pdf#page=4" title="Open the question paper at page 4">N24/41 Q1(c)</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=8" title="Open the mark scheme at page 8">MS&nbsp;p.8</a></span> bans builtin comparison outright — that's when you write:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># return 1 if a sorts before b, else 2 — char-by-char, no builtin comparison</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compare_strings</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">shortest</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shortest</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">ord</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">ord</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="nb">ord</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">ord</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">2</span>
+</pre></div></div>
+<p><strong>Mark scheme shape (4 marks here):</strong> loop over shared positions / both <code>&lt;</code> and <code>&gt;</code> returns
+/ tie-break on length / correct return convention. Every branch returns — always.</p>
+<h2>2. Worked example — MID-based sort key (<a class="qref" href="files/papers/J23-P42-QP.pdf#page=2" title="Open the question paper at page 2">June 2023 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J23-P42-QP.pdf#page=2" title="Open the question paper at page 2">June 2023 Paper 42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span> [14 marks]</strong> — global array of ten animal names; the
+paper's <code>SortDescending()</code> pseudocode compares only the <strong>first character</strong>
+(<code>MID(name, 1, 1)</code> in their convention) in a bubble sort, with four blanks to complete;
+output one name per line.</p>
+<p>The transferable idea: <em>the sort key can be any expression</em> — first character, length,
+lowercase form. Python translation of the key comparison:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">Animals</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ant&quot;</span><span class="p">,</span> <span class="s2">&quot;walrus&quot;</span><span class="p">,</span> <span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;ibex&quot;</span><span class="p">,</span> <span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="s2">&quot;yak&quot;</span><span class="p">,</span> <span class="s2">&quot;eel&quot;</span><span class="p">,</span> <span class="s2">&quot;goat&quot;</span><span class="p">,</span> <span class="s2">&quot;fox&quot;</span><span class="p">,</span> <span class="s2">&quot;bat&quot;</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">sort_descending</span><span class="p">():</span>
+    <span class="n">array_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Animals</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">array_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">array_length</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">Animals</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">Animals</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>     <span class="c1"># first char only</span>
+                <span class="n">Animals</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">Animals</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Animals</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Animals</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+</pre></div></div>
+<p>Watch the direction: "descending" flips the comparison. Half the marks in sort questions
+are the direction and the bounds.</p>
+<h2>3. Worked example — longest/shortest without builtins (<a class="qref" href="files/papers/J26-P42-QP.pdf#page=2" title="Open the question paper at page 2">June 2026 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J26-P42-QP.pdf#page=2" title="Open the question paper at page 2">June 2026 Paper 42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span> [18 marks]</strong> — nine given strings; find the longest and
+shortest without inbuilt functions (length allowed); then an insertion sort into
+alphabetical order that "must work for any length" without inbuilt sorting.</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">Strings</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;avatar&quot;</span><span class="p">,</span> <span class="s2">&quot;orc&quot;</span><span class="p">,</span> <span class="s2">&quot;goblin&quot;</span><span class="p">,</span> <span class="s2">&quot;elf&quot;</span><span class="p">,</span> <span class="s2">&quot;troll&quot;</span><span class="p">,</span> <span class="s2">&quot;wraith&quot;</span><span class="p">,</span> <span class="s2">&quot;gnome&quot;</span><span class="p">,</span> <span class="s2">&quot;hud&quot;</span><span class="p">,</span> <span class="s2">&quot;sprite&quot;</span><span class="p">]</span>
+
+<span class="n">longest</span> <span class="o">=</span> <span class="n">Strings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">shortest</span> <span class="o">=</span> <span class="n">Strings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">Strings</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">longest</span><span class="p">):</span>
+        <span class="n">longest</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">shortest</span><span class="p">):</span>
+        <span class="n">shortest</span> <span class="o">=</span> <span class="n">s</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Longest:&quot;</span><span class="p">,</span> <span class="n">longest</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shortest:&quot;</span><span class="p">,</span> <span class="n">shortest</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">insertion_sort_strings</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">key</span><span class="p">:</span>
+            <span class="n">arr</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">arr</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+    <span class="k">return</span> <span class="n">arr</span>
+</pre></div></div>
+<p>Full runnable version with the paper's flow: <a href="solutions/m04_strings_j26.html"><code>solutions/m04_strings_j26.py</code></a>.</p>
+<h2>4. Worked example — check digit (<a class="qref" href="files/papers/J24-P41-QP.pdf#page=12" title="Open the question paper at page 12">June 2024 P41 Q3(d)</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=33" title="Open the mark scheme at page 33">MS&nbsp;p.33</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J24-P41-QP.pdf#page=12" title="Open the question paper at page 12">June 2024 Paper 41 Q3(d)(i)</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=33" title="Open the mark scheme at page 33">MS&nbsp;p.33</a></span> [6 marks]</strong> — validate an 8-character string of
+digits with a check digit: alternate positions weighted ×1 and ×3 (starting weight 1 at the
+first character), sum the products, take <code>total DIV 10</code>, then <code>total MOD 10</code>; if the check
+value is 10 the check digit is <code>'X'</code>.</p>
+<p>Weighted-sum algorithms are pure DIV/MOD loops — slow down and implement exactly:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">validate_check_digit</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>                 <span class="c1"># first 7 characters, weight alternates 1,3,1,3...</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">weight</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">weight</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+    <span class="n">check</span> <span class="o">=</span> <span class="p">(</span><span class="n">total</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>         <span class="c1"># then DIV 10, then MOD 10 — per the spec</span>
+    <span class="k">if</span> <span class="n">check</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="mi">0</span>                      <span class="c1"># or &#39;X&#39; — follow the printed rule exactly</span>
+    <span class="k">return</span> <span class="n">check</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+</pre></div></div>
+<p>(Recreate the precise weighting from the paper when you attempt it — the pattern above is
+the <em>shape</em>. The mark scheme awards: correct loop, both weights, the DIV/MOD chain, the
+special case, the comparison.)</p>
+<h2>5. Validation loops — the reusable shapes</h2>
+<p><strong>Range validation (most common):</strong></p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter difficulty (1-5): &quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid difficulty&quot;</span><span class="p">)</span>
+</pre></div></div>
+<p><strong>Choice from a list</strong> (<a class="qref" href="files/papers/J26-P42-QP.pdf#page=1" title="Open the question paper at page 1">J26/42</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> avatar hair colour; <a class="qref" href="files/papers/N22-P42-QP.pdf#page=1" title="Open the question paper at page 1">N22/42</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> move letter):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">hair</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="k">while</span> <span class="n">hair</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;brown&quot;</span><span class="p">,</span> <span class="s2">&quot;blonde&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">]:</span>
+    <span class="n">hair</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Hair colour (black/brown/blonde/red): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</pre></div></div>
+<p><strong>Search-until-found</strong> (<a class="qref" href="files/papers/N22-P42-QP.pdf#page=6" title="Open the question paper at page 6">N22/42 Q2(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=16" title="Open the mark scheme at page 16">MS&nbsp;p.16</a></span> — name must exist in the loaded array):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Character name: &quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">characters</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">characters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown character&quot;</span><span class="p">)</span>
+</pre></div></div>
+<p><strong>Case-insensitive match</strong> (<a class="qref" href="files/papers/N21-P41-QP.pdf#page=5" title="Open the question paper at page 5">N21/41 Q2(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=12" title="Open the mark scheme at page 12">MS&nbsp;p.12</a></span>: "Silver" must match "silver"/"SILVER") — compare
+<code>.lower()</code> on both sides. The mark scheme awards the case-folding explicitly.</p>
+<h2>6. Worked example — run-length compression (<a class="qref" href="files/papers/N25-P43-QP.pdf#page=10" title="Open the question paper at page 10">Nov 2025 P43 Q2(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=28" title="Open the mark scheme at page 28">MS&nbsp;p.28</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N25-P43-QP.pdf#page=10" title="Open the question paper at page 10">November 2025 Paper 43 Q2(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=28" title="Open the mark scheme at page 28">MS&nbsp;p.28</a></span> [6 marks]</strong> — a queue holds the characters of a
+binary string read from a file; repeatedly <code>Dequeue()</code> and produce a run-length string, e.g.
+<code>1100011</code> → each run described by count then digit (<code>2</code>×1, <code>3</code>×0, <code>2</code>×1 → <code>2132</code> in the
+paper's count-then-value order — check the paper's own example). No run longer than 9.</p>
+<p>The skill: consume a stream via the ADT (you <em>must</em> use <code>Dequeue()</code> — that's a mark), track
+the current run, and build the output string with concatenation:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">compress</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">NewString</span>
+    <span class="n">NewString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">dequeue</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nxt</span> <span class="o">=</span> <span class="n">dequeue</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">nxt</span> <span class="o">==</span> <span class="n">current</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">NewString</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">+</span> <span class="n">current</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">nxt</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div></div>
+<p>Full version with the queue: <a href="solutions/m08_run_length_queue.html"><code>solutions/m08_run_length_queue.py</code></a> (Module 8).</p>
+<h2>Practice set</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/N23-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2023 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Translate vowel counter (MID/LENGTH), then rewrite recursively</td>
+<td>16</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J23-P42-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2023 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Sort ten strings by first character, 4 blanks</td>
+<td>14</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N24-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2024 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Read 45 strings; char-by-char compare; bubble sort</td>
+<td>22</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P42-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2026 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span></td>
+<td>Longest/shortest + insertion sort, no builtins</td>
+<td>18</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P43-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2026 P43 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P43-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span></td>
+<td>Lowercase count without builtin count; bubble sort by length with early exit</td>
+<td>18</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J24-P41-QP.pdf#page=11" title="Open the question paper at page 11">Jun 2024 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=29" title="Open the mark scheme at page 29">MS&nbsp;p.29</a></span></td>
+<td>Linear queue + check-digit validation</td>
+<td>17</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N25-P43-QP.pdf#page=9" title="Open the question paper at page 9">Nov 2025 P43 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=20" title="Open the mark scheme at page 20">MS&nbsp;p.20</a></span></td>
+<td>Queue + run-length compression from file</td>
+<td>24</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common pitfalls</h2>
+<ul>
+<li>Using a banned builtin — zero for those mark points, however elegant.</li>
+<li>Off-by-one on <code>MID</code>: pseudocode positions are 1-based, Python 0-based; state your
+  assumption in a comment.</li>
+<li>Validation loop that accepts the bad value because the <code>valid = True</code> line is outside the
+  <code>if</code> — test with the paper's invalid input before screenshotting.</li>
+<li>Case-sensitive comparison where the paper demands case-insensitive (it always names the
+  requirement explicitly — circle it).</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="4a20a5dbc168"><span>I can implement compare-by-<code>ord()</code> and length-by-loop when builtins are banned.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="9159ccef8808"><span>I know a sort key can be <code>s[0]</code>, <code>len(s)</code>, <code>s.lower()</code> — whatever the paper says.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="0448ac7c07fd"><span>I can write range/list/search validation loops from memory.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="6e3b4b6e09bf"><span>I implement weighted check-digit sums mechanically, following the spec line by line.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-03.html"><div class="dir">← Previous</div><div class="pt">Module 3 — 1D arrays, 2D arrays, parallel arrays and records</div></a><a class="next" href="module-05.html"><div class="dir">Next →</div><div class="pt">Module 5 — File handling and exception handling</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+Fire Station,3981,Expert,Town
+Pirate Ship,1250,Intermediate,Pirates
+Space Rover,890,Easy,Space
+Castle Keep,2100,Expert,Castle
+Race Car,210,Easy,Vehicles
+Airport,1650,Intermediate,Town
+Submarine,980,Intermediate,Ocean
+Treehouse,450,Easy,Nature
+Train Bridge,720,Easy,Trains
+Robot Lab,1830,Expert,Space
+Fishing Boat,640,Easy,Ocean
+Market Square,1450,Intermediate,Town
+Dragon Cave,2400,Expert,Castle
+Go-Kart,330,Easy,Vehicles
+Cruise Liner,1980,Intermediate,Ocean
+Observatory,2890,Expert,Space

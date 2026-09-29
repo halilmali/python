@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 1 — Pseudocode → Python foundations — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink active" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 1 · Python foundations</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 1 — Pseudocode → Python foundations</h1>
+<p><strong>Exam weight: background marks in every paper.</strong> Nearly every Paper 4 part is a
+translation task: the paper gives pseudocode (sometimes complete, sometimes with blanks)
+and you reproduce the logic in Python. This module makes the translation automatic.</p>
+<h2>1. The translation rules that matter</h2>
+<p>Everything is in <code>pseudocode-cheatsheet.md</code>; here are the five that decide marks:</p>
+<ol>
+<li><strong>Assignment is <code>&lt;-</code> in pseudocode, <code>=</code> in Python.</strong> Comparisons that were <code>=</code> become
+   <code>==</code>. Writing <code>if x = 5:</code> is a syntax error — under exam pressure this happens.</li>
+<li><strong><code>FOR i &lt;- 0 TO 9</code> is inclusive both ends</strong> → <code>range(0, 10)</code>. Translated bounds must
+   match the printed pseudocode exactly, especially in sorts:
+   <code>FOR Z &lt;- 0 TO ArrayLength - Y - 2</code> → <code>range(0, ArrayLength - Y - 1)</code>.</li>
+<li><strong><code>DIV</code> is integer division</strong> → <code>//</code> (or <code>int(a / b)</code>, the form the mark scheme's own
+   models use). <code>MOD</code> → <code>%</code>.</li>
+<li><strong><code>OUTPUT "x = " &amp; X</code></strong> → <code>print("x = " + str(X))</code> or <code>print(f"x = {X}")</code>. When
+   concatenating with <code>+</code>, <em>every</em> piece must be a string.</li>
+<li><strong><code>INPUT</code> returns a string</strong> → cast immediately: <code>int(input())</code>, <code>float(input())</code>.</li>
+</ol>
+<h2>2. Worked example — translate a complete recursive function (Nov 2021)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N21-P41-QP.pdf#page=2" title="Open the question paper at page 2">November 2021 Paper 41 Q1(a)(b)</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=3" title="Open the mark scheme at page 3">MS&nbsp;p.3</a></span> [6 marks]</strong> —
+<code>9618 Past Papers\9618 Computer Science November 2021 Question paper 41.pdf</code></p>
+<p>The paper gives a function <code>Unknown(X, Y)</code> in pseudocode: if <code>X &lt; Y</code> it outputs <code>X + Y</code>
+and returns <code>Unknown(X + 1, Y) * 2</code>; if <code>X = Y</code> it returns 1; otherwise it outputs
+<code>X + Y</code> and returns <code>Unknown(X - 1, Y) DIV 2</code>. Parts (a)–(b) ask you to write it as
+program code and have the main program output the parameters and return value for three
+calls (<code>Unknown(10, 15)</code>, <code>Unknown(10, 10)</code>, <code>Unknown(15, 10)</code>).</p>
+<p><strong>Model solution</strong> (<a href="solutions/m01_unknown_function.html"><code>solutions/m01_unknown_function.py</code></a>):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">Unknown</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">X</span> <span class="o">&lt;</span> <span class="n">Y</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="n">Y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Unknown</span><span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">X</span> <span class="o">==</span> <span class="n">Y</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="n">Y</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">Unknown</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>    <span class="c1"># DIV</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Parameters:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Return value:&quot;</span><span class="p">,</span> <span class="n">Unknown</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+</pre></div></div>
+<p>Two translation details earn their keep here: the multiplication/division applies to the
+<strong>returned</strong> value (it happens on the way back up), while the OUTPUT happens on the way
+down; and <code>DIV</code> becomes <code>int(... / 2)</code> — the form the mark scheme's own models use.
+Trace <code>Unknown(10, 15)</code> by hand first: it outputs 25, 26, 27, 28, 29 on the way down,
+hits the base case at (15, 15), and the returns come back multiplied — 2⁵ = 32. Verify by
+running; the exam gives you a computer precisely so that output-prediction parts can be
+checked before you commit the screenshot.</p>
+<p><strong>Mark scheme shape:</strong> one mark for the correct structure/branching, one for both
+recursive calls with the changed parameter, one for the outputs in the right places.</p>
+<h2>3. Worked example — I/O, casting and validation loop</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N22-P41-QP.pdf#page=2" title="Open the question paper at page 2">November 2022 Paper 41 Q1(c)</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span> [7 marks]</strong> — reads a search value from the user,
+validates it as a whole number in 0–100 inclusive, repeats until valid, then counts
+occurrences in an array loaded from <code>IntegerData.txt</code>.</p>
+<p>The validation loop is the transferable part — this exact shape appears in a dozen papers:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">get_valid_value</span><span class="p">():</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">search_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a whole number between 0 and 100: &quot;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">search_value</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+                <span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Out of range&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not a whole number&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">search_value</span>
+</pre></div></div>
+<p><strong>Mark scheme shape:</strong> loop structure / input cast / range check with both ends / repeat
+until valid / (here) using the value in the count. Learn the shape once, reuse everywhere
+(<a class="qref" href="files/papers/J22-P41-QP.pdf#page=1" title="Open the question paper at page 1">J22/41</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> name-length + score validation, <a class="qref" href="files/papers/N25-P42-QP.pdf#page=1" title="Open the question paper at page 1">N25/42</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> direction/minutes validation,
+<a class="qref" href="files/papers/N24-P41-QP.pdf#page=1" title="Open the question paper at page 1">N24/41</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> fence height/risk validation, <a class="qref" href="files/papers/J26-P42-QP.pdf#page=1" title="Open the question paper at page 1">J26/42</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> avatar criteria validation...).</p>
+<h2>4. Random numbers</h2>
+<p>Only occasional (<a class="qref" href="files/papers/J22-P42-QP.pdf#page=1" title="Open the question paper at page 1">J22/42</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>, <a class="qref" href="files/papers/J25-P41-QP.pdf#page=1" title="Open the question paper at page 1">J25/41</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>, <a class="qref" href="files/papers/N25-P41-QP.pdf#page=1" title="Open the question paper at page 1">N25/41</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>, <a class="qref" href="files/papers/N25-P42-QP.pdf#page=1" title="Open the question paper at page 1">N25/42</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>) but easy marks:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>    <span class="c1"># inclusive; MS allows inclusive or exclusive</span>
+</pre></div></div>
+<p><a class="qref" href="files/papers/J25-P41-QP.pdf#page=3" title="Open the question paper at page 3">J25/41 Q1(d)</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P41-MS.pdf#page=13" title="Open the mark scheme at page 13">MS&nbsp;p.13</a></span> and <a class="qref" href="files/papers/N25-P41-QP.pdf#page=3" title="Open the question paper at page 3">N25/41 Q1(d)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=11" title="Open the mark scheme at page 11">MS&nbsp;p.11</a></span> wrap random generation in an enqueue/push loop — combine with
+Module 8.</p>
+<h2>Practice set (open the PDFs, attempt before looking at anything)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+<th>Solution file</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/N21-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2021 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=3" title="Open the mark scheme at page 3">MS&nbsp;p.3</a></span></td>
+<td>Recursive trace + iterative rewrite (full question)</td>
+<td>17</td>
+<td>— (do the trace by hand)</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N23-P42-QP.pdf#page=7" title="Open the question paper at page 7">Nov 2023 P42 Q2(a)</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=17" title="Open the mark scheme at page 17">MS&nbsp;p.17</a></span></td>
+<td>Translate an iterative divisor-sum function (MODULUS loop)</td>
+<td>5</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N23-P41-QP.pdf#page=3" title="Open the question paper at page 3">Nov 2023 P41 Q1(a)</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Translate an iterative vowel-counting function (MID/LENGTH)</td>
+<td>5</td>
+<td><a href="solutions/m01_iterative_vowels.html"><code>solutions/m01_iterative_vowels.py</code></a></td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J23-P41-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2023 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Read 25 ints from a file, validate input 0–100, linear search counting matches</td>
+<td>18</td>
+<td><a href="solutions/m01_data_linear_search.html"><code>solutions/m01_data_linear_search.py</code></a></td>
+</tr>
+</tbody>
+</table></div>
+<p>For the last one you need a <code>Data.txt</code> with 25 integers — <a href="files/data-files/J23-41/Data.txt"><code>data-files/J23-41/Data.txt</code></a>.</p>
+<h2>Common pitfalls (mark-losing habits)</h2>
+<ul>
+<li><code>=</code> inside <code>if</code> (should be <code>==</code>) — the single most common Paper 4 Python syntax error.</li>
+<li>Forgetting <code>int()</code> on <code>input()</code> then comparing with <code>&gt;</code> or doing arithmetic — type error.</li>
+<li><code>range(0, n)</code> where the pseudocode says <code>TO n</code> (off-by-one) — silently wrong, silently
+  unmarked.</li>
+<li>Division producing floats where the paper wants integers (<code>10 / 3</code> → <code>3.3333</code> not <code>3</code>).</li>
+<li>Uppercase <code>TRUE</code>/<code>FALSE</code> in Python instead of <code>True</code>/<code>False</code>.</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="d91759ed05d6"><span>I translate FOR loops with inclusive bounds without thinking.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="8c8ce73d63f5"><span>I know <code>DIV</code>→<code>//</code> and <code>MOD</code>→<code>%</code>, and I cast <code>input()</code> immediately.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="9cc8a8554623"><span>I can write the repeat-until-valid loop shape from memory.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="cf7ee2ae7b23"><span>I traced a recursion on paper before running it.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-00.html"><div class="dir">← Previous</div><div class="pt">Module 0 — How Paper 4 works</div></a><a class="next" href="module-02.html"><div class="dir">Next →</div><div class="pt">Module 2 — Procedures, functions, parameters and globals</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

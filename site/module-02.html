@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 2 — Procedures, functions, parameters and globals — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink active" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 2 · Modular programming</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 2 — Procedures, functions, parameters and globals</h1>
+<p><strong>Exam weight: every paper, every question.</strong> Paper 4 constantly asks for "a procedure to
+output...", "a function that returns...", then "amend the main program to call it". You
+must be fluent in the procedure/function split, parameter passing, and Python's <code>global</code>.</p>
+<h2>1. Procedures vs functions</h2>
+<ul>
+<li><strong>Procedure</strong> = does something (output, store, update). No return value.
+  Pseudocode <code>PROCEDURE OutputHighScores()</code> → Python <code>def output_high_scores():</code></li>
+<li><strong>Function</strong> = computes and <strong>returns</strong>. Pseudocode <code>FUNCTION ... RETURNS BOOLEAN</code> →
+  <code>def ...(): ... return True</code>.</li>
+</ul>
+<p>Mark scheme language to internalise: <em>"returns a value in all instances"</em>. Every branch of
+your function must <code>return</code>. A full check that returns <code>False</code> in one branch and nothing in
+the other loses the mark even if the logic is right.</p>
+<h2>2. Parameters</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># pseudocode: PROCEDURE PrintArray(DataArray : ARRAY OF INTEGER)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_array</span><span class="p">(</span><span class="n">data_array</span><span class="p">):</span>        <span class="c1"># arrays/lists pass by reference — mutations stick</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data_array</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div></div>
+<ul>
+<li>Python passes <strong>lists/objects by reference</strong>: the callee can modify the caller's array.
+  This matches pseudocode <code>BYREF</code> and is exactly what ADT implementations rely on.</li>
+<li>Scalars (<code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>) behave like <code>BYVAL</code>: rebinding the parameter
+  inside the function does not affect the caller. That is fine — mark schemes know it.</li>
+<li>Where a paper explicitly says a parameter is <code>BYREF</code> for a <em>scalar</em> (rare, e.g. pointer
+  updates), return the new value instead, or use <code>global</code>. The mark scheme accepts the
+  return-based approach.</li>
+</ul>
+<h2>3. Globals — the <code>global</code> keyword</h2>
+<p>Paper 4 loves <strong>global data structures</strong>: the paper says "the array is used globally" and
+then asks for procedures that mutate it. In Python, <em>reading</em> a global needs nothing, but
+<em>rebinding</em> (assigning) a global scalar inside a function needs the <code>global</code> declaration:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">StackData</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>        <span class="c1"># global array</span>
+<span class="n">StackPointer</span> <span class="o">=</span> <span class="mi">0</span>            <span class="c1"># global integer</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">StackPointer</span>     <span class="c1"># required: we assign to it below</span>
+    <span class="k">if</span> <span class="n">StackPointer</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">StackData</span><span class="p">[</span><span class="n">StackPointer</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>   <span class="c1"># mutating the list needs no declaration</span>
+    <span class="n">StackPointer</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div></div>
+<p>The mark schemes' own Python models do exactly this (<code>global StackData</code>,
+<code>global QueueHead</code>, <code>global NumberItems</code>). Forgetting <code>global</code> gives
+<code>UnboundLocalError</code> at runtime — a bug that costs you your screenshot mark if untested.</p>
+<p><strong>Decision rule:</strong> if the function assigns (<code>=</code>) to a module-level <em>name</em>, declare it
+<code>global</code> at the top of the function. Mutating a list in place (<code>lst[i] = ...</code>,
+<code>lst.append(...)</code>) needs no declaration.</p>
+<h2>4. Worked example — stack with global structures (June 2022)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J22-P42-QP.pdf#page=2" title="Open the question paper at page 2">June 2022 Paper 42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span> [25 marks]</strong> —
+<code>9618 Past Papers\9618 Computer Science June 2022 Question paper 42.pdf</code></p>
+<p>Task in brief: a stack of up to 10 integers stored in a <strong>global</strong> 1D array with a global
+pointer initialised to 0; declare the structures; output the stack and pointer; write
+<code>Push()</code> (returns FALSE when full, else stores, updates pointer, returns TRUE); test by
+attempting 11 user-entered numbers (deliberate overflow); write <code>Pop()</code> (returns −1 when
+empty, else returns top and updates pointer); pop two and re-output.</p>
+<p>Full model solution: <a href="solutions/m02_stack_j22.html"><code>solutions/m02_stack_j22.py</code></a>. The part worth studying here is the
+<em>modular skeleton</em> — how the question's parts become procedures and how the main program
+strings them together:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">StackData</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>        <span class="c1"># global array of integers</span>
+<span class="n">StackPointer</span> <span class="o">=</span> <span class="mi">0</span>            <span class="c1"># global integer, next free space</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">output_stack</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stack contents:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">StackData</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;StackPointer =&quot;</span><span class="p">,</span> <span class="n">StackPointer</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">StackPointer</span>
+    <span class="k">if</span> <span class="n">StackPointer</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">StackData</span><span class="p">[</span><span class="n">StackPointer</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">StackPointer</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">StackPointer</span>
+    <span class="k">if</span> <span class="n">StackPointer</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">StackPointer</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">StackData</span><span class="p">[</span><span class="n">StackPointer</span><span class="p">]</span>
+
+<span class="c1"># main program</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>                      <span class="c1"># 11 pushes into 10 slots = overflow test</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a number: &quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">push</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Added to stack&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stack is full&quot;</span><span class="p">)</span>
+<span class="n">output_stack</span><span class="p">()</span>
+</pre></div></div>
+<p><strong>Mark scheme shape (1(c), 6 marks):</strong> header returning BOOLEAN / full check returns FALSE /
+store value / increment pointer / return TRUE. Note each of those is a mark — and note the
+11th input must produce the "full" message in your screenshot, because that <em>is</em> the test.</p>
+<h2>5. Worked example — functions returning objects (June 2022)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J22-P41-QP.pdf#page=6" title="Open the question paper at page 6">June 2022 Paper 41 Q2(f)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P41-MS.pdf#page=24" title="Open the mark scheme at page 24">MS&nbsp;p.24</a></span> [8 marks]</strong> — a <code>Defend()</code> function that takes a
+<code>Balloon</code> object as a parameter, reads an opposing strength, calls <code>ChangeHealth()</code> with
+the negative of the strength, outputs messages, and <strong>returns the amended object</strong>.</p>
+<p>Objects pass by reference, and returning them is natural in Python:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">defend</span><span class="p">(</span><span class="n">balloon</span><span class="p">):</span>
+    <span class="n">strength</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter opponent strength: &quot;</span><span class="p">))</span>
+    <span class="n">balloon</span><span class="o">.</span><span class="n">change_health</span><span class="p">(</span><span class="o">-</span><span class="n">strength</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Defence successful&quot;</span> <span class="k">if</span> <span class="n">balloon</span><span class="o">.</span><span class="n">get_health</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;Balloon destroyed&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">balloon</span>
+</pre></div></div>
+<p>This "object in, mutate, object out" pattern recurs (<a class="qref" href="files/papers/J26-P41-QP.pdf#page=1" title="Open the question paper at page 1">J26/41</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> <code>AddTrain()</code>, <a class="qref" href="files/papers/N25-P41-QP.pdf#page=1" title="Open the question paper at page 1">N25/41</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>
+<code>InsertData()</code> taking a Record object). Module 6 builds the class side.</p>
+<h2>Practice set</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+<th>Skills</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/J22-P42-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2022 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Full stack question (declare/output/Push/test/Pop)</td>
+<td>25</td>
+<td>globals, modular, ADT</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N22-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2022 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=3" title="Open the mark scheme at page 3">MS&nbsp;p.3</a></span></td>
+<td>File read + linear search + bubble sort, all as subprograms</td>
+<td>23</td>
+<td>modular skeleton</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J24-P41-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2024 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Initialise/BinarySearch/sort as functions with array parameters</td>
+<td>27</td>
+<td>parameter passing</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N24-P42-QP.pdf#page=8" title="Open the question paper at page 8">Nov 2024 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P42-MS.pdf#page=18" title="Open the mark scheme at page 18">MS&nbsp;p.18</a></span></td>
+<td>Queue encapsulated in a record; explicit BYREF/BYVAL in Enqueue blanks</td>
+<td>29</td>
+<td>record + parameters</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J25-P42-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2025 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=7" title="Open the mark scheme at page 7">MS&nbsp;p.7</a></span></td>
+<td>Stack calculator: Push/Pop/Calculate as functions over a global stack</td>
+<td>27</td>
+<td>globals, modular</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common pitfalls</h2>
+<ul>
+<li>Missing <code>global</code> on a rebound scalar → <code>UnboundLocalError</code> mid-exam.</li>
+<li>A function with a branch that doesn't return → "returns in all instances" mark lost.</li>
+<li>Doing the OUTPUT inside a <em>function</em> that the paper says RETURNS (or vice versa) — read
+  whether the part says procedure or function; the header mark follows the paper's wording.</li>
+<li>Mutating a caller's list and <em>also</em> forgetting the paper asked you to return it.</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="f1fe58f156b6"><span>I can write a function that returns a value on every branch.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="f4f84bee3f16"><span>I know when <code>global</code> is needed and when it isn't.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="4239966c2446"><span>I can explain why lists pass by reference and ints don't.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="990acb71b6dd"><span>I built the June 2022 stack and tested it with the printed 11-input overflow data.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-01.html"><div class="dir">← Previous</div><div class="pt">Module 1 — Pseudocode → Python foundations</div></a><a class="next" href="module-03.html"><div class="dir">Next →</div><div class="pt">Module 3 — 1D arrays, 2D arrays, parallel arrays and records</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

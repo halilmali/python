@@ -1,0 +1,10 @@
+528,alpha
+1128,beta
+1828,gamma
+1062,delta
+39,epsilon
+10,zeta
+210,eta
+410,theta
+610,iota
+810,kappa

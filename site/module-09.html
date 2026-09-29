@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 9 — Linked lists, binary trees, hash tables — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink active" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 9 · Lists, trees, hashes</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 9 — Linked lists, binary trees, hash tables</h1>
+<p><strong>Exam weight: 20–30 marks whenever they appear.</strong> These are the "hard half" of Paper 4's
+ADT questions — pointer manipulation over arrays or objects. Every variant has been asked
+between 2021 and 2026; the mark schemes break each one into small, learnable steps.</p>
+<h2>1. Linked list in a 1D/2D array (with pointers)</h2>
+<p>Two array layouts appear:</p>
+<ul>
+<li><strong>2D array with an empty-list chain</strong> (<a class="qref" href="files/papers/N24-P41-QP.pdf#page=12" title="Open the question paper at page 12">N24/41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span>, <a class="qref" href="files/papers/J26-P42-QP.pdf#page=8" title="Open the question paper at page 8">J26/42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=29" title="Open the mark scheme at page 29">MS&nbsp;p.29</a></span>): columns
+  <code>data | next-pointer</code>, plus <code>FirstNode</code> (start of the real list) and <code>FirstEmpty</code> (start
+  of the free list). Empty nodes hold −1.</li>
+<li><strong>Array of records</strong> (<a class="qref" href="files/papers/J21-P41-QP.pdf#page=2" title="Open the question paper at page 2">J21/41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J21-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span>): <code>NodeData</code>, <code>NextNode</code> fields, <code>StartPointer</code>,
+  <code>EmptyList</code> pointers.</li>
+</ul>
+<p>The canonical insertion at the <strong>front</strong> (<a class="qref" href="files/papers/N24-P41-QP.pdf#page=13" title="Open the question paper at page 13">N24/41 Q3(b)</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=28" title="Open the mark scheme at page 28">MS&nbsp;p.28</a></span>, 6 marks):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">InsertData</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">FirstNode</span><span class="p">,</span> <span class="n">FirstEmpty</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a positive integer: &quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">FirstEmpty</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List is full&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">this_node</span> <span class="o">=</span> <span class="n">FirstEmpty</span>                    <span class="c1"># take node from the free list</span>
+            <span class="n">FirstEmpty</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">[</span><span class="n">this_node</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">LinkedList</span><span class="p">[</span><span class="n">this_node</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>          <span class="c1"># store data</span>
+            <span class="n">LinkedList</span><span class="p">[</span><span class="n">this_node</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">FirstNode</span>      <span class="c1"># point at old first node</span>
+            <span class="n">FirstNode</span> <span class="o">=</span> <span class="n">this_node</span>                     <span class="c1"># new head</span>
+</pre></div></div>
+<p><strong>Removal</strong> (<a class="qref" href="files/papers/N24-P41-QP.pdf#page=15" title="Open the question paper at page 15">N24/41 Q3(d)</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=33" title="Open the mark scheme at page 33">MS&nbsp;p.33</a></span>, 5 marks) needs a <em>previous</em> pointer trail:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">RemoveData</span><span class="p">(</span><span class="n">ValueToRemove</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">FirstNode</span><span class="p">,</span> <span class="n">FirstEmpty</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">FirstNode</span>
+    <span class="n">previous</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">current</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">LinkedList</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">ValueToRemove</span><span class="p">:</span>
+        <span class="n">previous</span> <span class="o">=</span> <span class="n">current</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value not found&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">previous</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>                        <span class="c1"># removing the head</span>
+            <span class="n">FirstNode</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">LinkedList</span><span class="p">[</span><span class="n">previous</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># splice out</span>
+        <span class="n">LinkedList</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>               <span class="c1"># return node to the free list</span>
+        <span class="n">LinkedList</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">FirstEmpty</span>
+        <span class="n">FirstEmpty</span> <span class="o">=</span> <span class="n">current</span>
+</pre></div></div>
+<p><strong>Mark scheme shape (insert-at-front):</strong> input/loop / full check / take node from empty
+list / advance <code>FirstEmpty</code> / store value / link to previous head / update <code>FirstNode</code>.
+<strong><a class="qref" href="files/papers/J26-P42-QP.pdf#page=10" title="Open the question paper at page 10">J26/42 Q3(c)</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=37" title="Open the mark scheme at page 37">MS&nbsp;p.37</a></span></strong> raises the difficulty: insert at the <strong>end</strong> of the data list while
+maintaining the separate empty-list chain (8 marks) — the same two chains, plus a traversal
+to the last node first.</p>
+<h2>2. Linked list with object references (<a class="qref" href="files/papers/J25-P43-QP.pdf#page=7" title="Open the question paper at page 7">June 2025 P43 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P43-MS.pdf#page=33" title="Open the mark scheme at page 33">MS&nbsp;p.33</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J25-P43-QP.pdf#page=7" title="Open the question paper at page 7">June 2025 Paper 43 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P43-MS.pdf#page=33" title="Open the mark scheme at page 33">MS&nbsp;p.33</a></span> [29 marks]</strong> — class <code>Node</code> (TheData, NextNode), class
+<code>LinkedList</code> (HeadNode); <code>InsertNode()</code> inserts at the head; <code>RemoveNode()</code> searches for a
+value and unlinks it (6 marks, returns TRUE/FALSE); <code>Traverse()</code> builds a string.</p>
+<p>Object references replace array indices; <code>None</code> replaces −1:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Node</span><span class="p">:</span>
+    <span class="c1"># self.__TheData  : INTEGER</span>
+    <span class="c1"># self.__NextNode : Node</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__TheData</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__NextNode</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetNext</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__NextNode</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetNext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__NextNode</span> <span class="o">=</span> <span class="n">node</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__TheData</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">LinkedList</span><span class="p">:</span>
+    <span class="c1"># self.__HeadNode : Node</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__HeadNode</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">InsertNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_node</span><span class="p">):</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">SetNext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__HeadNode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__HeadNode</span> <span class="o">=</span> <span class="n">new_node</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">RemoveNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__HeadNode</span>
+        <span class="n">previous</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">while</span> <span class="n">current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">current</span><span class="o">.</span><span class="n">GetData</span><span class="p">()</span> <span class="o">!=</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">previous</span> <span class="o">=</span> <span class="n">current</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">GetNext</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">previous</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__HeadNode</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">GetNext</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">previous</span><span class="o">.</span><span class="n">SetNext</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">GetNext</span><span class="p">())</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div></div>
+<p>Full solution with traversal and tests: <a href="solutions/m09_linked_list_oop.html"><code>solutions/m09_linked_list_oop.py</code></a>.</p>
+<h2>3. Binary tree in a 2D array (the classic)</h2>
+<p>Layout (identical in <a class="qref" href="files/papers/N21-P41-QP.pdf#page=1" title="Open the question paper at page 1">N21/41</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>, <a class="qref" href="files/papers/N22-P41-QP.pdf#page=1" title="Open the question paper at page 1">N22/41</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>, <a class="qref" href="files/papers/J26-P43-QP.pdf#page=1" title="Open the question paper at page 1">J26/43</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P43-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>, <a class="qref" href="files/papers/N25-P42-QP.pdf#page=1" title="Open the question paper at page 1">N25/42</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>):
+<code>ArrayNodes[node][0] = left pointer, [1] = data, [2] = right pointer</code>; <code>RootPointer = −1</code>,
+<code>FreeNode = 0</code>; −1 = null.</p>
+<p><strong>Insert (<a class="qref" href="files/papers/N25-P42-QP.pdf#page=10" title="Open the question paper at page 10">N25/42 Q3(b)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P42-MS.pdf#page=29" title="Open the mark scheme at page 29">MS&nbsp;p.29</a></span>, 7 marks / <a class="qref" href="files/papers/J26-P43-QP.pdf#page=11" title="Open the question paper at page 11">J26/43 Q3(b)</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P43-MS.pdf#page=36" title="Open the mark scheme at page 36">MS&nbsp;p.36</a></span>, 7 marks):</strong></p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">AddNode</span><span class="p">(</span><span class="n">NewValue</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">RootPointer</span><span class="p">,</span> <span class="n">FreeNode</span>
+    <span class="k">if</span> <span class="n">FreeNode</span> <span class="o">&gt;</span> <span class="mi">49</span><span class="p">:</span>                        <span class="c1"># tree capacity 50</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The tree is full&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">FreeNode</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>             <span class="c1"># new node: no children yet</span>
+    <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">FreeNode</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">NewValue</span>
+    <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">FreeNode</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">RootPointer</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">RootPointer</span> <span class="o">=</span> <span class="n">FreeNode</span>               <span class="c1"># first node becomes the root</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">RootPointer</span>
+        <span class="n">placed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">placed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">NewValue</span> <span class="o">&lt;</span> <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">FreeNode</span>
+                    <span class="n">placed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">FreeNode</span>
+                    <span class="n">placed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">current</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">FreeNode</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div></div>
+<p><strong>Recursive in-order traversal (<a class="qref" href="files/papers/J26-P43-QP.pdf#page=13" title="Open the question paper at page 13">J26/43 Q3(e)</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P43-MS.pdf#page=43" title="Open the mark scheme at page 43">MS&nbsp;p.43</a></span>, 7 marks; <a class="qref" href="files/papers/N21-P41-QP.pdf#page=11" title="Open the question paper at page 11">N21/41 Q3(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=22" title="Open the mark scheme at page 22">MS&nbsp;p.22</a></span>, 7 marks):</strong></p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">InOrder</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">InOrder</span><span class="p">(</span><span class="n">ArrayNodes</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ArrayNodes</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">ArrayNodes</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">InOrder</span><span class="p">(</span><span class="n">ArrayNodes</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+<span class="c1"># call: InOrder(RootPointer)</span>
+</pre></div></div>
+<p><strong>Recursive search</strong> (<a class="qref" href="files/papers/N22-P41-QP.pdf#page=9" title="Open the question paper at page 9">N22/41 Q3(c)</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span>, given as incomplete pseudocode with four blanks —
+translate to Python: base case index −1 → FALSE; compare data; recurse left or right).</p>
+<p>Variants on this layout: <a class="qref" href="files/papers/N21-P41-QP.pdf#page=8" title="Open the question paper at page 8">N21/41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=17" title="Open the mark scheme at page 17">MS&nbsp;p.17</a></span> (AddNode pseudocode with 6 blanks, then in-order),
+<a class="qref" href="files/papers/N25-P42-QP.pdf#page=11" title="Open the question paper at page 11">N25/42 Q3(c)(d)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P42-MS.pdf#page=33" title="Open the mark scheme at page 33">MS&nbsp;p.33</a></span> (fill the tree from a 50-line file, then write the array to <code>Tree.txt</code>).</p>
+<h2>4. Binary tree with object references (<a class="qref" href="files/papers/J24-P42-QP.pdf#page=6" title="Open the question paper at page 6">J24/42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P42-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span>, <a class="qref" href="files/papers/J25-P41-QP.pdf#page=6" title="Open the question paper at page 6">J25/41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P41-MS.pdf#page=30" title="Open the mark scheme at page 30">MS&nbsp;p.30</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J25-P41-QP.pdf#page=6" title="Open the question paper at page 6">June 2025 Paper 41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P41-MS.pdf#page=30" title="Open the mark scheme at page 30">MS&nbsp;p.30</a></span> [30 marks]</strong> — <code>Node</code> holds <code>LeftNode</code>/<code>RightNode</code> of
+type Node; a <code>Tree</code> class holds <code>FirstNode</code>; <code>Insert()</code> walks references; then a
+<strong>recursive in-order</strong> <code>OutputInOrder()</code> (5 marks).</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Node</span><span class="p">:</span>
+    <span class="c1"># self.__LeftNode  : Node</span>
+    <span class="c1"># self.__Data      : INTEGER</span>
+    <span class="c1"># self.__RightNode : Node</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__LeftNode</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__RightNode</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Tree</span><span class="p">:</span>
+    <span class="c1"># self.__FirstNode : Node</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__FirstNode</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">Insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__FirstNode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__FirstNode</span> <span class="o">=</span> <span class="n">new_node</span>
+            <span class="k">return</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__FirstNode</span>
+        <span class="n">placed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">placed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">new_node</span><span class="o">.</span><span class="n">GetData</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">current</span><span class="o">.</span><span class="n">GetData</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">GetLeft</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">current</span><span class="o">.</span><span class="n">SetLeft</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+                    <span class="n">placed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">GetLeft</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">GetRight</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">current</span><span class="o">.</span><span class="n">SetRight</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+                    <span class="n">placed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">GetRight</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">OutputInOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OutputInOrder</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">GetLeft</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">GetData</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OutputInOrder</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">GetRight</span><span class="p">())</span>
+</pre></div></div>
+<p>Full solution: <a href="solutions/m09_binary_tree_oop.html"><code>solutions/m09_binary_tree_oop.py</code></a>. <a class="qref" href="files/papers/J24-P42-QP.pdf#page=6" title="Open the question paper at page 6">J24/42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P42-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span> is the same idea with
+<code>Node</code> objects stored <em>inside an array</em> within a <code>TreeClass</code> (pointer = index) — read its
+table carefully.</p>
+<h2>5. Hash table (<a class="qref" href="files/papers/J25-P42-QP.pdf#page=6" title="Open the question paper at page 6">J25/42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span>, <a class="qref" href="files/papers/N25-P41-QP.pdf#page=9" title="Open the question paper at page 9">N25/41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N25-P41-QP.pdf#page=9" title="Open the question paper at page 9">November 2025 Paper 41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span> [25 marks]</strong> — 100×10 2D array; <code>Hash(Key)</code> returns
+<code>Key MOD 100</code>; collisions live in the <em>next free slot of the same row</em>; <code>Record</code> class with
+<strong>public</strong> Key/Data attributes; <code>ReadData()</code> reads <code>HashTableData.txt</code> (<code>key,string</code>),
+splits, and inserts; <code>GetRecord()</code> hashes and searches the row, returning the data or
+<code>"Not found"</code>.</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Record</span><span class="p">:</span>
+    <span class="c1"># self.Key  : INTEGER   (public, per the paper)</span>
+    <span class="c1"># self.Data : STRING</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Data</span> <span class="o">=</span> <span class="n">data</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Hash</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="o">%</span> <span class="mi">100</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">InsertData</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">Hash</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">Key</span><span class="p">)</span>
+    <span class="n">slot</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">slot</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="ow">and</span> <span class="n">HashTable</span><span class="p">[</span><span class="n">address</span><span class="p">][</span><span class="n">slot</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">slot</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">slot</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">HashTable</span><span class="p">[</span><span class="n">address</span><span class="p">][</span><span class="n">slot</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">GetRecord</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">Hash</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="n">HashTable</span><span class="p">[</span><span class="n">address</span><span class="p">][</span><span class="n">slot</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">entry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">entry</span><span class="o">.</span><span class="n">Key</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">entry</span><span class="o">.</span><span class="n">Data</span>
+    <span class="k">return</span> <span class="s2">&quot;Not found&quot;</span>
+</pre></div></div>
+<p><a class="qref" href="files/papers/J25-P42-QP.pdf#page=6" title="Open the question paper at page 6">J25/42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span>'s variant: 200-slot 1D table + a separate 100-slot <code>Spare</code> array for overflow,
+with a record type <code>(Key, Item1, Item2)</code> and initialisation to −1 fields. Model:
+<a href="solutions/m09_hash_table.html"><code>solutions/m09_hash_table.py</code></a>. The test data (N25: keys 528, 1128, 1828, 1062, 39) is
+chosen to force collisions — your screenshot must show the collided keys landing in the
+same row.</p>
+<h2>Practice set</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/J21-P41-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2021 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J21-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Linked list as array of records, add + traverse</td>
+<td>24</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N21-P41-QP.pdf#page=8" title="Open the question paper at page 8">Nov 2021 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=17" title="Open the mark scheme at page 17">MS&nbsp;p.17</a></span></td>
+<td>2D-array tree: AddNode blanks + recursive in-order</td>
+<td>28</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N22-P41-QP.pdf#page=8" title="Open the question paper at page 8">Nov 2022 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=16" title="Open the mark scheme at page 16">MS&nbsp;p.16</a></span></td>
+<td>2D-array tree: hard-coded data, recursive search + post-order</td>
+<td>21</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N24-P41-QP.pdf#page=12" title="Open the question paper at page 12">Nov 2024 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span></td>
+<td>2D-array linked list: insert front, remove</td>
+<td>19</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P42-QP.pdf#page=8" title="Open the question paper at page 8">Jun 2026 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=29" title="Open the mark scheme at page 29">MS&nbsp;p.29</a></span></td>
+<td>2D-array linked list with empty-list chain, add at end</td>
+<td>27</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P43-QP.pdf#page=10" title="Open the question paper at page 10">Jun 2026 P43 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P43-MS.pdf#page=35" title="Open the mark scheme at page 35">MS&nbsp;p.35</a></span></td>
+<td>2D-array tree: AddNode + recursive in-order</td>
+<td>25</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J25-P43-QP.pdf#page=7" title="Open the question paper at page 7">Jun 2025 P43 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P43-MS.pdf#page=33" title="Open the mark scheme at page 33">MS&nbsp;p.33</a></span></td>
+<td>Object-reference linked list, remove is hard</td>
+<td>29</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J25-P41-QP.pdf#page=6" title="Open the question paper at page 6">Jun 2025 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P41-MS.pdf#page=30" title="Open the mark scheme at page 30">MS&nbsp;p.30</a></span></td>
+<td>Object-reference tree + recursive in-order</td>
+<td>30</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J24-P42-QP.pdf#page=6" title="Open the question paper at page 6">Jun 2024 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P42-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span></td>
+<td>Tree as array of Node objects, two classes</td>
+<td>30</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J25-P42-QP.pdf#page=6" title="Open the question paper at page 6">Jun 2025 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span></td>
+<td>Hash table + Spare overflow array</td>
+<td>22</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N25-P41-QP.pdf#page=9" title="Open the question paper at page 9">Nov 2025 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span></td>
+<td>Hash table 100×10 + Record class + file</td>
+<td>25</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common pitfalls</h2>
+<ul>
+<li>Drawing the array on paper first is not optional — pointer bugs are 10× harder to find in
+  your head. Trace one insert by hand, then code it.</li>
+<li>Forgetting to update <code>FreeNode</code> (or the free-list head) after taking/returning a node.</li>
+<li>In removal: not handling the head-of-list special case.</li>
+<li>Off-by-one on capacity checks (<code>&gt; 49</code> vs <code>&gt; 50</code> for a 50-node tree).</li>
+<li>In hash tables: searching the whole table instead of just the hashed row/bucket.</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="5f07bb561b1f"><span>I can implement array-based list/tree insert with both chains updated correctly.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="4bae8c20f9ba"><span>I can write removal with the previous-pointer trail, including head special case.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="1ea34e51bec6"><span>I can write recursive in-order traversal in both array-index and object-reference forms.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="5d542eb903eb"><span>I can implement MOD hashing with per-row collision storage.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-08.html"><div class="dir">← Previous</div><div class="pt">Module 8 — Stacks and queues (array-based ADTs)</div></a><a class="next" href="module-10.html"><div class="dir">Next →</div><div class="pt">Module 10 — Searching and sorting (no builtins allowed)</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

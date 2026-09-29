@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m08_run_length_queue.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m08_run_length_queue.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m08_run_length_queue.py</h1>
+<p><strong>Source question:</strong> Module 4/8 worked example — Nov 2025 P43 Q2 (24 marks): a global linear queue</p>
+<p><a class="textlink" href="../files/solutions/m08_run_length_queue.py">Download raw file ↗</a></p>
+<div class="codeblock"><div class="cbhead"><span>run</span></div><div class="codehilite"><pre>python m08_run_length_queue.py</pre></div></div>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 4/8 worked example — Nov 2025 P43 Q2 (24 marks): a global linear queue</span>
+<span class="sd">of strings (max 100) with QueueHead, QueueTail and NumberItems; Enqueue()/</span>
+<span class="sd">Dequeue() per the paper&#39;s conventions (Dequeue returns the STRING &quot;False&quot; when</span>
+<span class="sd">empty — a deliberate trap); ReadData() loads &#39;1&#39;/&#39;0&#39; lines from BinaryData.txt;</span>
+<span class="sd">Compress() repeatedly dequeues to build a run-length string (count then digit,</span>
+<span class="sd">runs capped at 9).</span>
+
+<span class="sd">Run:  python m08_run_length_queue.py</span>
+
+<span class="sd">Data file: ../data-files/N25-43/BinaryData.txt (recreated in the paper&#39;s format)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Queue</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">QueueHead</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">QueueTail</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">NumberItems</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">NewString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>                   <span class="c1"># global output string, per the paper</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Enqueue</span><span class="p">(</span><span class="n">DataToInsert</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">QueueTail</span><span class="p">,</span> <span class="n">NumberItems</span>
+    <span class="k">if</span> <span class="n">NumberItems</span> <span class="o">==</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">QueueTail</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">Queue</span><span class="p">[</span><span class="n">QueueTail</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataToInsert</span>
+    <span class="n">NumberItems</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">QueueHead</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">QueueHead</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Dequeue</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">QueueHead</span><span class="p">,</span> <span class="n">NumberItems</span>
+    <span class="k">if</span> <span class="n">NumberItems</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;False&quot;</span>           <span class="c1"># string, not a Boolean — the paper&#39;s trap</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">[</span><span class="n">QueueHead</span><span class="p">]</span>
+    <span class="n">QueueHead</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">NumberItems</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ReadData</span><span class="p">():</span>
+    <span class="c1"># read one &#39;1&#39; or &#39;0&#39; per line, for any number of lines up to 100</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data-files/N25-43/BinaryData.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">Enqueue</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could not be opened&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Compress</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">NewString</span>
+    <span class="n">NewString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">Dequeue</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">current</span> <span class="o">!=</span> <span class="s2">&quot;False&quot;</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">nxt</span> <span class="o">=</span> <span class="n">Dequeue</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">nxt</span> <span class="o">==</span> <span class="n">current</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">nxt</span> <span class="o">=</span> <span class="n">Dequeue</span><span class="p">()</span>
+        <span class="n">NewString</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">+</span> <span class="n">current</span>     <span class="c1"># count then digit</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">nxt</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">ReadData</span><span class="p">()</span>
+    <span class="n">Compress</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">NewString</span><span class="p">)</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m08_queue_record.html"><div class="dir">← Previous</div><div class="pt">m08_queue_record.py</div></a><a class="next" href="../solutions/m08_stack_calculator.html"><div class="dir">Next →</div><div class="pt">m08_stack_calculator.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

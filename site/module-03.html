@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 3 — 1D arrays, 2D arrays, parallel arrays and records — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink active" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 3 · Arrays &amp; records</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 3 — 1D arrays, 2D arrays, parallel arrays and records</h1>
+<p><strong>Exam weight: ~20–30 marks in every paper.</strong> Arrays are the substrate of Paper 4 — every
+ADT in this syllabus is an array wearing a costume. This module covers declaration,
+initialisation, traversal, formatted output, parallel arrays, and records.</p>
+<h2>1. 1D arrays — declare, initialise, traverse</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># DECLARE ArrayData : ARRAY[0:9] OF INTEGER</span>
+<span class="n">ArrayData</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>    <span class="c1"># J21-style given values</span>
+<span class="c1"># or fixed-size empty structure to fill later:</span>
+<span class="n">DataArray</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>                               <span class="c1"># &quot;declare a 1D array of 100 integers&quot;</span>
+</pre></div></div>
+<p>Output formats the papers ask for — practise each:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># one per line</span>
+<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">DataArray</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="c1"># all on one line, space-separated (J23/41 Q1(b), N25/42 Q2(b), J25/43 Q2(d))</span>
+<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">DataArray</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="c1"># &quot;The number 7 is found 2 times.&quot;  (J23/41 Q1(d))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The number </span><span class="si">{</span><span class="n">search</span><span class="si">}</span><span class="s2"> is found </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> times.&quot;</span><span class="p">)</span>
+</pre></div></div>
+<h2>2. 2D arrays — the initialisation trap</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># ARRAY[0:9, 0:9] OF INTEGER   (10 x 10, J22/42 Q2)</span>
+<span class="n">ArrayData</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+
+<span class="c1"># ALWAYS this pattern. NEVER:</span>
+<span class="c1">#   ArrayData = [[0] * 10] * 10      &lt;- 10 references to the SAME row</span>
+</pre></div></div>
+<p>Why: with <code>[[0]*10]*10</code>, <code>ArrayData[0][3] = 5</code> changes the shared row, so row 7 "also"
+changes. This bug is invisible until you test with output — and the row you're testing with
+is usually the one that gets corrupted.</p>
+<p>Row-major traversal with a grid print (<a class="qref" href="files/papers/J22-P42-QP.pdf#page=4" title="Open the question paper at page 4">J22/42 Q2(b)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span>(ii) — output as a 2D grid):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">ArrayData</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">z</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div></div>
+<p>2D arrays in the exam are usually <strong>structured records in rows</strong>: a binary tree as
+<code>ArrayNodes[20][3]</code> (left pointer, data, right pointer — N21/N22/J26/N25), a linked list as
+index/data/pointer columns (<a class="qref" href="files/papers/N24-P41-QP.pdf#page=1" title="Open the question paper at page 1">N24/41</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>, <a class="qref" href="files/papers/J26-P42-QP.pdf#page=1" title="Open the question paper at page 1">J26/42</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>), or jobs <code>[100][2]</code> (<a class="qref" href="files/papers/N22-P42-QP.pdf#page=1" title="Open the question paper at page 1">N22/42</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>). Reading the
+<em>column meanings</em> off the question table is the skill; the loops are easy.</p>
+<h2>3. Parallel arrays (<a class="qref" href="files/papers/J22-P41-QP.pdf#page=1" title="Open the question paper at page 1">June 2022 P41</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J22-P41-QP.pdf#page=2" title="Open the question paper at page 2">June 2022 Paper 41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span> [29 marks]</strong> — a top-ten table: global arrays of 11
+player names (3 characters) and 11 scores, a <code>ReadHighScores()</code> that loads them from
+<code>HighScore.txt</code>, an <code>OutputHighScores()</code> printing <code>Name Score</code>, a procedure that inserts a
+new score in descending position, and <code>WriteTopTen()</code> saving to <code>NewHighScore.txt</code>.</p>
+<p>Parallel arrays are just two 1D arrays sharing an index. Model excerpt
+(<a href="solutions/m03_high_scores.html"><code>solutions/m03_high_scores.py</code></a>):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">PlayerNames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">11</span>    <span class="c1"># 3-character strings</span>
+<span class="n">PlayerScores</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">11</span>    <span class="c1"># integers</span>
+</pre></div></div>
+<p>The insert procedure is the classic "sorted insert" — shift from the end until the slot is
+found. Practise it here, then it transfers to the linked-list and queue questions.</p>
+<h2>4. Records — the class-as-record pattern</h2>
+<p>Papers declare <code>TYPE RecordData ... ENDTYPE</code>. The cover rule allows a class declaration as
+a record, and Python has no record type, so use a small class. When the paper says
+attributes are public (<a class="qref" href="files/papers/N25-P41-QP.pdf#page=9" title="Open the question paper at page 9">N25/41 Q3(a)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span> explicitly does), use plain names:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># TYPE ToyRecord</span>
+<span class="c1">#   ToyName       : STRING</span>
+<span class="c1">#   NumberBricks  : INTEGER</span>
+<span class="c1">#   Difficulty    : STRING</span>
+<span class="c1">#   Category      : STRING</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ToyRecord</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toy_name</span><span class="p">,</span> <span class="n">number_bricks</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ToyName</span> <span class="o">=</span> <span class="n">toy_name</span>            <span class="c1"># string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">NumberBricks</span> <span class="o">=</span> <span class="n">number_bricks</span>  <span class="c1"># integer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Difficulty</span> <span class="o">=</span> <span class="n">difficulty</span>       <span class="c1"># string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Category</span> <span class="o">=</span> <span class="n">category</span>           <span class="c1"># string</span>
+</pre></div></div>
+<p>An <strong>array of records</strong> is then just a list of these objects. <a class="qref" href="files/papers/J26-P41-QP.pdf#page=5" title="Open the question paper at page 5">J26/41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P41-MS.pdf#page=18" title="Open the mark scheme at page 18">MS&nbsp;p.18</a></span> is the full journey:
+read 16 comma-separated toys, filter by difficulty (validated), write matches to
+<code>SelectedToys.txt</code> in comma-separated form (<a href="solutions/m05_toys_filter.html"><code>solutions/m05_toys_filter.py</code></a> — Module 5).</p>
+<p>A record can also <strong>contain an array</strong>: <a class="qref" href="files/papers/J23-P42-QP.pdf#page=1" title="Open the question paper at page 1">J23/42</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>'s <code>Employee</code> has <code>PayYear2022[0:51]</code>
+(52 weekly pays, all initialised to 0.0):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Employee</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hourly_pay</span><span class="p">,</span> <span class="n">employee_number</span><span class="p">,</span> <span class="n">job_title</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">HourlyPay</span> <span class="o">=</span> <span class="n">hourly_pay</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">EmployeeNumber</span> <span class="o">=</span> <span class="n">employee_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">JobTitle</span> <span class="o">=</span> <span class="n">job_title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PayYear2022</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">52</span><span class="p">)]</span>
+</pre></div></div>
+<h2>5. Worked example — 2D array + random fill (<a class="qref" href="files/papers/J22-P42-QP.pdf#page=4" title="Open the question paper at page 4">June 2022 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=13" title="Open the mark scheme at page 13">MS&nbsp;p.13</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J22-P42-QP.pdf#page=4" title="Open the question paper at page 4">June 2022 Paper 42 Q2(a)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=13" title="Open the mark scheme at page 13">MS&nbsp;p.13</a></span> [4 marks]</strong> — declare a 10×10 integer 2D array and
+initialise every element with a random number between 1 and 100.</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<span class="n">ArrayData</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">ArrayData</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">z</span><span class="p">]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div></div>
+<p><strong>Mark scheme shape:</strong> correct 2D declaration / nested loops / random in range (mark scheme
+allows inclusive or exclusive interpretation) / assignment into the right indices.
+Part (b)(ii) then wants the grid output shown in §2 above — three marks for
+row loop, column loop with spacing, newline per row.</p>
+<h2>6. Worked example — 2D array with column meanings (<a class="qref" href="files/papers/N22-P42-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2022 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=3" title="Open the mark scheme at page 3">MS&nbsp;p.3</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N22-P42-QP.pdf#page=2" title="Open the question paper at page 2">November 2022 Paper 42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=3" title="Open the mark scheme at page 3">MS&nbsp;p.3</a></span> [23 marks]</strong> — <code>Jobs[0:99, 0:1]</code> holding job numbers
+and priorities; initialise to −1; <code>AddJob()</code> stores a pair or reports full; <code>InsertionSort()</code>
+orders by priority keeping pairs together; <code>PrintArray()</code> formats output.</p>
+<p>Sorting a 2D array "by column 1 while dragging column 0 along" is a recurring twist. Model
+excerpt (<a href="solutions/m03_jobs_insertion_sort.html"><code>solutions/m03_jobs_insertion_sort.py</code></a>):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">insertion_sort</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">NumberOfJobs</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NumberOfJobs</span><span class="p">):</span>
+        <span class="n">key_job</span> <span class="o">=</span> <span class="n">Jobs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">key_priority</span> <span class="o">=</span> <span class="n">Jobs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">Jobs</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">key_priority</span><span class="p">:</span>
+            <span class="n">Jobs</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Jobs</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">Jobs</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Jobs</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">Jobs</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">key_job</span>
+        <span class="n">Jobs</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key_priority</span>
+</pre></div></div>
+<p>The whole row moves as a unit — that is the mark point examiners look for.</p>
+<h2>Practice set</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/J21-P41-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2021 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J21-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Linked list as array of records (declare + traverse + add) — pairs with Module 9</td>
+<td>24</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J22-P41-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2022 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Parallel-array high-score table, read/write files</td>
+<td>29</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J22-P42-QP.pdf#page=4" title="Open the question paper at page 4">Jun 2022 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=13" title="Open the mark scheme at page 13">MS&nbsp;p.13</a></span></td>
+<td>2D random array, grid output, sort, recursive search</td>
+<td>23</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N22-P42-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2022 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=3" title="Open the mark scheme at page 3">MS&nbsp;p.3</a></span></td>
+<td>2D job array + insertion sort by priority</td>
+<td>23</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N24-P42-QP.pdf#page=12" title="Open the question paper at page 12">Nov 2024 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P42-MS.pdf#page=31" title="Open the mark scheme at page 31">MS&nbsp;p.31</a></span></td>
+<td>2D string array from file, two-key bubble sort, formatted output</td>
+<td>17</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P41-QP.pdf#page=5" title="Open the question paper at page 5">Jun 2026 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P41-MS.pdf#page=18" title="Open the mark scheme at page 18">MS&nbsp;p.18</a></span></td>
+<td>Records: read 16 toys, filter, write matches</td>
+<td>28</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N25-P41-QP.pdf#page=9" title="Open the question paper at page 9">Nov 2025 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span></td>
+<td>Hash table as 100×10 2D array of Record objects</td>
+<td>25</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common pitfalls</h2>
+<ul>
+<li>The shared-row 2D initialisation bug.</li>
+<li>Hardcoding lengths (<code>for i in range(10)</code>) where the paper says the structure must work
+  "for any length" — use <code>len(array)</code>.</li>
+<li>Mixing up row/column order after re-reading the question's table — annotate the columns
+  (<code># col 0 = left pointer, col 1 = data, col 2 = right pointer</code>) before writing code.</li>
+<li>Forgetting that a "record" question wants the class <em>declared and used</em>, not a
+  parallel-array shortcut (the declaration marks live in the class).</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="2adf2ff866ea"><span>I initialise 2D arrays with a comprehension, never <code>[[x]*n]*m</code>.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="31082906d995"><span>I can print an array as a grid and as one space-separated line.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="bc85d57e0d54"><span>I can declare a record-as-class with type comments and build an array of them.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="8716e824f095"><span>I can insertion-sort a 2D array by one column, moving whole rows.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-02.html"><div class="dir">← Previous</div><div class="pt">Module 2 — Procedures, functions, parameters and globals</div></a><a class="next" href="module-04.html"><div class="dir">Next →</div><div class="pt">Module 4 — String processing and input validation</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

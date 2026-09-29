@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python for Cambridge 9618 Paper 4 — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink active" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs">Course home</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Python for Cambridge 9618 Paper 4 — A Complete Preparation Course</h1>
+<p>A skill-by-skill course that prepares A Level students for <strong>9618 Paper 4 (Practical)</strong>
+using Python 3 (console mode), built directly on the past papers in
+<code>C:\Users\mali\Desktop\cs\9626-topical-questions\9618 Past Papers\</code> (June &amp; November
+2021–2026).</p>
+<p>Every worked example and practice task cites a real paper question (session, variant,
+question part, marks). Students attempt the questions from the original PDFs in that
+folder; this course supplies the teaching, the Python–pseudocode bridge, model solutions,
+and mark-scheme-guided commentary.</p>
+<h2>Web course (recommended way to study)</h2>
+<p>The whole course also builds into a self-contained static website:</p>
+<div class="codeblock"><div class="cbhead"><span>bash</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre>python build_site.py          # regenerates ./site (42 pages)
+</pre></div></div>
+<p>Serve it with any static server, e.g.:</p>
+<div class="codeblock"><div class="cbhead"><span>bash</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre>cd site
+python -m http.server 8123    # then open http://127.0.0.1:8123/
+</pre></div></div>
+<p>(Opening <code>site/index.html</code> directly from disk also works.) The site adds: sidebar
+navigation with previous/next paging, client-side full-text search (press <code>/</code>),
+syntax-highlighted code with copy buttons, a viewer for all 24 model solutions plus the
+sample data files, per-module <strong>checkpoint progress</strong> and a course-wide progress bar
+(saved in the browser), and a light/dark theme. No external dependencies — works fully
+offline, so it can be shared with students as a folder or zipped.</p>
+<h2>Start here</h2>
+<ol>
+<li><strong><a href="cheatsheet.html">pseudocode-cheatsheet.md</a></strong> — the translation table the
+   whole course leans on. Print it for every student.</li>
+<li><strong><a href="module-00.html">00-exam-orientation</a></strong> — how the exam works, the
+   evidence-document rules that decide real marks, and how the mark schemes treat Python.</li>
+<li><strong><a href="question-bank.html">question-bank.md</a></strong> — every unique paper question catalogued by
+   topic and marks, with a skill→question index.</li>
+</ol>
+<h2>The modules</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Module</th>
+<th>Core skill</th>
+<th>Typical exam weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><a href="module-00.html">Exam orientation</a></td>
+<td>Format, evidence discipline, setup</td>
+<td>—</td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="module-01.html">Python foundations</a></td>
+<td>Pseudocode→Python translation, validation loops</td>
+<td>background in every paper</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="module-02.html">Modular programming</a></td>
+<td>Procedures/functions, parameters, <code>global</code></td>
+<td>every paper</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="module-03.html">Arrays &amp; records</a></td>
+<td>1D/2D arrays, parallel arrays, records</td>
+<td>~20–30 marks</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="module-04.html">Strings &amp; validation</a></td>
+<td>No-builtin string algorithms, validation</td>
+<td>10–20 marks</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="module-05.html">Files &amp; exceptions</a></td>
+<td>Read/write patterns, try/except marks</td>
+<td>5–25 marks</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="module-06.html">OOP foundations</a></td>
+<td>Classes, <code>__init__</code>, getters, arrays of objects</td>
+<td>~20–30 marks</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="module-07.html">OOP advanced</a></td>
+<td>Composition, inheritance, overriding, <code>super()</code></td>
+<td>15–30 marks</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="module-08.html">Stacks &amp; queues</a></td>
+<td>Array-based ADTs with pointer conventions</td>
+<td>20–29 marks</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="module-09.html">Lists, trees, hashes</a></td>
+<td>Linked lists, binary trees, hash tables</td>
+<td>20–30 marks</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="module-10.html">Searching &amp; sorting</a></td>
+<td>Linear/binary search, bubble/insertion sort</td>
+<td>10–20 marks</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="module-11.html">Recursion</a></td>
+<td>Trace, translate, iterative↔recursive</td>
+<td>6–17 marks</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="module-12.html">Exam technique</a></td>
+<td>150-minute protocol, evidence audit, mock plan</td>
+<td>all of it</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each module follows the same shape: <strong>objectives → teaching notes → worked example(s)
+from real papers with model solutions → practice set citing original PDFs → common
+pitfalls → checkpoint</strong>.</p>
+<h2>Solutions and data files</h2>
+<ul>
+<li><a href="solutions.html"><code>solutions/</code></a> — 24 runnable Python model solutions (m01–m10...), one or
+  more per module. Each file's docstring states the reference question, the run command
+  and any test input. All verified to run cleanly.</li>
+<li><a href="solutions.html"><code>data-files/</code></a> — sample data files in the formats the papers describe
+  (<code>CardValues.txt</code>, <code>Employees.txt</code>, <code>TheData.txt</code>, ...), with synthetic content. The
+  original exam data files are not published, so these are recreations — students should
+  also make their own.</li>
+</ul>
+<p>Run a solution from the <code>solutions/</code> folder, e.g.:</p>
+<div class="codeblock"><div class="cbhead"><span>bash</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre>cd solutions
+python m01_unknown_function.py
+echo 7 | python m01_data_linear_search.py          # with test input
+seq 1 11 | python m08_queue_j26.py                 # overflow test data
+</pre></div></div>
+<h2>Suggested pathway</h2>
+<ul>
+<li><strong>Full course (12–14 weeks):</strong> Modules 0–1, then 2–5, then 6–7, then 8–11, one module
+  per week, each ending with its practice set. Module 12's six mocks fill the final
+  revision weeks (see the schedule in <a href="module-12.html">12-exam-technique</a>).</li>
+<li><strong>Intensive revision (4 weeks):</strong> Cheatsheet + Module 0, then two modules per week
+  chosen by each student's weakest skills, daily practice from <code>question-bank.md</code>,
+  mocks in the final week.</li>
+<li><strong>Top-up for strong students:</strong> Modules 9 and 11 (the discriminator skills), then
+  straight into mocks from the June 2025/2026 papers.</li>
+</ul>
+<p>Teachers: see <a href="teacher-guide.html">teacher-guide.md</a> for pacing, homework and assessment
+suggestions, and notes on how the papers duplicate variants.</p>
+<h2>Notes on the source material</h2>
+<ul>
+<li>Question references use the form <em><a class="qref" href="files/papers/J22-P42-QP.pdf#page=1" title="Open the question paper at page 1">June 2022 Paper 42</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>, Q1(c) [6 marks]</em>; original PDFs
+  are in <code>9626-topical-questions\9618 Past Papers\</code> (2026 papers in <code>9626-topical-questions\2026\</code>).</li>
+<li>Within each session, two of the three variants are usually clones (typically 41 = 43,
+  with 42 distinct); <code>question-bank.md</code> records which.</li>
+<li>The 2026 papers in the collection are marked as live 2026 series material — check your
+  centre's rules before using them for assessed mocks before the results window closes.</li>
+</ul>
+      <div class="pager"><span></span><a class="next" href="cheatsheet.html"><div class="dir">Next →</div><div class="pt">Cambridge Pseudocode → Python 3 Cheatsheet</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

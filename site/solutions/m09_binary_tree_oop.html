@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m09_binary_tree_oop.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m09_binary_tree_oop.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m09_binary_tree_oop.py</h1>
+<p><strong>Source question:</strong> Module 9 worked example — Jun 2025 P41 Q3 (30 marks): a binary search tree built</p>
+<p><a class="textlink" href="../files/solutions/m09_binary_tree_oop.py">Download raw file ↗</a></p>
+<div class="codeblock"><div class="cbhead"><span>run</span></div><div class="codehilite"><pre>python m09_binary_tree_oop.py</pre></div></div>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 9 worked example — Jun 2025 P41 Q3 (30 marks): a binary search tree built</span>
+<span class="sd">from object references — class Node (LeftNode, Data, RightNode) and class Tree</span>
+<span class="sd">(FirstNode); Insert() walks references to the leaf position; OutputInOrder() is</span>
+<span class="sd">a recursive traversal. Self-test inserts the paper&#39;s sequence and prints the</span>
+<span class="sd">in-order output (ascending).</span>
+
+<span class="sd">Run:  python m09_binary_tree_oop.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Node</span><span class="p">:</span>
+    <span class="c1"># self.__LeftNode  : Node</span>
+    <span class="c1"># self.__Data      : INTEGER</span>
+    <span class="c1"># self.__RightNode : Node</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__LeftNode</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__RightNode</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Data</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__LeftNode</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetRight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__RightNode</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__LeftNode</span> <span class="o">=</span> <span class="n">node</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetRight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__RightNode</span> <span class="o">=</span> <span class="n">node</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Tree</span><span class="p">:</span>
+    <span class="c1"># self.__FirstNode : Node</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__FirstNode</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">Insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">NewNode</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__FirstNode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__FirstNode</span> <span class="o">=</span> <span class="n">NewNode</span>
+            <span class="k">return</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__FirstNode</span>
+        <span class="n">placed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">placed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">NewNode</span><span class="o">.</span><span class="n">GetData</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">current</span><span class="o">.</span><span class="n">GetData</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">GetLeft</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">current</span><span class="o">.</span><span class="n">SetLeft</span><span class="p">(</span><span class="n">NewNode</span><span class="p">)</span>
+                    <span class="n">placed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">GetLeft</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">GetRight</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">current</span><span class="o">.</span><span class="n">SetRight</span><span class="p">(</span><span class="n">NewNode</span><span class="p">)</span>
+                    <span class="n">placed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">GetRight</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">OutputInOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="c1"># recursive in-order traversal: left, data, right</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OutputInOrder</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">GetLeft</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">GetData</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OutputInOrder</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">GetRight</span><span class="p">())</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OutputInOrder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__FirstNode</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">my_tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+        <span class="n">my_tree</span><span class="o">.</span><span class="n">Insert</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="n">my_tree</span><span class="o">.</span><span class="n">traverse</span><span class="p">()</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m08_two_stacks.html"><div class="dir">← Previous</div><div class="pt">m08_two_stacks.py</div></a><a class="next" href="../solutions/m09_hash_table.html"><div class="dir">Next →</div><div class="pt">m09_hash_table.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

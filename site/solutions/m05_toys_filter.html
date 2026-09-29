@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m05_toys_filter.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m05_toys_filter.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m05_toys_filter.py</h1>
+<p><strong>Source question:</strong> Module 5 worked example — Jun 2026 P41 Q2 (28 marks): read 16 comma-separated</p>
+<p><a class="textlink" href="../files/solutions/m05_toys_filter.py">Download raw file ↗</a></p>
+
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 5 worked example — Jun 2026 P41 Q2 (28 marks): read 16 comma-separated</span>
+<span class="sd">toy records from Toys.txt into an array of record objects (exception handling);</span>
+<span class="sd">validate the user&#39;s difficulty choice; filter by difficulty; write matching</span>
+<span class="sd">records to SelectedToys.txt in comma-separated form.</span>
+
+<span class="sd">Run with test input (e.g. difficulty &quot;Expert&quot;):</span>
+<span class="sd">    echo Expert | python m05_toys_filter.py</span>
+
+<span class="sd">Data file: ../data-files/J26-41/Toys.txt (recreated in the paper&#39;s format)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># 2(a) record type declared as a class (per the cover rule)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ToyRecord</span><span class="p">:</span>
+    <span class="c1"># self.ToyName      : STRING</span>
+    <span class="c1"># self.NumberBricks : INTEGER</span>
+    <span class="c1"># self.Difficulty   : STRING</span>
+    <span class="c1"># self.Category     : STRING</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toy_name</span><span class="p">,</span> <span class="n">number_bricks</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ToyName</span> <span class="o">=</span> <span class="n">toy_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">NumberBricks</span> <span class="o">=</span> <span class="n">number_bricks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Difficulty</span> <span class="o">=</span> <span class="n">difficulty</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Category</span> <span class="o">=</span> <span class="n">category</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ReadData</span><span class="p">():</span>
+    <span class="c1"># 2(b) read 16 records with exception handling</span>
+    <span class="n">toys</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">16</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data-files/J26-41/Toys.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="n">toys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ToyRecord</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could not be opened&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">toys</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_difficulty</span><span class="p">():</span>
+    <span class="c1"># 2(c) loop until a valid difficulty is entered</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+        <span class="n">difficulty</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter difficulty (Easy/Intermediate/Expert): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">difficulty</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;easy&quot;</span><span class="p">,</span> <span class="s2">&quot;intermediate&quot;</span><span class="p">,</span> <span class="s2">&quot;expert&quot;</span><span class="p">):</span>
+            <span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid difficulty&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">difficulty</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">SelectToys</span><span class="p">(</span><span class="n">toys</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">):</span>
+    <span class="c1"># 2(d) filter — linear search by attribute</span>
+    <span class="n">selected</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">toy</span> <span class="ow">in</span> <span class="n">toys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">toy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">toy</span><span class="o">.</span><span class="n">Difficulty</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">difficulty</span><span class="p">:</span>
+            <span class="n">selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">toy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">selected</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">WriteFile</span><span class="p">(</span><span class="n">selected</span><span class="p">):</span>
+    <span class="c1"># 2(e) write matches to a new file, comma-separated</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data-files/J26-41/SelectedToys.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">toy</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">toy</span><span class="o">.</span><span class="n">ToyName</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">toy</span><span class="o">.</span><span class="n">NumberBricks</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span>
+                       <span class="o">+</span> <span class="n">toy</span><span class="o">.</span><span class="n">Difficulty</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="n">toy</span><span class="o">.</span><span class="n">Category</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">selected</span><span class="p">),</span> <span class="s2">&quot;toys written to SelectedToys.txt&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could not be written&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">toys</span> <span class="o">=</span> <span class="n">ReadData</span><span class="p">()</span>
+    <span class="n">difficulty</span> <span class="o">=</span> <span class="n">get_difficulty</span><span class="p">()</span>
+    <span class="n">selected</span> <span class="o">=</span> <span class="n">SelectToys</span><span class="p">(</span><span class="n">toys</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">toy</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">toy</span><span class="o">.</span><span class="n">ToyName</span><span class="p">,</span> <span class="n">toy</span><span class="o">.</span><span class="n">NumberBricks</span><span class="p">,</span> <span class="n">toy</span><span class="o">.</span><span class="n">Difficulty</span><span class="p">,</span> <span class="n">toy</span><span class="o">.</span><span class="n">Category</span><span class="p">)</span>
+    <span class="n">WriteFile</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m05_split_colours.html"><div class="dir">← Previous</div><div class="pt">m05_split_colours.py</div></a><a class="next" href="../solutions/m06_avatars.html"><div class="dir">Next →</div><div class="pt">m06_avatars.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

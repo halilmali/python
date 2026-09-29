@@ -1,0 +1,11 @@
+# Cambridge International exam papers (question papers + mark schemes) are
+# copyright UCLES/Cambridge University Press & Assessment and must not be
+# redistributed via this repository. build_site.py copies the papers referenced
+# by the practice links into site/files/papers/ from the local collection when
+# present; that folder is ignored here.
+site/files/papers/
+
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

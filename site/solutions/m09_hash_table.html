@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m09_hash_table.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m09_hash_table.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m09_hash_table.py</h1>
+<p><strong>Source question:</strong> Module 9 worked example — Nov 2025 P41 Q3 (25 marks): a hash table as a 100x10</p>
+<p><a class="textlink" href="../files/solutions/m09_hash_table.py">Download raw file ↗</a></p>
+
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 9 worked example — Nov 2025 P41 Q3 (25 marks): a hash table as a 100x10</span>
+<span class="sd">2D array; Hash(Key) = Key MOD 100; collisions live in the next free slot of the</span>
+<span class="sd">same row; Record class with PUBLIC Key/Data attributes (per the paper);</span>
+<span class="sd">InitialiseHashTable(); ReadData() reads &quot;key,string&quot; lines from</span>
+<span class="sd">HashTableData.txt, splits and inserts; GetRecord() hashes and searches the row,</span>
+<span class="sd">returning the data or &quot;Not found&quot;.</span>
+
+<span class="sd">Run with test input (five keys incl. collisions):</span>
+<span class="sd">    printf &quot;528\n1128\n1828\n1062\n39\n&quot; | python m09_hash_table.py</span>
+
+<span class="sd">Data file: ../data-files/N25-41/HashTableData.txt (recreated in the paper&#39;s format)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Record</span><span class="p">:</span>
+    <span class="c1"># self.Key  : INTEGER   (public, per the paper)</span>
+    <span class="c1"># self.Data : STRING</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Data</span> <span class="o">=</span> <span class="n">data</span>
+
+
+<span class="n">HashTable</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Hash</span><span class="p">(</span><span class="n">Key</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Key</span> <span class="o">%</span> <span class="mi">100</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">InitialiseHashTable</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">HashTable</span>
+    <span class="n">HashTable</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">InsertData</span><span class="p">(</span><span class="n">RecordToInsert</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">Hash</span><span class="p">(</span><span class="n">RecordToInsert</span><span class="o">.</span><span class="n">Key</span><span class="p">)</span>
+    <span class="n">slot</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">slot</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="ow">and</span> <span class="n">HashTable</span><span class="p">[</span><span class="n">address</span><span class="p">][</span><span class="n">slot</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">slot</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">slot</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">HashTable</span><span class="p">[</span><span class="n">address</span><span class="p">][</span><span class="n">slot</span><span class="p">]</span> <span class="o">=</span> <span class="n">RecordToInsert</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ReadData</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data-files/N25-41/HashTableData.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="n">InsertData</span><span class="p">(</span><span class="n">Record</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could not be opened&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">GetRecord</span><span class="p">(</span><span class="n">Key</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">Hash</span><span class="p">(</span><span class="n">Key</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="n">HashTable</span><span class="p">[</span><span class="n">address</span><span class="p">][</span><span class="n">slot</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">entry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">entry</span><span class="o">.</span><span class="n">Key</span> <span class="o">==</span> <span class="n">Key</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">entry</span><span class="o">.</span><span class="n">Data</span>
+    <span class="k">return</span> <span class="s2">&quot;Not found&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">InitialiseHashTable</span><span class="p">()</span>
+    <span class="n">ReadData</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a key: &quot;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">GetRecord</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m09_binary_tree_oop.html"><div class="dir">← Previous</div><div class="pt">m09_binary_tree_oop.py</div></a><a class="next" href="../solutions/m09_linked_list_oop.html"><div class="dir">Next →</div><div class="pt">m09_linked_list_oop.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

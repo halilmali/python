@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m01_data_linear_search.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m01_data_linear_search.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m01_data_linear_search.py</h1>
+<p><strong>Source question:</strong> Module 1 practice — Jun 2023 P41 Q1 (18 marks): read 25 integers from Data.txt</p>
+<p><a class="textlink" href="../files/solutions/m01_data_linear_search.py">Download raw file ↗</a></p>
+
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 1 practice — Jun 2023 P41 Q1 (18 marks): read 25 integers from Data.txt</span>
+<span class="sd">into a local array; procedure PrintArray(); function LinearSearch() that counts</span>
+<span class="sd">matches; main validates the user&#39;s search value (whole number 0-100) and outputs</span>
+<span class="sd">&quot;The number X is found N times.&quot;</span>
+
+<span class="sd">Run with test input (e.g. searching for 7):</span>
+<span class="sd">    echo 7 | python m01_data_linear_search.py</span>
+
+<span class="sd">Data file: ../data-files/J23-41/Data.txt  (recreated in the paper&#39;s format)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># 1(a) declare the array — the paper asks for it in the main program (local)</span>
+<span class="n">DataArray</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">25</span>
+
+
+<span class="c1"># 1(b) read the 25 integers from the file, with exception handling</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ReadFile</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data-files/J23-41/Data.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">):</span>
+            <span class="n">DataArray</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File not found&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># 1(c)(ii) output the whole array on one line</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">PrintArray</span><span class="p">(</span><span class="n">DataArray</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">DataArray</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="c1"># 1(c)(iii) linear search that COUNTS occurrences</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">LinearSearch</span><span class="p">(</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">SearchValue</span><span class="p">):</span>
+    <span class="n">Count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">SearchValue</span><span class="p">:</span>
+            <span class="n">Count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">Count</span>
+
+
+<span class="c1"># 1(d) main program: validate input 0-100, search, report</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">ReadFile</span><span class="p">()</span>
+    <span class="n">PrintArray</span><span class="p">(</span><span class="n">DataArray</span><span class="p">)</span>
+    <span class="n">Valid</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">Valid</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">SearchValue</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a whole number between 0 and 100: &quot;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">SearchValue</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+                <span class="n">Valid</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Out of range&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not a whole number&quot;</span><span class="p">)</span>
+    <span class="n">Count</span> <span class="o">=</span> <span class="n">LinearSearch</span><span class="p">(</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">SearchValue</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The number </span><span class="si">{</span><span class="n">SearchValue</span><span class="si">}</span><span class="s2"> is found </span><span class="si">{</span><span class="n">Count</span><span class="si">}</span><span class="s2"> times.&quot;</span><span class="p">)</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><span></span><a class="next" href="../solutions/m01_iterative_vowels.html"><div class="dir">Next →</div><div class="pt">m01_iterative_vowels.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

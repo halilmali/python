@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 6 — OOP foundations: classes, constructors, getters, setters — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink active" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 6 · OOP foundations</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 6 — OOP foundations: classes, constructors, getters, setters</h1>
+<p><strong>Exam weight: ~20–30 marks in every paper.</strong> Every Paper 4 has an OOP question. The core
+subset — declare a class with private attributes, write the constructor, write getters,
+instantiate from file data — appears in <em>every</em> session and is highly formulaic.</p>
+<h2>1. The canonical class skeleton</h2>
+<p>Every OOP question starts the same way. Learn this template until writing it takes 60
+seconds:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Card</span><span class="p">:</span>
+    <span class="c1"># self.__Number : INTEGER     &lt;- attribute declarations as comments:</span>
+    <span class="c1"># self.__Colour : STRING      &lt;- the paper asks for these explicitly in Python</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">colour</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Number</span> <span class="o">=</span> <span class="n">number</span>        <span class="c1"># private: double underscore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Colour</span> <span class="o">=</span> <span class="n">colour</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Number</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_colour</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Colour</span>
+</pre></div></div>
+<p>Why each line earns marks (from the mark schemes):</p>
+<ul>
+<li><strong>Class declaration</strong> — "Class Card declaration (and end where appropriate)".</li>
+<li><strong>Attributes private with correct identifiers and data types</strong> — the double underscore is
+  the privacy mark; the <em>comments</em> supply the data types (Python has no declarations).</li>
+<li><strong>Constructor header</strong> — "taking N parameters (Python N+1)": <code>self</code> counts as one.</li>
+<li><strong>Constructor assigns parameters to attributes.</strong></li>
+<li><strong>Get methods</strong>: header with no parameter, returning the attribute; the second and
+  further getters are usually bundled into one mark.</li>
+</ul>
+<h2>2. What the class diagram tells you</h2>
+<p>Paper 4 presents the class as a table: attributes on the left, methods on the right, with
+one-line descriptions. Read it mechanically:</p>
+<ul>
+<li><code>Number : INTEGER</code> → attribute with type (→ your <code>#</code> comment).</li>
+<li><code>Constructor()</code> with "Takes two values as parameters and sets them" → <code>__init__(self, a, b)</code>.</li>
+<li><code>GetNumber()</code> "Returns the number of the card" → trivial getter.</li>
+<li>Anything with <code>Set...</code> or "changes" → setter (may clamp/validate — see below).</li>
+<li>Inheritance questions add "inherits from X" text — Module 7.</li>
+</ul>
+<h2>3. Worked example — Card class (<a class="qref" href="files/papers/J22-P42-QP.pdf#page=7" title="Open the question paper at page 7">June 2022 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=25" title="Open the mark scheme at page 25">MS&nbsp;p.25</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J22-P42-QP.pdf#page=7" title="Open the question paper at page 7">June 2022 Paper 42 Q3(a)(b)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=25" title="Open the mark scheme at page 25">MS&nbsp;p.25</a></span> [8 marks]</strong> —
+<code>9618 Past Papers\9618 Computer Science June 2022 Question paper 42.pdf</code></p>
+<p>In brief: class <code>Card</code> with private attributes Number (integer) and Colour (string);
+constructor taking both; get methods returning each. Then (part c, 7 marks) read 30 cards
+from <code>CardValues.txt</code> into an array of Card objects — covered in Module 5.</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Card</span><span class="p">:</span>
+    <span class="c1"># self.__Number : INTEGER</span>
+    <span class="c1"># self.__Colour : STRING</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">colour</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Number</span> <span class="o">=</span> <span class="n">number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Colour</span> <span class="o">=</span> <span class="n">colour</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Number</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetColour</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Colour</span>
+</pre></div></div>
+<p>That is 8 marks for roughly 12 lines. This is why OOP is the best return-on-time in the
+paper. Full solution including the file reading and the selection game:
+<a href="solutions/m06_card_game.html"><code>solutions/m06_card_game.py</code></a>.</p>
+<h2>4. Worked example — setters with clamping (<a class="qref" href="files/papers/N23-P41-QP.pdf#page=8" title="Open the question paper at page 8">Nov 2023 P41 Q3(a)</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P41-MS.pdf#page=25" title="Open the mark scheme at page 25">MS&nbsp;p.25</a></span>(iii))</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N23-P41-QP.pdf#page=8" title="Open the question paper at page 8">November 2023 Paper 41 Q3(a)</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P41-MS.pdf#page=25" title="Open the mark scheme at page 25">MS&nbsp;p.25</a></span>(iii) [4 marks]</strong> — <code>SetXPosition()</code> and
+<code>SetYPosition()</code> must only accept values in 0–10000; out-of-range values are clamped to the
+nearest bound. Part (iv) then writes <code>Move(direction)</code> updating position by 10 using the
+set methods.</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">SetXPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">new_x</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__XPosition</span> <span class="o">=</span> <span class="mi">10000</span>
+    <span class="k">elif</span> <span class="n">new_x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__XPosition</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__XPosition</span> <span class="o">=</span> <span class="n">new_x</span>
+</pre></div></div>
+<p>The mark scheme awards the range check, both clamps, and the assignment. Then <code>Move()</code>
+<em>must</em> go through the setters ("using the set methods" is stated — and marked): direct
+attribute assignment would lose the point.</p>
+<h2>5. Instantiating and arrays of objects</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">Player1</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span>                       <span class="c1"># direct instantiation</span>
+<span class="n">AvailableAvatars</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">30</span>                 <span class="c1"># declare the array, fill from file</span>
+<span class="n">AvailableAvatars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Avatar</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">glasses</span><span class="p">,</span> <span class="n">hair</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+</pre></div></div>
+<p>Read-from-file-into-objects is Module 5's pattern A/B combined with this. When the paper
+says "declare an array of 100 Picture objects" — <code>[None] * 100</code> then fill by index; the
+declaration mark is for the structure, not the contents.</p>
+<h2>6. Objects as parameters and return values</h2>
+<p>Recurring shape (<a class="qref" href="files/papers/J22-P41-QP.pdf#page=6" title="Open the question paper at page 6">J22/41 Q2(f)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P41-MS.pdf#page=24" title="Open the mark scheme at page 24">MS&nbsp;p.24</a></span>, <a class="qref" href="files/papers/J26-P41-QP.pdf#page=8" title="Open the question paper at page 8">J26/41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P41-MS.pdf#page=32" title="Open the mark scheme at page 32">MS&nbsp;p.32</a></span>, <a class="qref" href="files/papers/N25-P41-QP.pdf#page=10" title="Open the question paper at page 10">N25/41 Q3(d)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=29" title="Open the mark scheme at page 29">MS&nbsp;p.29</a></span>): a function takes an object,
+mutates it via its methods, sometimes returns it:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">AddTrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_train</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__NumberTrains</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__NumberPlatforms</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__Trains</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__NumberTrains</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_train</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__NumberTrains</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div></div>
+<p>Note the private attribute access <em>inside</em> the class is fine; outside the class you must go
+through getters — Python won't stop you from touching <code>obj.__X</code> from outside, but the
+mark scheme does.</p>
+<h2>7. Worked example — full OOP + file + validation flow (<a class="qref" href="files/papers/J26-P42-QP.pdf#page=4" title="Open the question paper at page 4">June 2026 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J26-P42-QP.pdf#page=4" title="Open the question paper at page 4">June 2026 Paper 42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span> [30 marks]</strong> — class <code>Avatar</code> (TheName, Glasses boolean,
+Hair, Age), constructor, getters, <code>MeetCriteria()</code> matching two attribute values; read 30
+<strong>space-separated</strong> records from <code>AvatarFile.txt</code> (e.g. name / glasses / hair / age) with
+exception handling; validate user criteria (glasses yes/no; hair from a list); output
+matching avatars.</p>
+<p>This paper is the whole Module 6 in one question. Attempt it after Modules 5+6; the full
+model is <a href="solutions/m06_avatars.html"><code>solutions/m06_avatars.py</code></a>. Note the boolean field: <code>"True"</code> in the file must be
+converted to Python <code>True</code> (<code>parts[1] == "True"</code>).</p>
+<h2>Practice set</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/J21-P41-QP.pdf#page=8" title="Open the question paper at page 8">Jun 2021 P41 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J21-P41-MS.pdf#page=21" title="Open the mark scheme at page 21">MS&nbsp;p.21</a></span></td>
+<td>TreasureChest: class + file + quiz loop</td>
+<td>31</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J22-P41-QP.pdf#page=5" title="Open the question paper at page 5">Jun 2022 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P41-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span></td>
+<td>Balloon: object as parameter/return</td>
+<td>25</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J22-P42-QP.pdf#page=7" title="Open the question paper at page 7">Jun 2022 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=25" title="Open the mark scheme at page 25">MS&nbsp;p.25</a></span></td>
+<td>Card + file + selection game</td>
+<td>27</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N21-P41-QP.pdf#page=4" title="Open the question paper at page 4">Nov 2021 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=8" title="Open the mark scheme at page 8">MS&nbsp;p.8</a></span></td>
+<td>Picture + file search, case-insensitive</td>
+<td>30</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N22-P41-QP.pdf#page=4" title="Open the question paper at page 4">Nov 2022 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=8" title="Open the mark scheme at page 8">MS&nbsp;p.8</a></span></td>
+<td>Card + Hand (composition)</td>
+<td>31</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N22-P42-QP.pdf#page=5" title="Open the question paper at page 5">Nov 2022 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=11" title="Open the mark scheme at page 11">MS&nbsp;p.11</a></span></td>
+<td>Character + file + movement validation</td>
+<td>31</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J24-P41-QP.pdf#page=6" title="Open the question paper at page 6">Jun 2024 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=14" title="Open the mark scheme at page 14">MS&nbsp;p.14</a></span></td>
+<td>Tree + CSV file + filter criteria</td>
+<td>31</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N24-P41-QP.pdf#page=6" title="Open the question paper at page 6">Nov 2024 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=12" title="Open the mark scheme at page 12">MS&nbsp;p.12</a></span></td>
+<td>Horse + Fence, validated course input</td>
+<td>34</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P42-QP.pdf#page=4" title="Open the question paper at page 4">Jun 2026 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span></td>
+<td>Avatar + space-separated file + matching</td>
+<td>30</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N25-P41-QP.pdf#page=4" title="Open the question paper at page 4">Nov 2025 P41 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span></td>
+<td>Train/Station composition</td>
+<td>25</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common pitfalls</h2>
+<ul>
+<li>Forgetting the <code># type</code> comments — the paper explicitly instructs them for Python and the
+  "correct data types" mark lives there.</li>
+<li>Public attributes where private is demanded (or vice versa: <a class="qref" href="files/papers/N25-P41-QP.pdf#page=9" title="Open the question paper at page 9">N25/41 Q3(a)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span> Record class
+  explicitly wants public).</li>
+<li>Getters that print instead of return ("Returns the number..." — RETURN).</li>
+<li>Instantiating with the wrong argument order — match the constructor's parameter order to
+  the file's field order.</li>
+<li>Accessing <code>self.__X</code> from <em>outside</em> the class instead of using a getter.</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="60fcf11a07d6"><span>I can write the canonical class skeleton (comments + <code>__init__</code> + getters) from memory.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="f8ed84e27407"><span>I know the mark points a bare class declaration is worth.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="77ec9ba79ea2"><span>I can build and fill an array of objects.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="391cfe7883f3"><span>I can write a clamping setter and a mutator that routes through setters.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-05.html"><div class="dir">← Previous</div><div class="pt">Module 5 — File handling and exception handling</div></a><a class="next" href="module-07.html"><div class="dir">Next →</div><div class="pt">Module 7 — OOP advanced: composition, inheritance, overriding</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

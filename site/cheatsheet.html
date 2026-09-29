@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cambridge Pseudocode → Python 3 Cheatsheet — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink active" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / Pseudocode → Python cheatsheet</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Cambridge Pseudocode → Python 3 Cheatsheet (Paper 4 edition)</h1>
+<p>Paper 4 questions are written in Cambridge pseudocode; you answer in Python (console mode).
+Translating fluently — and knowing where the mark scheme expects Python conventions — is the
+foundation of this whole course. Print this and keep it next to you.</p>
+<p>Cover rules printed on every Paper 4 paper:</p>
+<ul>
+<li>Use <strong>Python (console mode)</strong> (or Java/VB console).</li>
+<li>A <strong>class declaration can be used to declare a record</strong>.</li>
+<li>If your language has no arrays, <strong>a list can be used instead</strong> (Python).</li>
+<li>Work not saved in the <strong>evidence document</strong> scores zero, even if correct.</li>
+</ul>
+<h2>1. Variables, declarations, type comments</h2>
+<p>Python declares nothing — the mark scheme's own models annotate types with comments, and
+Paper 4 explicitly instructs: <em>"If you are writing in Python, include attribute declarations
+using comments."</em></p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># pseudocode: DECLARE StackData : ARRAY[0:9] OF INTEGER</span>
+<span class="n">StackData</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># array of 10 integers</span>
+<span class="n">StackPointer</span> <span class="o">=</span> <span class="mi">0</span>                              <span class="c1"># integer</span>
+</pre></div></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pseudocode type</th>
+<th>Python</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INTEGER</td>
+<td><code>int</code></td>
+<td>cast with <code>int()</code></td>
+</tr>
+<tr>
+<td>REAL</td>
+<td><code>float</code></td>
+<td>cast with <code>float()</code></td>
+</tr>
+<tr>
+<td>STRING / CHARACTER</td>
+<td><code>str</code></td>
+<td>cast with <code>str()</code></td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td><code>bool</code></td>
+<td><code>True</code> / <code>False</code> (capitalised!)</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td><code>datetime.date</code></td>
+<td><code>date(2019, 1, 1)</code>; <code>.year</code> gives the year</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Fixed-size structures</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># ARRAY[0:9] OF INTEGER            -&gt;  10 elements</span>
+<span class="n">StackData</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="c1"># ARRAY[0:19, 0:2] OF INTEGER      -&gt;  20 rows x 3 columns</span>
+<span class="n">ArrayNodes</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)]</span>   <span class="c1"># separate row objects!</span>
+<span class="c1"># initialise every element to -1:</span>
+<span class="n">ArrayNodes</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)]</span>
+</pre></div></div>
+<p><strong>Trap:</strong> <code>[[‑1]*3]*20</code> creates 20 references to the <em>same</em> row — changing one row changes
+all of them. Always use a comprehension for 2D initialisation.</p>
+<p>Python lists grow with <code>.append(x)</code> — accepted by the mark scheme, but when the question
+says "declare an array of 30 elements", create the fixed-size list first (<code>[None]*30</code> or
+<code>[0]*30</code>) so your indices and full-checks behave like the pseudocode.</p>
+<h2>3. Operators</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pseudocode</th>
+<th>Python</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+  -  *</code></td>
+<td><code>+  -  *</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>/</code> (real division)</td>
+<td><code>/</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DIV</code> (integer division)</td>
+<td><code>//</code> or <code>int(a / b)</code></td>
+<td>mark scheme models use <code>int(...)</code>; <code>//</code> is cleaner and accepted</td>
+</tr>
+<tr>
+<td><code>MOD</code></td>
+<td><code>%</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>=</code> compare, <code>&lt;-</code> assign</td>
+<td><code>==</code> compare, <code>=</code> assign</td>
+<td>classic Paper 4 slip: <code>=</code> in an IF is a syntax error</td>
+</tr>
+<tr>
+<td><code>&lt;&gt;</code></td>
+<td><code>!=</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>AND  OR  NOT</code></td>
+<td><code>and  or  not</code></td>
+<td>lowercase</td>
+</tr>
+<tr>
+<td><code>&amp;</code> (string concat)</td>
+<td><code>+</code> (both sides must be <code>str</code>)</td>
+<td>or f-strings: <code>f"x = {x}"</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Console I/O</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># OUTPUT &quot;Enter name&quot;                              |  INPUT Name</span>
+<span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter name: &quot;</span><span class="p">)</span>        <span class="c1"># always a string!</span>
+
+<span class="c1"># INPUT Num : INTEGER</span>
+<span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>                  <span class="c1"># cast immediately</span>
+<span class="c1"># INPUT Price : REAL</span>
+<span class="n">price</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+</pre></div></div>
+<ul>
+<li><code>input()</code> returns a string. If the question wants a number, cast at once — validation
+  parts often award the cast as a mark point.</li>
+<li><code>print()</code> adds a newline; <code>print(x, end=" ")</code> keeps one line; <code>print(a, b)</code> inserts a
+  single space. Grid output (<a class="qref" href="files/papers/J22-P42-QP.pdf#page=4" title="Open the question paper at page 4">J22/42 Q2(b)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span>(ii)) wants <code>end=" "</code> per row then a bare <code>print()</code>.</li>
+</ul>
+<h2>5. Selection</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># IF x &gt; 10 THEN</span>
+<span class="c1">#   OUTPUT &quot;big&quot;</span>
+<span class="c1"># ELSE</span>
+<span class="c1">#   OUTPUT &quot;small&quot;</span>
+<span class="c1"># ENDIF</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;big&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;small&quot;</span><span class="p">)</span>
+</pre></div></div>
+<p>Multiple branches: pseudocode <code>CASE ... OF</code> → Python <code>elif</code> chain. There is no <code>switch</code>.</p>
+<h2>6. Loops</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># FOR X &lt;- 0 TO 9 ... NEXT X                 (inclusive!)</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>            <span class="c1"># range(10) is 0..9 — inclusive upper bound - 1</span>
+    <span class="o">...</span>
+<span class="c1"># FOR X &lt;- 0 TO 9 with step 2:</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>      <span class="c1"># pseudocode STEP 2</span>
+    <span class="o">...</span>
+<span class="c1"># REPEAT ... UNTIL valid</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+    <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="c1"># WHILE NOT EOF</span>
+<span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre></div></div>
+<p><strong>The #1 loop bug:</strong> pseudocode <code>FOR Y &lt;- 0 TO ArrayLength - 2</code> means <em>inclusive</em> of
+<code>ArrayLength - 2</code> → <code>range(0, ArrayLength - 1)</code>. When translating bubble sort from the
+paper's pseudocode, keep each bound exactly as printed.</p>
+<h2>7. Modular programming</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># PROCEDURE OutputData(ArrayData : ARRAY OF INTEGER)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">output_data</span><span class="p">(</span><span class="n">array_data</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c1"># FUNCTION Push(Value : INTEGER) RETURNS BOOLEAN</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="c1"># BYREF: Python passes mutable objects (lists) by reference automatically.</span>
+<span class="c1"># To let a function REBIND a global scalar, declare it:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">stack_pointer</span>
+    <span class="o">...</span>
+</pre></div></div>
+<ul>
+<li>Mark schemes expect the <code>global</code> keyword inside functions that update module-level
+  pointers/variables (their own Python models do exactly this, e.g. <code>global StackData</code>,
+  <code>global QueueHead</code>).</li>
+<li>Pseudocode parameters <code>BYREF</code> (lists, arrays of objects) work naturally; <code>BYVAL</code> scalars
+  are also fine because rebinding a parameter never affects the caller.</li>
+<li>Naming: identifiers from the paper (<code>StackData</code>, <code>Push</code>) are usually kept verbatim in the
+  models. It is safe (and faster to mark) to mirror the paper's own names, even though
+  camelCase is not PEP 8 style. This course uses the paper's names in solutions.</li>
+</ul>
+<h2>8. Strings</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pseudocode</th>
+<th>Python</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LENGTH(S)</code></td>
+<td><code>len(s)</code></td>
+<td>often the ONLY builtin allowed</td>
+</tr>
+<tr>
+<td><code>MID(S, start, n)</code></td>
+<td><code>s[start-1 : start-1+n]</code></td>
+<td>pseudocode positions are usually 1-based!</td>
+</tr>
+<tr>
+<td><code>LEFT(S, n)</code></td>
+<td><code>s[:n]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RIGHT(S, n)</code></td>
+<td><code>s[-n:]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>UCASE(S)</code></td>
+<td><code>s.upper()</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>LCASE(S)</code></td>
+<td><code>s.lower()</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>TOUPPER(ch)</code> / <code>TOLOWER(ch)</code></td>
+<td><code>ch.upper()</code> / <code>ch.lower()</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ASC(ch)</code></td>
+<td><code>ord(ch)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CHR(n)</code></td>
+<td><code>chr(n)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SPLIT</code>-like tasks</td>
+<td><code>s.split(',')</code></td>
+<td>banned where the paper says "no inbuilt split" — write a loop</td>
+</tr>
+</tbody>
+</table></div>
+<p>Where the paper bans builtins (e.g. "find the longest string without inbuilt functions",
+"inbuilt length allowed"), the ban applies to that feature only — the ban's scope is always
+stated in the question. Compare char-by-char with <code>ord()</code> or <code>&lt;</code>/<code>&gt;</code> when comparison
+builtins are forbidden.</p>
+<h2>9. File handling (text)</h2>
+<p>Paper 4 wants <strong>exception handling</strong> on file operations — it usually carries a dedicated
+mark ("appropriate use of exception handling, with catch and output") and a separate mark
+for closing the file in a suitable place.</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># reading a fixed number of lines</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;CardValues.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">colour</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">cards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Card</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">colour</span><span class="p">))</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File not found&quot;</span><span class="p">)</span>
+
+<span class="c1"># reading to end of file, unknown length</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;TheData.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">colour</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="o">...</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could not be opened&quot;</span><span class="p">)</span>
+
+<span class="c1"># writing a new file</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;NewHighScore.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could not be written&quot;</span><span class="p">)</span>
+
+<span class="c1"># appending (one item per line)</span>
+<span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;Red.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+<span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">item</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div></div>
+<ul>
+<li><code>strip()</code> every line — trailing <code>"\n"</code> breaks <code>int()</code> and equality checks.</li>
+<li>Read order = the order stated in the question (number then colour, name then x then y...).</li>
+<li>Variable-length records (<a class="qref" href="files/papers/J23-P42-QP.pdf#page=1" title="Open the question paper at page 1">J23/42</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span> <code>Employees.txt</code>: bonus line only for managers) need a
+  "peek": read the next line, decide from its content.</li>
+<li><code>open(...)</code> mode <code>"r"</code> read, <code>"w"</code> write (overwrites), <code>"a"</code> append.</li>
+</ul>
+<h2>10. OOP</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">class</span><span class="w"> </span><span class="nc">Card</span><span class="p">:</span>
+    <span class="c1"># self.__Number : INTEGER</span>
+    <span class="c1"># self.__Colour : STRING</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">colour</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Number</span> <span class="o">=</span> <span class="n">number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Colour</span> <span class="o">=</span> <span class="n">colour</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Number</span>
+</pre></div></div>
+<ul>
+<li><strong>Private</strong> = double underscore prefix: <code>self.__Number</code>. The privacy mark is awarded on
+  the double underscore.</li>
+<li><strong>Attribute declarations as comments</strong> directly above <code>__init__</code> — the question asks for
+  them explicitly, and they earn the "declared with correct data types" mark.</li>
+<li>Constructor header marks accept the Python parameter count (<code>self</code> counts as one extra:
+  a 4-parameter constructor is <code>def __init__(self, a, b, c, d)</code> — "Python 5").</li>
+<li>Inheritance: <code>class Manager(Employee):</code> then <code>super().__init__(...)</code> to call the parent
+  constructor. Overriding needs no keyword — just redefine the method with the same name.</li>
+<li><code>__str__</code> is <em>not</em> asked for; produce whatever string the question's OUTPUT format shows.</li>
+</ul>
+<h2>11. Records</h2>
+<p>The rubric lets a class serve as a record, but when the paper says <code>TYPE RecordData</code> and
+Python has no records, use a class with plain (public) attributes:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="c1"># TYPE RecordData</span>
+<span class="c1">#   ID     : STRING</span>
+<span class="c1">#   Total  : INTEGER</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RecordData</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ID</span> <span class="o">=</span> <span class="n">record_id</span>   <span class="c1"># string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Total</span> <span class="o">=</span> <span class="mi">0</span>        <span class="c1"># integer</span>
+</pre></div></div>
+<p>Some papers explicitly demand <strong>public</strong> attributes (<a class="qref" href="files/papers/N25-P41-QP.pdf#page=9" title="Open the question paper at page 9">N25/41 Q3(a)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P41-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span>) — then plain
+<code>self.Key = ...</code> without underscores is the mark-earning form.</p>
+<h2>12. Random numbers</h2>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="n">number</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>   <span class="c1"># inclusive both ends; MS: &quot;allow inclusive or exclusive&quot;</span>
+</pre></div></div>
+<h2>13. DIV/MOD arithmetic in context</h2>
+<p>Check-digit and hashing questions are DIV/MOD machines:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower</span> <span class="o">+</span> <span class="n">upper</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>          <span class="c1"># binary search</span>
+<span class="n">bucket</span> <span class="o">=</span> <span class="n">key</span> <span class="o">%</span> <span class="mi">100</span>                  <span class="c1"># hash: key MOD 100</span>
+<span class="n">check</span> <span class="o">=</span> <span class="p">(</span><span class="n">total</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>          <span class="c1"># weighted check digit</span>
+</pre></div></div>
+<h2>14. Functions must return in ALL branches</h2>
+<p>Mark points literally say "returns a value in all instances / in all possible situations".
+A function that falls through a branch without returning loses the mark:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>                 <span class="c1"># every path returns</span>
+    <span class="k">global</span> <span class="n">stack_pointer</span>
+    <span class="k">if</span> <span class="n">stack_pointer</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">StackData</span><span class="p">[</span><span class="n">stack_pointer</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">stack_pointer</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div></div>
+<h2>15. Where Python is actually <em>easier</em> (use it)</h2>
+<ul>
+<li>Tuple swap in sorts: <code>ArrayData[x][z], ArrayData[x][z+1] = ArrayData[x][z+1], ArrayData[x][z]</code>
+  — explicitly accepted by the mark scheme.</li>
+<li>Slicing for string algorithms (unless banned).</li>
+<li><code>del lst[-1]</code> for pop-from-list models (seen in the mark scheme's own answers).</li>
+<li>f-strings for the exact output formats the paper demands.</li>
+</ul>
+<h2>16. Evidence discipline (worth marks every paper)</h2>
+<ol>
+<li>Save each program with the exact name given (<code>Question1_J22</code> → <code>Question1_J22.py</code> is fine).</li>
+<li>After each part: save, run, <strong>screenshot the console output</strong>, paste code <em>and</em> screenshot
+   into the evidence document at the right part.</li>
+<li>Use the <strong>exact test data</strong> printed in the paper — screenshots are marked against it
+   (including deliberate overflow/invalid-input tests, e.g. 11 pushes into a 10-slot stack).</li>
+<li>Screenshot content is specified: e.g. <a class="qref" href="files/papers/N25-P42-QP.pdf#page=12" title="Open the question paper at page 12">N25/42 Q3(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P42-MS.pdf#page=37" title="Open the mark scheme at page 37">MS&nbsp;p.37</a></span>(ii) requires the new file's contents
+   <em>and its filename</em> visible in one screenshot.</li>
+</ol>
+      <div class="pager"><a class="prev" href="index.html"><div class="dir">← Previous</div><div class="pt">Python for Cambridge 9618 Paper 4</div></a><a class="next" href="module-00.html"><div class="dir">Next →</div><div class="pt">Module 0 — How Paper 4 works</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

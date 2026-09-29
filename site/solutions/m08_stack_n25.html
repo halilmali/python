@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m08_stack_n25.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m08_stack_n25.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m08_stack_n25.py</h1>
+<p><strong>Source question:</strong> Module 8 worked example — Nov 2025 P41 Q1 (20 marks): stack of 30 integers in a</p>
+<p><a class="textlink" href="../files/solutions/m08_stack_n25.py">Download raw file ↗</a></p>
+<div class="codeblock"><div class="cbhead"><span>run</span></div><div class="codehilite"><pre>python m08_stack_n25.py</pre></div></div>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 8 worked example — Nov 2025 P41 Q1 (20 marks): stack of 30 integers in a</span>
+<span class="sd">global array (elements &quot;null&quot;), TopOfStack is the index of the LAST element,</span>
+<span class="sd">initialised to -1; Push() returns FALSE when full; Pop() returns -999 when</span>
+<span class="sd">empty; main generates 40 random integers 0-1000 and pushes until full;</span>
+<span class="sd">FindValues() pops everything and reports the largest and smallest.</span>
+
+<span class="sd">Run:  python m08_stack_n25.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<span class="n">Stack</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">)]</span>   <span class="c1"># global array of 30 integers</span>
+<span class="n">TopOfStack</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>                     <span class="c1"># index of last element</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Push</span><span class="p">(</span><span class="n">NewValue</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">TopOfStack</span>
+    <span class="k">if</span> <span class="n">TopOfStack</span> <span class="o">==</span> <span class="mi">29</span><span class="p">:</span>            <span class="c1"># stack full</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">TopOfStack</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">Stack</span><span class="p">[</span><span class="n">TopOfStack</span><span class="p">]</span> <span class="o">=</span> <span class="n">NewValue</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Pop</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">TopOfStack</span>
+    <span class="k">if</span> <span class="n">TopOfStack</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>            <span class="c1"># stack empty</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">999</span>                 <span class="c1"># sentinel defined by the paper</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">[</span><span class="n">TopOfStack</span><span class="p">]</span>
+    <span class="n">TopOfStack</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">FindValues</span><span class="p">():</span>
+    <span class="n">largest</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>                    <span class="c1"># values are 0-1000, so these are safe starts</span>
+    <span class="n">smallest</span> <span class="o">=</span> <span class="mi">1001</span>
+    <span class="k">while</span> <span class="n">TopOfStack</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">Pop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">largest</span><span class="p">:</span>
+            <span class="n">largest</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">smallest</span><span class="p">:</span>
+            <span class="n">smallest</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The largest value was&quot;</span><span class="p">,</span> <span class="n">largest</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The smallest value was&quot;</span><span class="p">,</span> <span class="n">smallest</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># (d) 40 random integers, push until full, then stop with &quot;Stack full&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">40</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">Push</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stack full&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+    <span class="c1"># (e)(f) pop everything, report largest and smallest</span>
+    <span class="n">FindValues</span><span class="p">()</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m08_stack_calculator.html"><div class="dir">← Previous</div><div class="pt">m08_stack_calculator.py</div></a><a class="next" href="../solutions/m08_two_stacks.html"><div class="dir">Next →</div><div class="pt">m08_two_stacks.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

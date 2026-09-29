@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m07_vehicle_helicopter.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m07_vehicle_helicopter.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m07_vehicle_helicopter.py</h1>
+<p><strong>Source question:</strong> Module 7 worked example — Jun 2023 P41 Q2 (32 marks): parent class Vehicle</p>
+<p><a class="textlink" href="../files/solutions/m07_vehicle_helicopter.py">Download raw file ↗</a></p>
+<div class="codeblock"><div class="cbhead"><span>run</span></div><div class="codehilite"><pre>python m07_vehicle_helicopter.py</pre></div></div>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 7 worked example — Jun 2023 P41 Q2 (32 marks): parent class Vehicle</span>
+<span class="sd">(speed logic with a max-speed limit), child class Helicopter adding vertical</span>
+<span class="sd">movement and overriding IncreaseSpeed(); an output procedure that prints</span>
+<span class="sd">vertical data only when the object is a helicopter; main instantiates a car and</span>
+<span class="sd">a helicopter and increases each one&#39;s speed twice.</span>
+
+<span class="sd">Run:  python m07_vehicle_helicopter.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Vehicle</span><span class="p">:</span>
+    <span class="c1"># self.__VehicleID        : STRING</span>
+    <span class="c1"># self.__MaxSpeed         : INTEGER</span>
+    <span class="c1"># self.__CurrentSpeed     : INTEGER</span>
+    <span class="c1"># self.__IncreaseAmount   : INTEGER</span>
+    <span class="c1"># self.__HorizontalPosition : INTEGER</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vehicle_id</span><span class="p">,</span> <span class="n">max_speed</span><span class="p">,</span> <span class="n">increase_amount</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__VehicleID</span> <span class="o">=</span> <span class="n">vehicle_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__MaxSpeed</span> <span class="o">=</span> <span class="n">max_speed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__CurrentSpeed</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__IncreaseAmount</span> <span class="o">=</span> <span class="n">increase_amount</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__HorizontalPosition</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetVehicleID</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VehicleID</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetCurrentSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__CurrentSpeed</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetHorizontalPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__HorizontalPosition</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetIncreaseAmount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__IncreaseAmount</span> <span class="o">=</span> <span class="n">amount</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">IncreaseSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__CurrentSpeed</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__IncreaseAmount</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__CurrentSpeed</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__MaxSpeed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__CurrentSpeed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__MaxSpeed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__HorizontalPosition</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__CurrentSpeed</span> <span class="o">*</span> <span class="mi">2</span>   <span class="c1"># per the spec</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Helicopter</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
+    <span class="c1"># self.__VerticalPosition : INTEGER</span>
+    <span class="c1"># self.__VerticalChange   : INTEGER</span>
+    <span class="c1"># self.__MaxHeight        : INTEGER</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vehicle_id</span><span class="p">,</span> <span class="n">max_speed</span><span class="p">,</span> <span class="n">increase_amount</span><span class="p">,</span>
+                 <span class="n">vertical_position</span><span class="p">,</span> <span class="n">vertical_change</span><span class="p">,</span> <span class="n">max_height</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vehicle_id</span><span class="p">,</span> <span class="n">max_speed</span><span class="p">,</span> <span class="n">increase_amount</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalPosition</span> <span class="o">=</span> <span class="n">vertical_position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalChange</span> <span class="o">=</span> <span class="n">vertical_change</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__MaxHeight</span> <span class="o">=</span> <span class="n">max_height</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetVerticalPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalPosition</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">IncreaseSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                    <span class="c1"># overrides the parent method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalPosition</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalChange</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalPosition</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__MaxHeight</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__VerticalPosition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__MaxHeight</span>
+        <span class="n">Vehicle</span><span class="o">.</span><span class="n">IncreaseSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>             <span class="c1"># horizontal logic from the parent</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Output</span><span class="p">(</span><span class="n">VehicleToOutput</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ID:&quot;</span><span class="p">,</span> <span class="n">VehicleToOutput</span><span class="o">.</span><span class="n">GetVehicleID</span><span class="p">(),</span>
+          <span class="s2">&quot;Speed:&quot;</span><span class="p">,</span> <span class="n">VehicleToOutput</span><span class="o">.</span><span class="n">GetCurrentSpeed</span><span class="p">(),</span>
+          <span class="s2">&quot;Position:&quot;</span><span class="p">,</span> <span class="n">VehicleToOutput</span><span class="o">.</span><span class="n">GetHorizontalPosition</span><span class="p">())</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">VehicleToOutput</span><span class="p">,</span> <span class="n">Helicopter</span><span class="p">):</span>       <span class="c1"># type-dependent output</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Height:&quot;</span><span class="p">,</span> <span class="n">VehicleToOutput</span><span class="o">.</span><span class="n">GetVerticalPosition</span><span class="p">())</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">car</span> <span class="o">=</span> <span class="n">Vehicle</span><span class="p">(</span><span class="s2">&quot;Tiger&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">helicopter</span> <span class="o">=</span> <span class="n">Helicopter</span><span class="p">(</span><span class="s2">&quot;Lion&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">car</span><span class="o">.</span><span class="n">IncreaseSpeed</span><span class="p">()</span>
+    <span class="n">car</span><span class="o">.</span><span class="n">IncreaseSpeed</span><span class="p">()</span>
+    <span class="n">helicopter</span><span class="o">.</span><span class="n">IncreaseSpeed</span><span class="p">()</span>
+    <span class="n">helicopter</span><span class="o">.</span><span class="n">IncreaseSpeed</span><span class="p">()</span>
+    <span class="n">Output</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+    <span class="n">Output</span><span class="p">(</span><span class="n">helicopter</span><span class="p">)</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m07_employees.html"><div class="dir">← Previous</div><div class="pt">m07_employees.py</div></a><a class="next" href="../solutions/m08_circular_queue.html"><div class="dir">Next →</div><div class="pt">m08_circular_queue.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

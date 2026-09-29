@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 10 — Searching and sorting (no builtins allowed) — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink active" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 10 · Searching &amp; sorting</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 10 — Searching and sorting (no builtins allowed)</h1>
+<p><strong>Exam weight: 10–20 marks in most papers.</strong> When Paper 4 asks for a sort or search it
+nearly always says "you must not use any built-in sorting functions" — the mark scheme
+describes the manual algorithm, so <code>list.sort()</code> earns zero. Learn these four algorithms as
+<em>translations of the syllabus pseudocode</em>, not as generic code.</p>
+<h2>1. Linear search — two return conventions</h2>
+<p>The syllabus uses both; the paper states which it wants:</p>
+<p><strong>Found / not found (Boolean)</strong> — <a class="qref" href="files/papers/J21-P41-QP.pdf#page=6" title="Open the question paper at page 6">J21/41 Q2(b)</a> <span class="mswrap"><a class="msref" href="files/papers/J21-P41-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span>, <a class="qref" href="files/papers/N21-P41-QP.pdf#page=5" title="Open the question paper at page 5">N21/41 Q2(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=12" title="Open the mark scheme at page 12">MS&nbsp;p.12</a></span>:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">LinearSearch</span><span class="p">(</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">SearchValue</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DataArray</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">SearchValue</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div></div>
+<p><strong>Count of matches</strong> — <a class="qref" href="files/papers/J23-P41-QP.pdf#page=3" title="Open the question paper at page 3">J23/41 Q1(c)</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P41-MS.pdf#page=9" title="Open the mark scheme at page 9">MS&nbsp;p.9</a></span> ("The number 7 is found 2 times."), <a class="qref" href="files/papers/N22-P41-QP.pdf#page=2" title="Open the question paper at page 2">N22/41 Q1(c)</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span>:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">LinearSearch</span><span class="p">(</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">SearchValue</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DataArray</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">SearchValue</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span>
+</pre></div></div>
+<p>Return-in-all-branches matters here: the <code>return True</code> inside the loop plus the final
+<code>return False</code> is the pattern the mark scheme calls "returns in all instances".</p>
+<h2>2. Binary search — iterative and recursive</h2>
+<p>Binary search requires <strong>sorted data</strong> (papers make you sort first — that's the point).</p>
+<p><strong>Iterative</strong> (<a class="qref" href="files/papers/J24-P41-QP.pdf#page=4" title="Open the question paper at page 4">June 2024 P41 Q1(e)</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=10" title="Open the mark scheme at page 10">MS&nbsp;p.10</a></span>, 6 marks):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">BinarySearch</span><span class="p">(</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">SearchValue</span><span class="p">):</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">DataArray</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="n">first</span> <span class="o">&lt;=</span> <span class="n">last</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+        <span class="n">middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">first</span> <span class="o">+</span> <span class="n">last</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="o">==</span> <span class="n">SearchValue</span><span class="p">:</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">SearchValue</span><span class="p">:</span>
+            <span class="n">last</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">found</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">middle</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div></div>
+<p><strong>Recursive</strong> (<a class="qref" href="files/papers/N25-P42-QP.pdf#page=7" title="Open the question paper at page 7">N25/42 Q2(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P42-MS.pdf#page=23" title="Open the mark scheme at page 23">MS&nbsp;p.23</a></span> — the paper fixes the four-parameter signature; <a class="qref" href="files/papers/J24-P42-QP.pdf#page=13" title="Open the question paper at page 13">J24/42 Q3(d)</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P42-MS.pdf#page=37" title="Open the mark scheme at page 37">MS&nbsp;p.37</a></span>
+same):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">RecursiveBinarySearch</span><span class="p">(</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">Lower</span><span class="p">,</span> <span class="n">Upper</span><span class="p">,</span> <span class="n">SearchValue</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">Upper</span> <span class="o">&gt;=</span> <span class="n">Lower</span><span class="p">:</span>
+        <span class="n">Mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">Lower</span> <span class="o">+</span> <span class="n">Upper</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">Mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">SearchValue</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Mid</span>
+        <span class="k">elif</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">Mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">SearchValue</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">RecursiveBinarySearch</span><span class="p">(</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">Lower</span><span class="p">,</span> <span class="n">Mid</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">SearchValue</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">RecursiveBinarySearch</span><span class="p">(</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">Mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Upper</span><span class="p">,</span> <span class="n">SearchValue</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div></div>
+<p>Compare with <a class="qref" href="files/papers/J22-P42-QP.pdf#page=6" title="Open the question paper at page 6">J22/42 Q2(c)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=22" title="Open the mark scheme at page 22">MS&nbsp;p.22</a></span>: the paper gave this exact function as incomplete pseudocode with
+six blanks (note that variant computes <code>Mid</code> as <code>(Lower + (Upper − 1)) DIV 2</code> — when the
+paper provides pseudocode, translate <em>it</em>, don't substitute your own version). The mark
+scheme awards: mid calculation / found return / both branch recursions / not-found return
+/ correct bounds.</p>
+<h2>3. Bubble sort — from the syllabus pseudocode</h2>
+<p>Paper 4 prints bubble sort pseudocode and asks for a translation (<a class="qref" href="files/papers/J22-P42-QP.pdf#page=4" title="Open the question paper at page 4">J22/42 Q2(b)(i)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=15" title="Open the mark scheme at page 15">MS&nbsp;p.15</a></span>) or a
+completion of it (<a class="qref" href="files/papers/J21-P41-QP.pdf#page=6" title="Open the question paper at page 6">J21/41 Q2(e)</a> <span class="mswrap"><a class="msref" href="files/papers/J21-P41-MS.pdf#page=14" title="Open the mark scheme at page 14">MS&nbsp;p.14</a></span>, four/five blanks). The syllabus shape, translated:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">BubbleSort</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ArrayData</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ArrayData</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ArrayData</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">ArrayData</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">z</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">ArrayData</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">z</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">ArrayData</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">z</span><span class="p">],</span> <span class="n">ArrayData</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">z</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ArrayData</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">z</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ArrayData</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">z</span><span class="p">]</span>
+</pre></div></div>
+<p>That is <a class="qref" href="files/papers/J22-P42-QP.pdf#page=1" title="Open the question paper at page 1">J22/42</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>'s three-loop row-sorting variant. The tuple swap on the last line is
+<strong>explicitly accepted</strong> by the mark scheme ("Accept for MP5: ...").</p>
+<p><strong>Early-exit efficiency variant</strong> (<a class="qref" href="files/papers/J26-P43-QP.pdf#page=4" title="Open the question paper at page 4">J26/43 Q1(f)</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P43-MS.pdf#page=12" title="Open the mark scheme at page 12">MS&nbsp;p.12</a></span>, 5 marks — "stop as soon as the array is in
+order"):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">BubbleSortByLength</span><span class="p">():</span>
+    <span class="n">in_order</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">in_order</span><span class="p">:</span>
+        <span class="n">in_order</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DataArray</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">DataArray</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">DataArray</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]):</span>
+                <span class="n">DataArray</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">DataArray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">in_order</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div></div>
+<p>The <code>swapped</code>/<code>in_order</code> flag <em>is</em> the mark point. Other bubble variants:
+<a class="qref" href="files/papers/N24-P42-QP.pdf#page=13" title="Open the question paper at page 13">N24/42 Q3(d)</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P42-MS.pdf#page=35" title="Open the mark scheme at page 35">MS&nbsp;p.35</a></span> — two keys (level descending, then score descending, over parallel columns of
+a 2D string array); <a class="qref" href="files/papers/N24-P41-QP.pdf#page=5" title="Open the question paper at page 5">N24/41 Q1(d)</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=9" title="Open the mark scheme at page 9">MS&nbsp;p.9</a></span> — sorting strings with the char-by-char compare from
+Module 4; <a class="qref" href="files/papers/J23-P42-QP.pdf#page=2" title="Open the question paper at page 2">J23/42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span> — first-character key, descending.</p>
+<h2>4. Insertion sort — iterative and recursive</h2>
+<p><strong>Iterative</strong> (<a class="qref" href="files/papers/N22-P42-QP.pdf#page=3" title="Open the question paper at page 3">N22/42 Q1(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=7" title="Open the mark scheme at page 7">MS&nbsp;p.7</a></span> on a 2D array; <a class="qref" href="files/papers/J25-P43-QP.pdf#page=5" title="Open the question paper at page 5">J25/43 Q2(e)</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P43-MS.pdf#page=26" title="Open the mark scheme at page 26">MS&nbsp;p.26</a></span>; <a class="qref" href="files/papers/J26-P42-QP.pdf#page=3" title="Open the question paper at page 3">J26/42 Q1(c)</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=10" title="Open the mark scheme at page 10">MS&nbsp;p.10</a></span> on strings):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">InsertionSort</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">Numbers</span><span class="p">)):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">Numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">Numbers</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">key</span><span class="p">:</span>
+            <span class="n">Numbers</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Numbers</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">Numbers</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+</pre></div></div>
+<p><strong>Recursive</strong> (<a class="qref" href="files/papers/J24-P42-QP.pdf#page=11" title="Open the question paper at page 11">June 2024 P42 Q3(b)(i)</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P42-MS.pdf#page=29" title="Open the mark scheme at page 29">MS&nbsp;p.29</a></span>, 4 marks — the paper <em>provides</em> the recursive
+pseudocode <code>RecursiveInsertion</code> to translate, then (c) asks for the same algorithm
+iteratively, 4 marks):</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">RecursiveInsertion</span><span class="p">(</span><span class="n">IntegerArray</span><span class="p">,</span> <span class="n">NumberElements</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">NumberElements</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">IntegerArray</span>
+    <span class="n">RecursiveInsertion</span><span class="p">(</span><span class="n">IntegerArray</span><span class="p">,</span> <span class="n">NumberElements</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">IntegerArray</span><span class="p">[</span><span class="n">NumberElements</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">pointer</span> <span class="o">=</span> <span class="n">NumberElements</span> <span class="o">-</span> <span class="mi">2</span>
+    <span class="k">while</span> <span class="n">pointer</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">IntegerArray</span><span class="p">[</span><span class="n">pointer</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">last</span><span class="p">:</span>
+        <span class="n">IntegerArray</span><span class="p">[</span><span class="n">pointer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">IntegerArray</span><span class="p">[</span><span class="n">pointer</span><span class="p">]</span>
+        <span class="n">pointer</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">IntegerArray</span><span class="p">[</span><span class="n">pointer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">last</span>
+    <span class="k">return</span> <span class="n">IntegerArray</span>
+<span class="c1"># call: RecursiveInsertion(Numbers, len(Numbers))</span>
+</pre></div></div>
+<p>Translate the printed pseudocode line by line — the parameter names and the recursion
+position are mark points.</p>
+<h2>5. Worked example — full sort+search pipeline (<a class="qref" href="files/papers/J24-P41-QP.pdf#page=2" title="Open the question paper at page 2">June 2024 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/J24-P41-QP.pdf#page=2" title="Open the question paper at page 2">June 2024 Paper 41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span> [27 marks]</strong> —
+<code>9618 Past Papers\9618 Computer Science June 2024 Question paper 41.pdf</code></p>
+<p>In brief: read a count (validated 1–20), fill a global array of integers, <code>Initialise()</code>
+procedure, bubble sort, then an iterative <code>BinarySearch()</code>; main program prints the array,
+sorts, searches for a user value and outputs found/not-found with screenshots at each
+stage.</p>
+<p>This is the module's whole pipeline in one question. Full model:
+<a href="solutions/m10_sort_search_j24.html"><code>solutions/m10_sort_search_j24.py</code></a>. Mark scheme shape: validation loop / array fill /
+bubble translate / binary search (header, mid, three branches, loop condition) /
+main-program calls + messages.</p>
+<h2>6. Choosing the algorithm the paper wants</h2>
+<ul>
+<li>Paper prints pseudocode → translate it exactly (names, bounds, direction).</li>
+<li>Paper says "efficient"/"stop when in order" → flagged bubble.</li>
+<li>Paper says nothing and offers a choice → bubble (safest, matches syllabus pseudocode).</li>
+<li>Paper sorts 2D/parallel data → move whole rows together (Module 3).</li>
+<li>Paper bans comparisons/length builtins → Module 4's char-by-char tools.</li>
+</ul>
+<h2>Practice set</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/J24-P41-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2024 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Count, fill, bubble, iterative binary search</td>
+<td>27</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J24-P42-QP.pdf#page=10" title="Open the question paper at page 10">Jun 2024 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P42-MS.pdf#page=28" title="Open the mark scheme at page 28">MS&nbsp;p.28</a></span></td>
+<td>Recursive insertion translate → iterative; recursive binary search</td>
+<td>23</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J24-P42-QP.pdf#page=13" title="Open the question paper at page 13">Jun 2024 P42 Q3(d)</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P42-MS.pdf#page=37" title="Open the mark scheme at page 37">MS&nbsp;p.37</a></span></td>
+<td>Recursive binary search from spec</td>
+<td>6</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J25-P43-QP.pdf#page=4" title="Open the question paper at page 4">Jun 2025 P43 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P43-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span></td>
+<td>Insertion sort + binary search, no builtins</td>
+<td>20</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P43-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2026 P43 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P43-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span></td>
+<td>Count + bubble by length with early exit</td>
+<td>18</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N24-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2024 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Char-by-char compare + bubble sort of strings</td>
+<td>22</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N24-P42-QP.pdf#page=12" title="Open the question paper at page 12">Nov 2024 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/N24-P42-MS.pdf#page=31" title="Open the mark scheme at page 31">MS&nbsp;p.31</a></span></td>
+<td>Two-key bubble sort on a 2D string array</td>
+<td>17</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J23-P42-QP.pdf#page=2" title="Open the question paper at page 2">Jun 2023 P42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>First-character descending bubble, 4 blanks</td>
+<td>14</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N22-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2022 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=3" title="Open the mark scheme at page 3">MS&nbsp;p.3</a></span></td>
+<td>File + linear search count + bubble</td>
+<td>23</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common pitfalls</h2>
+<ul>
+<li><code>list.sort()</code>, <code>sorted()</code>, <code>max()</code>, <code>min()</code>, <code>in</code> where the paper bans builtins — zero
+  for those mark points.</li>
+<li>Translation drift: changing the paper's loop bounds or comparison direction "to make it
+  work" — mark it against their pseudocode, not against correctness vibes.</li>
+<li>Forgetting the not-found return (−1 / FALSE) — "returns in all instances".</li>
+<li>Binary search on unsorted data — sort first; papers always sequence it.</li>
+<li>Off-by-one at the edges (<code>last = len(...) - 1</code>, <code>first &lt;= last</code>).</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="8b56e2ec1d13"><span>I can write linear search in both return conventions.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="625355bbf98b"><span>I can write iterative and recursive binary search from memory.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="ce8a1ffea14b"><span>I can translate bubble sort from printed pseudocode, including blanks and early exit.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="055917efd47b"><span>I can write insertion sort iteratively and translate the recursive variant.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-09.html"><div class="dir">← Previous</div><div class="pt">Module 9 — Linked lists, binary trees, hash tables</div></a><a class="next" href="module-11.html"><div class="dir">Next →</div><div class="pt">Module 11 — Recursion: trace, translate, convert</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+15.5
+101
+Programmer
+22.0
+102
+12.5
+Manager
+18.75
+103
+Analyst
+30.0
+104
+20.0
+Director
+14.2
+105
+Tester
+25.1
+106
+15.0
+Manager
+16.8
+107
+Designer
+21.3
+108
+Team Lead

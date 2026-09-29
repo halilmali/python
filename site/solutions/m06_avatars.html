@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m06_avatars.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m06_avatars.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m06_avatars.py</h1>
+<p><strong>Source question:</strong> Module 6 worked example — Jun 2026 P42 Q2 (30 marks): class Avatar (TheName,</p>
+<p><a class="textlink" href="../files/solutions/m06_avatars.py">Download raw file ↗</a></p>
+
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 6 worked example — Jun 2026 P42 Q2 (30 marks): class Avatar (TheName,</span>
+<span class="sd">Glasses boolean, Hair, Age; constructor; getters; MeetCriteria() matching two</span>
+<span class="sd">attribute values); read 30 SPACE-separated records from AvatarFile.txt with</span>
+<span class="sd">exception handling; validate the user&#39;s criteria (glasses yes/no; hair from a</span>
+<span class="sd">list); output matching avatars.</span>
+
+<span class="sd">Run with test input (glasses, hair, e.g. &quot;yes\nblonde\n&quot;):</span>
+<span class="sd">    printf &quot;yes\nblonde\n&quot; | python m06_avatars.py</span>
+
+<span class="sd">Data file: ../data-files/J26-42/AvatarFile.txt (recreated in the paper&#39;s format)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Avatar</span><span class="p">:</span>
+    <span class="c1"># self.__TheName  : STRING</span>
+    <span class="c1"># self.__Glasses  : BOOLEAN</span>
+    <span class="c1"># self.__Hair     : STRING</span>
+    <span class="c1"># self.__Age      : INTEGER</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">the_name</span><span class="p">,</span> <span class="n">glasses</span><span class="p">,</span> <span class="n">hair</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__TheName</span> <span class="o">=</span> <span class="n">the_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Glasses</span> <span class="o">=</span> <span class="n">glasses</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Hair</span> <span class="o">=</span> <span class="n">hair</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Age</span> <span class="o">=</span> <span class="n">age</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetTheName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__TheName</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetGlasses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Glasses</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetHair</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Hair</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetAge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Age</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">MeetCriteria</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">glasses</span><span class="p">,</span> <span class="n">hair</span><span class="p">):</span>
+        <span class="c1"># matches when both attributes equal the criteria</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Glasses</span> <span class="o">==</span> <span class="n">glasses</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Hair</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">hair</span>
+
+
+<span class="n">AvailableAvatars</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">30</span>     <span class="c1"># global array of Avatar objects</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ReadData</span><span class="p">():</span>
+    <span class="c1"># 2(b) read 30 space-separated records, exception handling</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data-files/J26-42/AvatarFile.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="n">AvailableAvatars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Avatar</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span><span class="p">,</span>
+                                         <span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could not be opened&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_criteria</span><span class="p">():</span>
+    <span class="c1"># 2(c) validated inputs — glasses yes/no, hair from the allowed list</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">while</span> <span class="n">answer</span> <span class="o">!=</span> <span class="s2">&quot;yes&quot;</span> <span class="ow">and</span> <span class="n">answer</span> <span class="o">!=</span> <span class="s2">&quot;no&quot;</span><span class="p">:</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Does the avatar wear glasses? (yes/no): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">glasses</span> <span class="o">=</span> <span class="n">answer</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span>
+
+    <span class="n">hair</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">while</span> <span class="n">hair</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;brown&quot;</span><span class="p">,</span> <span class="s2">&quot;blonde&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">):</span>
+        <span class="n">hair</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Hair colour (black/brown/blonde/red): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">glasses</span><span class="p">,</span> <span class="n">hair</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">ReadData</span><span class="p">()</span>
+    <span class="n">glasses</span><span class="p">,</span> <span class="n">hair</span> <span class="o">=</span> <span class="n">get_criteria</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">AvailableAvatars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">AvailableAvatars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">MeetCriteria</span><span class="p">(</span><span class="n">glasses</span><span class="p">,</span> <span class="n">hair</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">AvailableAvatars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">GetTheName</span><span class="p">(),</span>
+                  <span class="n">AvailableAvatars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">GetAge</span><span class="p">(),</span>
+                  <span class="n">AvailableAvatars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">GetHair</span><span class="p">(),</span>
+                  <span class="s2">&quot;glasses&quot;</span> <span class="k">if</span> <span class="n">AvailableAvatars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">GetGlasses</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;no glasses&quot;</span><span class="p">)</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m05_toys_filter.html"><div class="dir">← Previous</div><div class="pt">m05_toys_filter.py</div></a><a class="next" href="../solutions/m06_card_game.html"><div class="dir">Next →</div><div class="pt">m06_card_game.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

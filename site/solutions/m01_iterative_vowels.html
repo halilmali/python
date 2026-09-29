@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m01_iterative_vowels.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m01_iterative_vowels.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m01_iterative_vowels.py</h1>
+<p><strong>Source question:</strong> Module 1 practice — Nov 2023 P41 Q1(a): translate the paper&#x27;s iterative</p>
+<p><a class="textlink" href="../files/solutions/m01_iterative_vowels.py">Download raw file ↗</a></p>
+<div class="codeblock"><div class="cbhead"><span>run</span></div><div class="codehilite"><pre>python m01_iterative_vowels.py</pre></div></div>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 1 practice — Nov 2023 P41 Q1(a): translate the paper&#39;s iterative</span>
+<span class="sd">vowel-counting function (built on LENGTH and MID in the pseudocode) to Python,</span>
+<span class="sd">then call it with the paper&#39;s test phrase.</span>
+
+<span class="sd">Run:  python m01_iterative_vowels.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">IterativeVowels</span><span class="p">(</span><span class="n">Phrase</span><span class="p">):</span>
+    <span class="n">Total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Phrase</span><span class="p">)):</span>        <span class="c1"># LENGTH(Phrase) -&gt; len(Phrase)</span>
+        <span class="k">if</span> <span class="n">Phrase</span><span class="p">[</span><span class="n">X</span><span class="p">]</span> <span class="ow">in</span> <span class="s2">&quot;aeiou&quot;</span><span class="p">:</span>        <span class="c1"># MID(Phrase, X+1, 1) -&gt; Phrase[X]</span>
+            <span class="n">Total</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">Total</span>
+
+
+<span class="c1"># main program — call with the paper&#39;s test word and output the result</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">IterativeVowels</span><span class="p">(</span><span class="s2">&quot;house&quot;</span><span class="p">))</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m01_data_linear_search.html"><div class="dir">← Previous</div><div class="pt">m01_data_linear_search.py</div></a><a class="next" href="../solutions/m01_unknown_function.html"><div class="dir">Next →</div><div class="pt">m01_unknown_function.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 0 — How Paper 4 works — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink active" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 0 · Exam orientation</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 0 — How Paper 4 works (and how to set up like a candidate)</h1>
+<p><strong>Time: 1 lesson.</strong> Before any Python, understand the game you are playing. Paper 4 is as
+much an <em>evidence management</em> exam as a programming exam.</p>
+<h2>The exam in numbers</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Fact</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Duration</td>
+<td>2 hours 30 minutes</td>
+</tr>
+<tr>
+<td>Total marks</td>
+<td>75, in 3 big questions</td>
+</tr>
+<tr>
+<td>Language</td>
+<td>Python 3 (console mode) — your choice from Java/VB/Python</td>
+</tr>
+<tr>
+<td>Format</td>
+<td>On-computer. You write, run, screenshot, and paste code + screenshots into <code>evidence.doc</code>/<code>evidence.docx</code></td>
+</tr>
+<tr>
+<td>Structure</td>
+<td>Q1 ≈ 17–29 marks, Q2 ≈ 22–34, Q3 ≈ 17–33 — question types rotate (see <code>question-bank.md</code>)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>The three-question pattern (2021–2026)</h2>
+<p>Almost every paper is three self-contained programs:</p>
+<ol>
+<li><strong>One "algorithm/ADT" question</strong> — a stack, queue, linked list, binary tree or hash
+   table built on a global array, often with part of the algorithm given as pseudocode
+   (to translate or complete).</li>
+<li><strong>One "data" question</strong> — read a text file into an array/records/objects, process,
+   sometimes write results to a file. Heavy on exception handling.</li>
+<li><strong>One "OOP" question</strong> — declare classes with private attributes and a constructor,
+   sometimes inherit/override, sometimes compose objects inside objects.</li>
+</ol>
+<p>The rotation is not strict (some papers are ADT + OOP + algorithms), so the course trains
+the underlying <em>skills</em>, then assembles them into full-paper runs in Module 12.</p>
+<h2>The rules that cost real marks</h2>
+<p>Read the front cover of any past paper and internalise these:</p>
+<ol>
+<li><strong>"If work is not saved in the evidence document, you will not receive marks for that
+   task."</strong> Correct code left in the IDE scores zero. After <em>every</em> part: save program →
+   run → screenshot output → paste code and screenshot into the evidence document.</li>
+<li><strong>Exact save names.</strong> <code>Save your program as Question1_J22</code> — markers see these names.</li>
+<li><strong>Exact test data.</strong> Where the paper prints test inputs (often including an overflow or
+   invalid case), your screenshot must show those exact inputs. The screenshot marks are
+   awarded against the printed data, not "any run".</li>
+<li><strong>Screenshot contents are specified.</strong> Example: <a class="qref" href="files/papers/N25-P42-QP.pdf#page=12" title="Open the question paper at page 12">November 2025 Paper 42 Q3(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P42-MS.pdf#page=37" title="Open the mark scheme at page 37">MS&nbsp;p.37</a></span>(ii) requires
+   the new file's contents <em>and the filename</em> visible in one screenshot.</li>
+<li><strong>No internet, no email.</strong> You may not look anything up. Train without a browser.</li>
+</ol>
+<h2>What the mark scheme actually rewards (Python-specific)</h2>
+<p>Drawn from the 2022–2026 mark schemes (see <code>question-bank.md</code> for the full analysis):</p>
+<ul>
+<li><strong><code>global</code> keyword</strong>: when a procedure/function updates a module-level pointer or array,
+  the model answers declare it (<code>global StackData</code>, <code>global QueueHead</code>). Do the same.</li>
+<li><strong><code>self.__Attribute</code></strong> for private — the double underscore <em>is</em> the privacy mark.</li>
+<li><strong>Attribute declarations as comments</strong> above the constructor: the papers explicitly
+  instruct this for Python, and the comments earn the "declared with correct data types"
+  mark.</li>
+<li><strong><code>try/except</code> on file operations</strong> usually carries its own dedicated mark, plus one for
+  closing the file in a suitable place.</li>
+<li><strong>Functions must return in all branches</strong> — mark points say "in all instances".</li>
+<li><strong>Banned builtins score zero for their mark points</strong>: if the paper says "no inbuilt
+  sorting function", the mark scheme describes the manual algorithm, so <code>list.sort()</code>
+  earns nothing.</li>
+<li><strong>Marks are never deducted</strong> (Cambridge Marking Principle): wrong extra code just earns
+  nothing — so always <em>attempt</em> every part.</li>
+</ul>
+<h2>Setting up your training environment</h2>
+<ol>
+<li>Install Python 3.11+ (or use whatever your school provides) and an editor — IDLE, VS Code
+   or Thonny are all fine. Train in the same environment you'll use in the exam.</li>
+<li>Create a course working folder. Every worked example and practice solution in this course
+   lives in <code>solutions/</code>.</li>
+<li>Sample data files matching the formats the papers describe are in <code>data-files/</code> — the
+   original exam data files are not published, so these are recreations with the same
+   structure; make your own too.</li>
+<li>Time yourself from Module 1 onwards using the marks as minutes (75 marks / 150 minutes
+   ≈ 2 minutes per mark).</li>
+</ol>
+<h2>How to use this course</h2>
+<ul>
+<li>Modules 1–11 teach one skill family each: read the notes, study the worked example
+  (a real past-paper question, cited), then do the practice set against the original PDFs.</li>
+<li><code>pseudocode-cheatsheet.md</code> is your constant companion — print it.</li>
+<li><code>question-bank.md</code> indexes every paper question by skill.</li>
+<li>Module 12 is exam technique: a timed full-paper protocol and a mock schedule.</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="5eb0a5a2909c"><span>I can name the three question families and roughly what each is worth.</span></label></li>
+<li>[ ] I know the evidence-document workflow (save → run → screenshot → paste) and why a
+      correct unsaved answer is worth zero.</li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="635baa432caf"><span>My Python environment runs; I can create and run <code>hello.py</code>.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="50299043c5a6"><span>I have the pseudocode cheatsheet printed or pinned.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="cheatsheet.html"><div class="dir">← Previous</div><div class="pt">Cambridge Pseudocode → Python 3 Cheatsheet</div></a><a class="next" href="module-01.html"><div class="dir">Next →</div><div class="pt">Module 1 — Pseudocode → Python foundations</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

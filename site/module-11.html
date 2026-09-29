@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 11 — Recursion: trace, translate, convert — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink active" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 11 · Recursion</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 11 — Recursion: trace, translate, convert</h1>
+<p><strong>Exam weight: 6–17 marks in roughly two-thirds of papers.</strong> Paper 4 tests recursion in
+three ways: <em>trace it</em> (predict output), <em>translate it</em> (recursive pseudocode → Python, or
+fill blanks), and <em>convert it</em> (iterative ↔ recursive). The mark scheme splits each into
+mechanical points: base case / comparison / recursive call with changed parameter /
+aggregation / no superfluous code.</p>
+<h2>1. Reading a recursive function</h2>
+<p>Every exam recursion has the same anatomy:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">recursive_value</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">to_find</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="o">==</span> <span class="n">to_find</span><span class="p">:</span>               <span class="c1"># base case 1</span>
+        <span class="k">return</span> <span class="n">number</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="n">to_find</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>           <span class="c1"># condition</span>
+        <span class="k">return</span> <span class="n">number</span> <span class="o">+</span> <span class="n">recursive_value</span><span class="p">(</span><span class="n">number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">to_find</span><span class="p">)</span>   <span class="c1"># change + aggregate</span>
+    <span class="k">return</span> <span class="n">recursive_value</span><span class="p">(</span><span class="n">number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">to_find</span><span class="p">)</span>                <span class="c1"># change, no aggregate</span>
+</pre></div></div>
+<p>The four questions to ask of any recursion:
+1. What stops it (base case)?
+2. What changes in each call (the "progress" — must move toward the base case)?
+3. What do the returned values do on the way back (aggregation, or just propagation)?
+4. What side effects (OUTPUT/print) happen on the way <strong>down</strong> vs on the way <strong>up</strong>?</p>
+<h2>2. Tracing — the discipline</h2>
+<p><a class="qref" href="files/papers/N21-P41-QP.pdf#page=3" title="Open the question paper at page 3">N21/41 Q1(b)</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span> has the main program call the given recursive function <code>Unknown(X, Y)</code> three
+times and output each return value; the marks are for correct outputs. Trace in a table —
+one row per call, columns for parameters, branch taken, print, return:</p>
+<div class="codeblock"><div class="cbhead"><span>text</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre>Call           Branch        Prints      Returns
+Unknown(10,15) x &lt; y         25          Unknown(11,15) * 2
+Unknown(11,15) x &lt; y         26          Unknown(12,15) * 2
+...            ...           ...         ...
+Unknown(15,15) x = y         —           1
+</pre></div></div>
+<p>Then unwind: the returns multiply on the way back up, so <code>Unknown(10, 15)</code> = 2⁵ = 32.
+Always trace mechanically; "it looks like it doubles" is how marks die. Then <strong>verify by
+running</strong> — the exam gives you a computer; output-prediction parts can be checked before
+you commit the screenshot.</p>
+<h2>3. Worked example — iterative → recursive (<a class="qref" href="files/papers/N23-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2023 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N23-P41-QP.pdf#page=2" title="Open the question paper at page 2">November 2023 Paper 41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span> [16 marks]</strong> — the paper supplies an iterative
+pseudocode function counting vowels in a string (using MID and LENGTH); part (a) asks you
+to translate it to Python (5 marks); part (b) asks you to <strong>rewrite it recursively</strong>
+(6 marks).</p>
+<p>Iterative translation:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">IterativeVowels</span><span class="p">(</span><span class="n">Phrase</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Phrase</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">Phrase</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="ow">in</span> <span class="s2">&quot;aeiou&quot;</span><span class="p">:</span>       <span class="c1"># or explicit comparisons per the printed code</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">total</span>
+</pre></div></div>
+<p>Recursive rewrite — the standard "index parameter" pattern:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">RecursiveVowels</span><span class="p">(</span><span class="n">Phrase</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">Phrase</span><span class="p">):</span>               <span class="c1"># base case: past the end</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">Phrase</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="ow">in</span> <span class="s2">&quot;aeiou&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">RecursiveVowels</span><span class="p">(</span><span class="n">Phrase</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">RecursiveVowels</span><span class="p">(</span><span class="n">Phrase</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># call: RecursiveVowels(&quot;imagine&quot;, 0)</span>
+</pre></div></div>
+<p><strong>Mark scheme shape (recursive version):</strong> base case / comparison per character /
+recursive call with progress (+1 or shorter string) / aggregation of 1 / remainder correct
+with <em>nothing superfluous</em> (that literal point exists in the mark scheme — leave out
+debug prints).</p>
+<h2>4. Worked example — recursive → iterative (<a class="qref" href="files/papers/N21-P41-QP.pdf#page=3" title="Open the question paper at page 3">Nov 2021 P41 Q1(c)</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N21-P41-QP.pdf#page=3" title="Open the question paper at page 3">November 2021 Paper 41 Q1(c)</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=6" title="Open the mark scheme at page 6">MS&nbsp;p.6</a></span> [7 marks]</strong> — after running the given recursive
+<code>Unknown(X, Y)</code> (Module 1's example), rewrite it as an <strong>iterative</strong> <code>IterativeUnknown()</code>
+and call it with the same three parameter pairs.</p>
+<p>Conversion recipe: replace recursion with a loop whose condition mirrors the base case,
+and turn "recursive call" into "update the variables". The only subtlety here is that the
+<code>* 2</code> and <code>DIV 2</code> apply to the <em>returned</em> value on the way back up — so accumulate them
+into a running result, once per step:</p>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">IterativeUnknown</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">X</span> <span class="o">!=</span> <span class="n">Y</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="n">Y</span><span class="p">)</span>               <span class="c1"># each level printed X + Y on the way down</span>
+        <span class="k">if</span> <span class="n">X</span> <span class="o">&lt;</span> <span class="n">Y</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">*</span> <span class="mi">2</span>    <span class="c1"># applied to the return value at each level</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">result</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div></div>
+<p>Same prints, same return values — that's the 7 marks. (Check <code>Unknown(15, 10)</code> by hand:
+five halvings starting from 1 collapse to 0 — integer division. Candidates who used real
+division get 0.03125 and lose the mark.)</p>
+<h2>5. Worked example — fill-in-the-blanks recursion (<a class="qref" href="files/papers/N23-P42-QP.pdf#page=7" title="Open the question paper at page 7">Nov 2023 P42 Q2(b)</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span>)</h2>
+<p><strong>Reference: <a class="qref" href="files/papers/N23-P42-QP.pdf#page=7" title="Open the question paper at page 7">November 2023 Paper 42 Q2(b)(i)</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span> [7 marks]</strong> — a divisor-sum function given as
+incomplete recursive pseudocode: five gaps covering the base case (<code>Number = 0</code> → return
+0... per the printed structure), the match condition, the two recursive calls with changed
+parameters, and the aggregation.</p>
+<p>Method: fill the gaps <strong>on the paper first</strong> (they are 5 of the 7 marks), then translate
+the completed function to Python. The mark scheme awards one mark per gap, plus one for
+both recursive calls being accurate <em>and</em> correctly placed, plus one for the remainder with
+nothing superfluous. The same fill-blanks pattern appears in <a class="qref" href="files/papers/N22-P41-QP.pdf#page=9" title="Open the question paper at page 9">N22/41 Q3(c)</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span> (tree search),
+<a class="qref" href="files/papers/N21-P41-QP.pdf#page=8" title="Open the question paper at page 8">N21/41 Q3(b)</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=18" title="Open the mark scheme at page 18">MS&nbsp;p.18</a></span> (tree AddNode), <a class="qref" href="files/papers/J22-P42-QP.pdf#page=6" title="Open the question paper at page 6">J22/42 Q2(c)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=22" title="Open the mark scheme at page 22">MS&nbsp;p.22</a></span> (binary search), <a class="qref" href="files/papers/J22-P41-QP.pdf#page=9" title="Open the question paper at page 9">J22/41 Q3(c)</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P41-MS.pdf#page=30" title="Open the mark scheme at page 30">MS&nbsp;p.30</a></span> (queue Enqueue).</p>
+<h2>6. Recursion over structures</h2>
+<ul>
+<li><strong>Recursive traversal</strong> — array-based tree (<a class="qref" href="files/papers/J26-P43-QP.pdf#page=13" title="Open the question paper at page 13">J26/43 Q3(e)</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P43-MS.pdf#page=43" title="Open the mark scheme at page 43">MS&nbsp;p.43</a></span>, <a class="qref" href="files/papers/N21-P41-QP.pdf#page=11" title="Open the question paper at page 11">N21/41 Q3(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=22" title="Open the mark scheme at page 22">MS&nbsp;p.22</a></span>, 7 marks each) and
+  object-based tree (<a class="qref" href="files/papers/J25-P41-QP.pdf#page=8" title="Open the question paper at page 8">J25/41 Q3(c)</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P41-MS.pdf#page=35" title="Open the mark scheme at page 35">MS&nbsp;p.35</a></span>, 5 marks): in-order = left / print / right, with the −1
+  or <code>None</code> base case. Written out in Module 9.</li>
+<li><strong>Recursive counting over an array</strong> (<a class="qref" href="files/papers/N25-P43-QP.pdf#page=12" title="Open the question paper at page 12">N25/43 Q3(a)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=32" title="Open the mark scheme at page 32">MS&nbsp;p.32</a></span>, 9 marks): the paper requires passing
+  "the array without the first element" — Python slicing makes this natural:</li>
+</ul>
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="k">def</span><span class="w"> </span><span class="nf">RecursiveCount</span><span class="p">(</span><span class="n">ArrayCopy</span><span class="p">,</span> <span class="n">NumberElements</span><span class="p">,</span> <span class="n">DataToFind</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">NumberElements</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>                      <span class="c1"># base case: empty array</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">ArrayCopy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">DataToFind</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">RecursiveCount</span><span class="p">(</span><span class="n">ArrayCopy</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">NumberElements</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">DataToFind</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">RecursiveCount</span><span class="p">(</span><span class="n">ArrayCopy</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">NumberElements</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">DataToFind</span><span class="p">)</span>
+</pre></div></div>
+<p>Keep the parameter names and structure the paper specifies even where a Pythonic loop
+  would be shorter — the recursion <em>is</em> the requirement.</p>
+<h2>7. Practice set</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Task</th>
+<th>Marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="qref" href="files/papers/N21-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2021 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N21-P41-MS.pdf#page=3" title="Open the mark scheme at page 3">MS&nbsp;p.3</a></span></td>
+<td>Trace + iterative rewrite of a recursive function</td>
+<td>17</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N23-P41-QP.pdf#page=2" title="Open the question paper at page 2">Nov 2023 P41 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P41-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span></td>
+<td>Translate iterative vowels; rewrite recursively</td>
+<td>16</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N23-P42-QP.pdf#page=6" title="Open the question paper at page 6">Nov 2023 P42 Q2</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=17" title="Open the mark scheme at page 17">MS&nbsp;p.17</a></span></td>
+<td>Translate iterative divisor-sum; complete recursive version</td>
+<td>17</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N22-P42-QP.pdf#page=9" title="Open the question paper at page 9">Nov 2022 P42 Q3(d)</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P42-MS.pdf#page=23" title="Open the mark scheme at page 23">MS&nbsp;p.23</a></span></td>
+<td>Convert a given iterative output function to recursion</td>
+<td>6</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N22-P41-QP.pdf#page=9" title="Open the question paper at page 9">Nov 2022 P41 Q3(c)(d)</a> <span class="mswrap"><a class="msref" href="files/papers/N22-P41-MS.pdf#page=19" title="Open the mark scheme at page 19">MS&nbsp;p.19</a></span></td>
+<td>Recursive tree search (blanks) + recursive post-order</td>
+<td>12</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J24-P42-QP.pdf#page=10" title="Open the question paper at page 10">Jun 2024 P42 Q3</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P42-MS.pdf#page=28" title="Open the mark scheme at page 28">MS&nbsp;p.28</a></span></td>
+<td>Recursive insertion sort translate + iterative; recursive binary search</td>
+<td>23</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/N25-P43-QP.pdf#page=12" title="Open the question paper at page 12">Nov 2025 P43 Q3(a)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=32" title="Open the mark scheme at page 32">MS&nbsp;p.32</a></span></td>
+<td>RecursiveCount with array-minus-first-element</td>
+<td>9</td>
+</tr>
+<tr>
+<td><a class="qref" href="files/papers/J26-P43-QP.pdf#page=13" title="Open the question paper at page 13">Jun 2026 P43 Q3(e)</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P43-MS.pdf#page=43" title="Open the mark scheme at page 43">MS&nbsp;p.43</a></span></td>
+<td>Recursive in-order traversal on 2D-array tree</td>
+<td>7</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common pitfalls</h2>
+<ul>
+<li>Missing or unreachable base case → <code>RecursionError</code> at runtime (maximum depth exceeded).</li>
+<li>Recursive call that doesn't progress toward the base case (forgetting <code>x + 1</code> or
+  <code>NumberElements - 1</code>).</li>
+<li>Aggregating on the wrong side (adding before the call when the aggregation is meant to
+  happen on the way back — trace to check which the pseudocode intends).</li>
+<li>Extra prints in a fill-blanks answer — the "nothing superfluous" point is real.</li>
+<li>Deep recursion on large arrays: fine at exam scale (20–100 elements), but know that
+  Python's default recursion limit (~1000) exists.</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="928933ff415a"><span>I can trace a recursion in a table, down and up, without guessing.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="b47db2a10994"><span>I can rewrite a simple recursion as a loop and a loop as a recursion.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="b4315866d038"><span>I can fill recursive pseudocode gaps: base case, progress, aggregation.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="7b93e199ecdd"><span>I can write recursive tree traversals in both array and object forms.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-10.html"><div class="dir">← Previous</div><div class="pt">Module 10 — Searching and sorting (no builtins allowed)</div></a><a class="next" href="module-12.html"><div class="dir">Next →</div><div class="pt">Module 12 — Exam technique: the 150-minute protocol</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

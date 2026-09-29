@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 12 — Exam technique: the 150-minute protocol — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checkpoints.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="index.html"><span>Home</span></a>
+<a class="navlink" href="cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink active" href="module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="index.html">Course home</a> / 12 · Exam technique</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>Module 12 — Exam technique: the 150-minute protocol</h1>
+<p><strong>Time: revision weeks.</strong> You now own every skill family. This module is about spending
+them efficiently: time allocation, evidence discipline, recovery plans, and a mock
+schedule using the papers in <code>9626-topical-questions\9618 Past Papers\</code>.</p>
+<h2>1. Time budget (75 marks / 150 minutes)</h2>
+<p>Work in marks-per-minute (≈2 marks/minute) but front-load the formulaic parts:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Time</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>5 min</td>
+<td>Evidence document: name/centre/candidate number; save as <code>evidence_zz999_9999</code>. Read all three questions.</td>
+</tr>
+<tr>
+<td>First pass — Q1</td>
+<td>~35 min</td>
+<td>Q1 is usually the most mechanical (ADT skeleton). Bank it fully, screenshots included.</td>
+</tr>
+<tr>
+<td>Second pass — Q2/Q3</td>
+<td>~45 min each</td>
+<td>Usually OOP+files and one algorithm-heavy question. Do the formulaic parts of <em>both</em> before the hardest sub-parts.</td>
+</tr>
+<tr>
+<td>Hardest parts</td>
+<td>flexible</td>
+<td>The 6–8-mark single parts (tree insert, AddItem, hash insert). Attempt — no negative marking.</td>
+</tr>
+<tr>
+<td>Final 15 min</td>
+<td>15 min</td>
+<td>Evidence audit (checklist below). Non-negotiable.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Do not sink 30 minutes into one 6-mark part while unsaved 15-mark parts sit in your editor.</p>
+<h2>2. The evidence checklist (final 15 minutes)</h2>
+<p>Cambridge's rule: <strong>not in the evidence document = no marks.</strong> Before stopping:</p>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="cd5d454d6106"><span>Every part's <strong>code</strong> is pasted at the correct part label.</span></label></li>
+<li>[ ] Every screenshot part has an image showing the <strong>paper's exact test data</strong> being run
+      (including the deliberate overflow/invalid tests — e.g. the 11th push into a full
+      stack, the invalid check-digit string).</li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="38983a5b1165"><span>Program files saved with the exact names given (<code>Question1_J22</code> etc.).</span></label></li>
+<li>[ ] Screenshot content matches what the part demands (e.g. <a class="qref" href="files/papers/N25-P42-QP.pdf#page=12" title="Open the question paper at page 12">N25/42 Q3(e)</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P42-MS.pdf#page=37" title="Open the mark scheme at page 37">MS&nbsp;p.37</a></span>(ii): the new
+      file's contents <em>and</em> its filename visible).</li>
+<li>[ ] No part left blank — wrong-but-attempted code can still collect mark points; blank
+      collects none.</li>
+</ul>
+<h2>3. Reading the question (the 30-second scan)</h2>
+<p>For every part, extract and jot at the margin:</p>
+<ol>
+<li><strong>Procedure or function?</strong> ("write program code for the function Push()") — header
+   marks follow the wording; functions must return in all branches.</li>
+<li><strong>Parameters and return type</strong> — often printed explicitly; copy them verbatim.</li>
+<li><strong>Sentinels and messages</strong> — <code>−1</code>, <code>"Empty"</code>, <code>"Stack is full"</code>: use the exact strings.</li>
+<li><strong>Bans</strong> — "no inbuilt sorting functions", "without using an inbuilt split function",
+   "inbuilt length allowed". Circle them.</li>
+<li><strong>Global or local?</strong> — "declared globally" changes your <code>global</code> declarations.</li>
+<li><strong>Validation demanded or explicitly waived</strong> — <a class="qref" href="files/papers/N23-P42-QP.pdf#page=2" title="Open the question paper at page 2">N23/42 Q1</a> <span class="mswrap"><a class="msref" href="files/papers/N23-P42-MS.pdf#page=4" title="Open the mark scheme at page 4">MS&nbsp;p.4</a></span> says "You do not need to
+   validate the parameters"; others demand validation loops. Both appear; read.</li>
+</ol>
+<h2>4. When pseudocode is printed — translate, don't rewrite</h2>
+<p>The most under-rated instruction in the paper: where pseudocode is given (complete or with
+blanks), your answer is marked against <em>that</em> algorithm. Translate line by line — same
+bounds, same comparison direction, same parameter names. <a class="qref" href="files/papers/J22-P42-QP.pdf#page=1" title="Open the question paper at page 1">J22/42</a> <span class="mswrap"><a class="msref" href="files/papers/J22-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span>'s binary search computes
+mid as <code>(Lower + (Upper − 1)) DIV 2</code>; candidates who "fixed" it to their own preferred form
+still worked, but translated versions match mark points exactly and cost nothing.</p>
+<h2>5. Recovery plans</h2>
+<ul>
+<li><strong>Syntax error you can't find</strong> → comment the block; rebuild it in 5 lines from the
+  skeleton. Never leave broken code pasted in the evidence document if you can paste a
+  partial-but-running version instead.</li>
+<li><strong>Logic bug with no time</strong> → paste the best version, add a comment showing intended
+  behaviour; mark points for structure (header, checks, updates) can still score.</li>
+<li><strong>Screenshot missed earlier</strong> → re-run the saved program with the printed test data and
+  capture it; the program file is still on disk.</li>
+<li><strong>Blank mind on a hard ADT</strong> → draw the array on paper and trace ONE operation by hand
+  (Module 9's advice); 90 seconds that usually unblocks the whole part.</li>
+</ul>
+<h2>6. The mock schedule (use your own PDF collection)</h2>
+<p>Six full mocks before the exam — 2h30 each, closed book, evidence document discipline,
+then self-mark against the published mark schemes (same folder):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mock</th>
+<th>Paper</th>
+<th>Why this one</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a class="qref" href="files/papers/J23-P42-QP.pdf#page=1" title="Open the question paper at page 1">June 2023 P42</a> <span class="mswrap"><a class="msref" href="files/papers/J23-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span></td>
+<td>OOP inheritance + variable-length files (hardest file format)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a class="qref" href="files/papers/J24-P42-QP.pdf#page=1" title="Open the question paper at page 1">June 2024 P42</a> <span class="mswrap"><a class="msref" href="files/papers/J24-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span></td>
+<td>Recursion everywhere + two-class tree</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a class="qref" href="files/papers/J25-P41-QP.pdf#page=1" title="Open the question paper at page 1">June 2025 P41</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P41-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span></td>
+<td>Circular queue + six-file write + object tree</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a class="qref" href="files/papers/J25-P42-QP.pdf#page=1" title="Open the question paper at page 1">June 2025 P42</a> <span class="mswrap"><a class="msref" href="files/papers/J25-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span></td>
+<td>Stack calculator + hash table + inheritance</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a class="qref" href="files/papers/J26-P42-QP.pdf#page=1" title="Open the question paper at page 1">June 2026 P42</a> <span class="mswrap"><a class="msref" href="files/papers/J26-P42-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span></td>
+<td>No-builtin string limits + free-list linked list</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a class="qref" href="files/papers/N25-P43-QP.pdf#page=1" title="Open the question paper at page 1">Nov 2025 P43</a> <span class="mswrap"><a class="msref" href="files/papers/N25-P43-MS.pdf#page=1" title="Open the mark scheme at page 1">MS&nbsp;p.1</a></span></td>
+<td>Composition grid + run-length + array-slice recursion</td>
+</tr>
+</tbody>
+</table></div>
+<p>Keep the remaining unique papers (see <code>question-bank.md</code>) as module practice and
+fallback mocks. Self-marking rules: award mark points ruthlessly — no "it basically does
+that". Log every lost mark into three buckets: <em>syntax slip</em>, <em>misread question</em>,
+<em>didn't know</em> — the buckets tell you what to revise. Aim for 60+/75 (an A** boundary is
+typically around 55–65 depending on session).</p>
+<h2>7. Final week</h2>
+<ul>
+<li>Rebuild the canonical skeleton from memory: class template, try/except file patterns,
+  stack/queue skeletons, bubble/insertion sorts, binary search both forms, recursive
+  in-order traversal. (All are in <code>pseudocode-cheatsheet.md</code> and module READMEs.)</li>
+<li>Re-read the pitfalls sections of every module — they are all real mark losses observed in
+  the mark schemes.</li>
+<li>Sleep. Paper 4 rewards a steady hand and a patient evidence workflow, not last-minute
+  cramming.</li>
+</ul>
+<h2>Checkpoint</h2>
+<ul>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="e8fb45eff67e"><span>I can state my time budget per question and what happens in the final 15 minutes.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="cb01f79c6279"><span>I have a written recovery plan for syntax errors and missing screenshots.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="b32e6db74ce8"><span>Six mocks are scheduled with self-marking dates.</span></label></li>
+<li class="checkpoint"><label><input type="checkbox" data-ckpt="0db2fa1a4432"><span>I can rebuild every canonical skeleton from memory.</span></label></li>
+</ul>
+      <div class="pager"><a class="prev" href="module-11.html"><div class="dir">← Previous</div><div class="pt">Module 11 — Recursion: trace, translate, convert</div></a><a class="next" href="question-bank.html"><div class="dir">Next →</div><div class="pt">9618 Paper 4 — Master Question Bank (2021–2026)</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

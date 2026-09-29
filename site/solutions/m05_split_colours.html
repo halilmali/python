@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m05_split_colours.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m05_split_colours.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m05_split_colours.py</h1>
+<p><strong>Source question:</strong> Module 5 worked example — Jun 2025 P41 Q2 (25 marks): ask for a filename, read</p>
+<p><a class="textlink" href="../files/solutions/m05_split_colours.py">Download raw file ↗</a></p>
+
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 5 worked example — Jun 2025 P41 Q2 (25 marks): ask for a filename, read</span>
+<span class="sd">lines like &quot;10,red&quot; of unknown length, split into value and colour, store into</span>
+<span class="sd">six per-colour arrays, then append each value to its colour&#39;s file, with</span>
+<span class="sd">exception handling on both reading and writing.</span>
+
+<span class="sd">Run with test input (the filename):</span>
+<span class="sd">    echo TheData.txt | python m05_split_colours.py</span>
+
+<span class="sd">Data file: ../data-files/J25-41/TheData.txt (recreated in the paper&#39;s format)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">ColourFiles</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;red&quot;</span><span class="p">:</span> <span class="s2">&quot;Red.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">:</span> <span class="s2">&quot;Green.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange.txt&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;pink&quot;</span><span class="p">:</span> <span class="s2">&quot;Pink.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">:</span> <span class="s2">&quot;Blue.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">:</span> <span class="s2">&quot;Yellow.txt&quot;</span><span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ReadData</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">Red</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Green</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Orange</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Pink</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Blue</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Yellow</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data-files/J25-41/&quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>                      <span class="c1"># unknown number of lines</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>            <span class="c1"># &quot;10,red&quot; -&gt; [&quot;10&quot;, &quot;red&quot;]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">colour</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">colour</span> <span class="o">==</span> <span class="s2">&quot;red&quot;</span><span class="p">:</span>
+                <span class="n">Red</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">colour</span> <span class="o">==</span> <span class="s2">&quot;green&quot;</span><span class="p">:</span>
+                <span class="n">Green</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">colour</span> <span class="o">==</span> <span class="s2">&quot;orange&quot;</span><span class="p">:</span>
+                <span class="n">Orange</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">colour</span> <span class="o">==</span> <span class="s2">&quot;pink&quot;</span><span class="p">:</span>
+                <span class="n">Pink</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">colour</span> <span class="o">==</span> <span class="s2">&quot;blue&quot;</span><span class="p">:</span>
+                <span class="n">Blue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">colour</span> <span class="o">==</span> <span class="s2">&quot;yellow&quot;</span><span class="p">:</span>
+                <span class="n">Yellow</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could not be opened&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Red</span><span class="p">,</span> <span class="n">Green</span><span class="p">,</span> <span class="n">Orange</span><span class="p">,</span> <span class="n">Pink</span><span class="p">,</span> <span class="n">Blue</span><span class="p">,</span> <span class="n">Yellow</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">WriteFile</span><span class="p">(</span><span class="n">Values</span><span class="p">,</span> <span class="n">Colour</span><span class="p">):</span>
+    <span class="c1"># append each value on its own line, with exception handling</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data-files/J25-41/&quot;</span> <span class="o">+</span> <span class="n">ColourFiles</span><span class="p">[</span><span class="n">Colour</span><span class="p">],</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">Values</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not write &quot;</span> <span class="o">+</span> <span class="n">ColourFiles</span><span class="p">[</span><span class="n">Colour</span><span class="p">])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter the data filename: &quot;</span><span class="p">)</span>
+    <span class="n">Red</span><span class="p">,</span> <span class="n">Green</span><span class="p">,</span> <span class="n">Orange</span><span class="p">,</span> <span class="n">Pink</span><span class="p">,</span> <span class="n">Blue</span><span class="p">,</span> <span class="n">Yellow</span> <span class="o">=</span> <span class="n">ReadData</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">WriteFile</span><span class="p">(</span><span class="n">Red</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span>
+    <span class="n">WriteFile</span><span class="p">(</span><span class="n">Green</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">)</span>
+    <span class="n">WriteFile</span><span class="p">(</span><span class="n">Orange</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+    <span class="n">WriteFile</span><span class="p">(</span><span class="n">Pink</span><span class="p">,</span> <span class="s2">&quot;pink&quot;</span><span class="p">)</span>
+    <span class="n">WriteFile</span><span class="p">(</span><span class="n">Blue</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+    <span class="n">WriteFile</span><span class="p">(</span><span class="n">Yellow</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Red:&quot;</span><span class="p">,</span> <span class="n">Red</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Blue:&quot;</span><span class="p">,</span> <span class="n">Blue</span><span class="p">)</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m04_strings_j26.html"><div class="dir">← Previous</div><div class="pt">m04_strings_j26.py</div></a><a class="next" href="../solutions/m05_toys_filter.html"><div class="dir">Next →</div><div class="pt">m05_toys_filter.py</div></a></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

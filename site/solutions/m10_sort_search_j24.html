@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m10_sort_search_j24.py — 9618 Paper 4 Python Course</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/checkpoints.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <div class="t1">Python for 9618 Paper 4</div>
+      <div class="t2">A Level Computer Science · Practical exam course</div>
+    </a>
+    <div class="overall">
+      <div class="lbl js-overall-lbl">0 / 0 checkpoints (0%)</div>
+      <div class="bar"><div class="fill js-overall-fill"></div></div>
+    </div>
+    <div class="navgroup">Start</div>
+<a class="navlink" href="../index.html"><span>Home</span></a>
+<a class="navlink" href="../cheatsheet.html"><span>Pseudocode → Python cheatsheet</span></a>
+<div class="navgroup">Modules</div>
+<a class="navlink" href="../module-00.html"><span>0 · Exam orientation</span></a>
+<a class="navlink" href="../module-01.html"><span>1 · Python foundations</span></a>
+<a class="navlink" href="../module-02.html"><span>2 · Modular programming</span></a>
+<a class="navlink" href="../module-03.html"><span>3 · Arrays &amp; records</span></a>
+<a class="navlink" href="../module-04.html"><span>4 · Strings &amp; validation</span></a>
+<a class="navlink" href="../module-05.html"><span>5 · Files &amp; exceptions</span></a>
+<a class="navlink" href="../module-06.html"><span>6 · OOP foundations</span></a>
+<a class="navlink" href="../module-07.html"><span>7 · OOP advanced</span></a>
+<a class="navlink" href="../module-08.html"><span>8 · Stacks &amp; queues</span></a>
+<a class="navlink" href="../module-09.html"><span>9 · Lists, trees, hashes</span></a>
+<a class="navlink" href="../module-10.html"><span>10 · Searching &amp; sorting</span></a>
+<a class="navlink" href="../module-11.html"><span>11 · Recursion</span></a>
+<a class="navlink" href="../module-12.html"><span>12 · Exam technique</span></a>
+<div class="navgroup">Reference</div>
+<a class="navlink" href="../question-bank.html"><span>Question bank</span></a>
+<a class="navlink" href="../teacher-guide.html"><span>Teacher guide</span></a>
+<a class="navlink" href="../solutions.html"><span>Solutions</span></a>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      <div class="searchbox">
+        <span class="mag">🔍</span>
+        <input id="searchInput" type="search" placeholder="Search the course…  (press /)"
+               autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="tbtn" id="themeBtn" type="button">Dark</button>
+    </div>
+    <main class="content">
+      <div class="crumbs"><a href="../solutions.html">Solutions</a> / m10_sort_search_j24.py</div>
+      <div class="progresswrap">
+        <div class="lbl">Module checkpoints</div>
+        <div class="bar"><div class="fill"></div></div>
+      </div>
+      <h1>m10_sort_search_j24.py</h1>
+<p><strong>Source question:</strong> Module 10 worked example — Jun 2024 P41 Q1 (27 marks): read a validated count</p>
+<p><a class="textlink" href="../files/solutions/m10_sort_search_j24.py">Download raw file ↗</a></p>
+
+<div class="codeblock"><div class="cbhead"><span>python</span><button class="copy" type="button">Copy</button></div><div class="codehilite"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module 10 worked example — Jun 2024 P41 Q1 (27 marks): read a validated count</span>
+<span class="sd">(1-20), fill a global array, Initialise() procedure, bubble sort, iterative</span>
+<span class="sd">BinarySearch(), then the main program outputs the array before and after</span>
+<span class="sd">sorting and searches for a user value.</span>
+
+<span class="sd">Run with test input (count, values, search value), e.g.:</span>
+<span class="sd">    printf &quot;10\n23\n17\n5\n90\n12\n44\n1\n8\n63\n29\n44\n&quot; | python m10_sort_search_j24.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">NumberArray</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">20</span>          <span class="c1"># global array</span>
+<span class="n">NumberCount</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<span class="c1"># 1(b) read the count and the values</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Initialise</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">NumberCount</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+        <span class="n">NumberCount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;How many numbers (1-20)? &quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">NumberCount</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">:</span>
+            <span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Count must be between 1 and 20&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NumberCount</span><span class="p">):</span>
+        <span class="n">NumberArray</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a number: &quot;</span><span class="p">))</span>
+
+
+<span class="c1"># 1(d) bubble sort ascending — no inbuilt sorting</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">BubbleSort</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NumberCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NumberCount</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">NumberArray</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">NumberArray</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">NumberArray</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">NumberArray</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">NumberArray</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">NumberArray</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+
+
+<span class="c1"># 1(e) iterative binary search; returns the index or -1</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">BinarySearch</span><span class="p">(</span><span class="n">SearchValue</span><span class="p">):</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">NumberCount</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">first</span> <span class="o">&lt;=</span> <span class="n">last</span><span class="p">:</span>
+        <span class="n">middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">first</span> <span class="o">+</span> <span class="n">last</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">NumberArray</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="o">==</span> <span class="n">SearchValue</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">middle</span>
+        <span class="k">elif</span> <span class="n">NumberArray</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">SearchValue</span><span class="p">:</span>
+            <span class="n">last</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">OutputArray</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NumberCount</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">NumberArray</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">Initialise</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Before sorting:&quot;</span><span class="p">)</span>
+    <span class="n">OutputArray</span><span class="p">()</span>
+    <span class="n">BubbleSort</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;After sorting:&quot;</span><span class="p">)</span>
+    <span class="n">OutputArray</span><span class="p">()</span>
+    <span class="n">search_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a value to search for: &quot;</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">BinarySearch</span><span class="p">(</span><span class="n">search_value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not found&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found at position </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div></div>
+<p><em>Work the question yourself from the original paper before reading this model
+answer. Then diff your version against it mark-point by mark-point.</em></p>
+      <div class="pager"><a class="prev" href="../solutions/m09_linked_list_oop.html"><div class="dir">← Previous</div><div class="pt">m09_linked_list_oop.py</div></a><span></span></div>
+    </main>
+  </div>
+</div>
+</body>
+</html>
